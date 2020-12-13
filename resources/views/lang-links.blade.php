@@ -1,0 +1,2 @@
+<a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'en') }}">{{ __('dictionary.English') }}</a><br>
+<a href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'ru') }}">{{ __('dictionary.Russian') }}</a><br>
