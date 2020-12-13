@@ -15,23 +15,23 @@ class RoleSeeder extends Seeder
     public function run()
     {
         Role::create([
-                'name' => Role::ROLE_ADMIN_EN,
-                'slug' => 'admin'
-            ]);
+            'name' => 'Administrator',
+            'slug' => Role::ROLE_ADMIN
+        ]);
 
         Role::create([
-                'name' => Role::ROLE_INFRASTRUCTURE_OWNER_EN,
-                'slug' => 'owner'
-            ]);
+            'name' => 'Infrastructure owner',
+            'slug' => Role::ROLE_INFRASTRUCTURE_OWNER
+        ]);
 
         Role::create([
-                'name' => Role::ROLE_ICT_OPERATOR_OR_PROVIDER_EN,
-                'slug' => 'ict'
-            ]);
+            'name' => 'ICT operator or provider',
+            'slug' => Role::ROLE_ICT_OPERATOR_OR_PROVIDER
+        ]);
 
         Role::create([
-                'name' => Role::ROLE_CONTRIBUTOR_EN,
-                'slug' => 'contributor'
-            ]);
+            'name' => 'Contributor',
+            'slug' => Role::ROLE_CONTRIBUTOR
+        ]);
     }
 }
