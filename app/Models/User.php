@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * Класс статей базы знаний
+ * Класс пользователей
  *
  * @property int $id
  * @property string $name               - Имя
