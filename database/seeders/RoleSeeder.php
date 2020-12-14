@@ -21,12 +21,12 @@ class RoleSeeder extends Seeder
 
         Role::create([
             'name' => 'Infrastructure owner',
-            'slug' => Role::ROLE_INFRASTRUCTURE_OWNER
+            'slug' => Role::ROLE_ROADS_OWNER
         ]);
 
         Role::create([
             'name' => 'ICT operator or provider',
-            'slug' => Role::ROLE_ICT_OPERATOR_OR_PROVIDER
+            'slug' => Role::ROLE_ICT_OWNER
         ]);
 
         Role::create([

@@ -6,7 +6,22 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
+/**
+ * Класс статей базы знаний
+ *
+ * @property int $id
+ * @property string $name               - Имя
+ * @property string $surname            - Фамилия
+ * @property string $email
+ * @property string $password
+ * @property Carbon $last_activity_at   - Метка последней активности
+ * @property boolean $active            - Статус
+ *
+ * Class User
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
