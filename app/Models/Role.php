@@ -23,8 +23,8 @@ class Role extends Model
      * Роли
      */
     const ROLE_ADMIN = 'admin';
-    const ROLE_INFRASTRUCTURE_OWNER = 'owner';
-    const ROLE_ICT_OPERATOR_OR_PROVIDER = 'ict';
+    const ROLE_ROADS_OWNER = 'roads';
+    const ROLE_ICT_OWNER = 'ict';
     const ROLE_CONTRIBUTOR = 'contributor';
 
     /**
