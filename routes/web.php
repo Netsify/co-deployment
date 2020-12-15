@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/*Route::middleware('setlocale')->prefix(Localization::locale())->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('root');
+
+    Auth::routes();
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/test', function () {
+        $name = (new \App\Models\Test())->name;
+        return view('test', compact('name'));
+    });
+
+});*/
+
+Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Auth::routes();
+
+
+    Route::get('/test', function () {
+//        dd(\App\Http\Middleware\SetLocale::getLocale());
+        $name = (new \App\Models\Test())->name;
+        return view('test', compact('name'));
+    });
 });
