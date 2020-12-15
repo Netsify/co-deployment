@@ -7,7 +7,8 @@
 
 return [
     'Authorization' => "Authorization",
-    'English'       => "English",
+    'Lang'          => "",
     'Registration'  => "Registration",
-    'Russian'       => "Russian",
+    'SwitchTo'      => "Switch to russian",
+
 ];

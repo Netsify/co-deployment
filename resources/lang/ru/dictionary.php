@@ -7,7 +7,7 @@
 
 return [
     'Authorization' => "Авторизация",
-    'English'       => "Английский",
+    'Lang'          => "en",
     'Registration'  => "Регистрация",
-    'Russian'       => "Русский",
+    'SwitchTo'      => "Переключить на английский",
 ];

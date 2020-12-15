@@ -1,7 +1,5 @@
 <?php
 
-
-use Localization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -15,8 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('setlocale')->prefix('{lang?}')->group(function () {
-Route::middleware('setlocale')->prefix(Localization::locale())->group(function () {
+/*Route::middleware('setlocale')->prefix(Localization::locale())->group(function () {
     Route::get('/', function () {
         return view('welcome');
     })->name('root');
@@ -26,10 +23,23 @@ Route::middleware('setlocale')->prefix(Localization::locale())->group(function (
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/test', function () {
-        return (new \App\Models\Test())->name;
+        $name = (new \App\Models\Test())->name;
+        return view('test', compact('name'));
     });
 
-    /*Route::get('set-lang/{lang}', function () {
-        return redirect()->ba*ck();
-    })->name('set-locale');*/
+});*/
+
+Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Auth::routes();
+
+
+    Route::get('/test', function () {
+//        dd(\App\Http\Middleware\SetLocale::getLocale());
+        $name = (new \App\Models\Test())->name;
+        return view('test', compact('name'));
+    });
 });
