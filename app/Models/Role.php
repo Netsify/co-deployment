@@ -6,6 +6,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -37,7 +38,6 @@ class Role extends Model implements TranslatableContract
      * @var array
      */
     protected $fillable = [
-//        'name',
         'slug'
     ];
 
@@ -47,4 +47,14 @@ class Role extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
+
+    /**
+     * Все роли кроме админа
+     *
+     * @return Collection
+     */
+    public function getUserRoles() : Collection
+    {
+        return $this->where('slug', '!=', self::ROLE_ADMIN)->get();
+    }
 }
