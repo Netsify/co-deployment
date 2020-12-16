@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Класс ролей
@@ -15,9 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class Role
  * @package App\Models
  */
-class Role extends Model
+class Role extends Model implements TranslatableContract
 {
-    use HasFactory;
+    use HasFactory, Translatable;
 
     /*
      * Роли
@@ -33,7 +37,14 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+//        'name',
         'slug'
     ];
+
+    /**
+     * Поле, которое должно быть переведено
+     *
+     * @var array
+     */
+    public $translatedAttributes = ['name'];
 }

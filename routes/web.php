@@ -13,22 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::middleware('setlocale')->prefix(Localization::locale())->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('root');
-
-    Auth::routes();
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::get('/test', function () {
-        $name = (new \App\Models\Test())->name;
-        return view('test', compact('name'));
-    });
-
-});*/
-
 Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function () {
     Route::get('/', function () {
         return view('welcome');
@@ -36,10 +20,23 @@ Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function
 
     Auth::routes();
 
-
     Route::get('/test', function () {
-//        dd(\App\Http\Middleware\SetLocale::getLocale());
         $name = (new \App\Models\Test())->name;
         return view('test', compact('name'));
+    });
+
+    Route::get('/test/roles', function () {
+/*        $data = [
+            'slug' => 'admin',
+            'ru' => ['name' => 'Администратор'],
+            'en' => ['name' => 'Admin'],
+        ];
+        $admin = \App\Models\Role::create($data);*/
+
+        $admin = \App\Models\Role::query()->first();
+//        $admin->translate('ru')->name = "Администратор";
+//        $admin->save();
+        $admin = \App\Models\Role::query()->first();
+        dd($admin->translate(\App\Http\Middleware\SetLocale::getLocale())->name);
     });
 });
