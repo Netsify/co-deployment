@@ -16,5 +16,5 @@ return [
     'Registration'      => "Регистрация",
     'Register'          => "Регистрация",
     'Role'              => "Роль",
-    'SwitchTo'          => "Переключить на английский",
+    'SwitchTo'          => "RU",
 ];

@@ -16,5 +16,5 @@ return [
     'Registration'      => "Registration",
     'Register'          => "Sign Up",
     'Role'              => "Role",
-    'SwitchTo'          => "Switch to russian",
+    'SwitchTo'          => "EN",
 ];

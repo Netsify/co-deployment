@@ -70,6 +70,11 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <a href="{{ currentRoute() }}" class="nav-link">
+                                {{ __('dictionary.SwitchTo') }} <img src="{{ getFlag() }}" class="img" width="20px" alt="flag">
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
