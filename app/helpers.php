@@ -49,3 +49,15 @@ function getLocale(){
 
     return null;
 }
+
+/**
+ * Флаг языка текущей локализации
+ *
+ * @return string
+ */
+function getFlag(){
+    switch (app()->getLocale()) {
+        case 'ru': return \Illuminate\Support\Facades\Storage::url('flags/ru.svg');
+        case 'en': return \Illuminate\Support\Facades\Storage::url('flags/en.svg');
+    }
+}

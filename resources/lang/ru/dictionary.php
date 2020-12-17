@@ -9,5 +9,5 @@ return [
     'Authorization' => "Авторизация",
     'Lang'          => "en",
     'Registration'  => "Регистрация",
-    'SwitchTo'      => "Переключить на английский",
+    'SwitchTo'      => "RU",
 ];

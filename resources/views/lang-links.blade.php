@@ -1,1 +1,1 @@
-<a href="{{ currentRoute() }}">{{ __('dictionary.SwitchTo') }}</a><br>
+<a href="{{ currentRoute() }}"><img src="{{ getFlag() }}" width="20px" alt="">{{ __('dictionary.SwitchTo') }}</a><br>

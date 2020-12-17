@@ -9,6 +9,6 @@ return [
     'Authorization' => "Authorization",
     'Lang'          => "",
     'Registration'  => "Registration",
-    'SwitchTo'      => "Switch to russian",
+    'SwitchTo'      => "EN",
 
 ];
