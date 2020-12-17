@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function () {
+Route::group(['prefix' => getLocale()], function () {
     Route::get('/', function () {
         return view('welcome');
     });
@@ -34,9 +34,6 @@ Route::group(['prefix' => \App\Http\Middleware\SetLocale::getLocale()], function
         $admin = \App\Models\Role::create($data);*/
 
         $admin = \App\Models\Role::query()->first();
-//        $admin->translate('ru')->name = "Администратор";
-//        $admin->save();
-        $admin = \App\Models\Role::query()->first();
-        dd($admin->translate(\App\Http\Middleware\SetLocale::getLocale())->name);
+        dd($admin->translate(getLocale())->name);
     });
 });

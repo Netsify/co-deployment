@@ -185,12 +185,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /*
-         * Подключаем провайдер для работы с локализацией
-         */
-        App\Providers\LocalizationServiceProvider::class
-
     ],
 
     /*
@@ -242,7 +236,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Localization' => \App\Facades\LocalizationFacade::class
     ],
 
 ];
