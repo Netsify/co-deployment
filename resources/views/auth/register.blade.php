@@ -43,7 +43,7 @@
                             <select name="role">
                                 <option value="" disabled selected>{{ __('dictionary.Role') }}</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->role_id }}">{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
                         </div>

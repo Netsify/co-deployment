@@ -47,14 +47,4 @@ class Role extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
-
-    /**
-     * Все роли кроме админа
-     *
-     * @return Collection
-     */
-    public function getUserRoles() : Collection
-    {
-        return $this->where('slug', '!=', self::ROLE_ADMIN)->get();
-    }
 }
