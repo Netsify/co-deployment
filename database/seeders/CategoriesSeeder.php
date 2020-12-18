@@ -23,18 +23,18 @@ class CategoriesSeeder extends Seeder
         $categories = [
             [
                 'slug' => "legislative_acts",
-                'ru'   => ['name' => "Legislative acts"],
-                'en'   => ['name' => "Законодательные акты"]
+                'en'   => ['name' => "Legislative acts"],
+                'ru'   => ['name' => "Законодательные акты"]
             ],
             [
                 'slug' => "methodology_and_research",
-                'ru'   => ['name' => "Methodology and research"],
-                'en'   => ['name' => "Методология и исследования"]
+                'en'   => ['name' => "Methodology and research"],
+                'ru'   => ['name' => "Методология и исследования"]
             ],
             [
                 'slug' => "training_materials",
-                'ru'   => ['name' => "Training materials"],
-                'en'   => ['name' => "Учебные материалы"]
+                'en'   => ['name' => "Training materials"],
+                'ru'   => ['name' => "Учебные материалы"]
             ]
         ];
 

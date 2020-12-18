@@ -35,7 +35,7 @@ Route::group(['prefix' => getLocale()], function () {
         ];
         $admin = \App\Models\Role::create($data);*/
 
-        $admin = \App\Models\Role::query()->first();
+        $admin = \App\Models\Category::query()->first();
         dd($admin->name);
     });
 });
