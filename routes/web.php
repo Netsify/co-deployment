@@ -20,6 +20,8 @@ Route::group(['prefix' => getLocale()], function () {
 
     Auth::routes();
 
+    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     Route::get('/test', function () {
         $name = (new \App\Models\Test())->name;
         return view('test', compact('name'));

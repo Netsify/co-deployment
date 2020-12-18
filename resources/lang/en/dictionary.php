@@ -6,9 +6,15 @@
  */
 
 return [
-    'Authorization' => "Authorization",
-    'Lang'          => "",
-    'Registration'  => "Registration",
-    'SwitchTo'      => "EN",
-
+    'Authorization'     => "Login",
+    'ConfirmPassword'   => "Repeat Password",
+    'Email'             => "Email",
+    'FirstName'         => "First Name",
+    'Lang'              => "",
+    'LastName'          => "Last Name",
+    'Password'          => "Password",
+    'Registration'      => "Registration",
+    'Register'          => "Sign Up",
+    'Role'              => "Role",
+    'SwitchTo'          => "EN",
 ];

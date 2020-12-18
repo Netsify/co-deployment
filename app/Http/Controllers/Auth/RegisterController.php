@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -42,6 +43,18 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $roles = Role::query()->where('slug', '!=', Role::ROLE_ADMIN)->get();
+
+        return view('auth.register', compact('roles'));
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -50,9 +63,18 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'integer'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ], [], [
+            'first_name' => __('dictionary.FirstName'),
+            'last_name' => __('dictionary.LastName'),
+            'role' => __('dictionary.Role'),
+            'email' => __('dictionary.Email'),
+            'password' => __('dictionary.Password'),
+            'password-confirm' => __('dictionary.ConfirmPassword'),
         ]);
     }
 
@@ -64,10 +86,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $user = new User([
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'role_id'    => $data['role'],
+            'email'      => $data['email'],
         ]);
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        return $user;
     }
 }
