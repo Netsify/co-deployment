@@ -36,6 +36,6 @@ Route::group(['prefix' => getLocale()], function () {
         $admin = \App\Models\Role::create($data);*/
 
         $admin = \App\Models\Role::query()->first();
-        dd($admin->translate(getLocale())->name);
+        dd($admin->name);
     });
 });

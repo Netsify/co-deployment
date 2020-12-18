@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,4 +12,5 @@ class RoleTranslation extends Model
     public $timestamps = false;
 
     protected $fillable = ['name'];
+
 }
