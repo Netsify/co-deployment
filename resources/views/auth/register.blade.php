@@ -46,7 +46,7 @@
                                 <select name="role" class="form-control @error('role') is-invalid @enderror">
                                     <option value="" disabled selected>{{ __('dictionary.SelectRole') }}</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                         <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                                     @endforeach
                                 </select>
 
