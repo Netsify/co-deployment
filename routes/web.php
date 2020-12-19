@@ -22,20 +22,6 @@ Route::group(['prefix' => getLocale()], function () {
 
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/test', function () {
-        $name = (new \App\Models\Test())->name;
-        return view('test', compact('name'));
-    });
-
-    Route::get('/test/roles', function () {
-/*        $data = [
-            'slug' => 'admin',
-            'ru' => ['name' => 'Администратор'],
-            'en' => ['name' => 'Admin'],
-        ];
-        $admin = \App\Models\Role::create($data);*/
-
-        $admin = \App\Models\Category::query()->first();
-        dd($admin->name);
-    });
+//    Route::get('/articles/create', [\App\Http\Controllers\ArticlesController::class, 'create'])->name('articles.create');
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class);
 });

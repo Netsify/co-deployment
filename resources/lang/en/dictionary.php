@@ -11,6 +11,7 @@ return [
     'Email'              => "Email",
     'FirstName'          => "First Name",
     'ForgotYourPassword' => "Forgot your password?",
+    'KB'                 => "Knowlage base",
     'Lang'               => "",
     'LastName'           => "Last Name",
     'Logout'             => "Logout",

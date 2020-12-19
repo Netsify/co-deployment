@@ -11,6 +11,7 @@ return [
     'Email'              => "Email",
     'FirstName'          => "Имя",
     'ForgotYourPassword' => "Забыли пароль?",
+    'KnowlageBase'       => "База знаний",
     'Lang'               => "en",
     'LastName'           => "Фамилия",
     'Logout'             => "Выход",

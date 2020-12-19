@@ -16,16 +16,17 @@ function currentRoute() {
         $lang = null;
     }
 
+
     switch (app()->getLocale()) {
         case 'ru': $locale = 'en/'; break;
-        case 'en': $locale = '/'; break;
+        case 'en': $locale = ''; break;
     }
 
     /*$locale = match(app()->getLocale()) {
         'ru' => 'en/',
         'en' => "/"
     };*/
-    $url = $locale . implode('/', $segments);
+    $url = env('APP_URL') . '/' . $locale . implode('/', $segments);
 
     return $url;
 };
