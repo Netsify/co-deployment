@@ -32,7 +32,7 @@
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
 
                                 @error('last_name')
-                                <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -40,20 +40,20 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('dictionary.Role') }}</label>
+                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('dictionary.Role') }}</label>
 
                             <div class="col-md-6">
                                 <select name="role" class="form-control @error('role') is-invalid @enderror">
                                     <option value="" disabled selected>{{ __('dictionary.SelectRole') }}</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                         <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                                     @endforeach
                                 </select>
 
                                 @error('role')
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
