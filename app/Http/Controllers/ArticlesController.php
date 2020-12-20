@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
@@ -26,8 +27,9 @@ class ArticlesController extends Controller
     public function create()
     {
         $categories = Category::query()->orderByTranslation('name')->get();
+        $tags = Tag::query()->orderByTranslation('name')->get();
 
-        return view('knowledgebase.form', compact('categories'));
+        return view('knowledgebase.form', compact('categories', 'tags'));
     }
 
     /**

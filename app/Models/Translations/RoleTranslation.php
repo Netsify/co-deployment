@@ -2,15 +2,15 @@
 
 namespace App\Models\Translations;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class RoleTranslation extends Model
+/**
+ * Класс для перевода ролей пользователей
+ *
+ * @property $name - Роль
+ *
+ * Class RoleTranslation
+ * @package App\Models\Translations
+ */
+class RoleTranslation extends TranslatableModel
 {
-    use HasFactory;
-
-    public $timestamps = false;
-
-    protected $fillable = ['name'];
 
 }
