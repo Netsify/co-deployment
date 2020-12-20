@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property string $password
  * @property Carbon $last_activity_at   - Метка последней активности
  * @property boolean $active            - Статус
+ * @property Article[] $articles        - Статьи пользователя
  *
  * Class User
  * @package App\Models
@@ -66,5 +67,15 @@ class User extends Authenticatable
     public function getFullNameAttribute() : string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Статьи пользователя
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
     }
 }

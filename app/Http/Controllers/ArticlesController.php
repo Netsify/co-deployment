@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Services\KnowledgeBaseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ArticlesController extends Controller
 {
@@ -40,7 +43,16 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = new Article($request->only(['title', 'content']));
+        $article->category_id = $request->get('category');
+
+        $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
+        if ($knowledgeBaseService->createArticle($request->get('tag'))) {
+            return redirect()->route('home');
+        }
+
+        Session::flash('error','При создании статьи возникли проблемы. Пожалуйста попробуйте позже.');
+        return redirect()->back();
     }
 
     /**

@@ -8,7 +8,14 @@
                     <div class="card-header">{{ __('knowledgebase.NewArticle') }}</div>
 
                     <div class="card-body">
+                        @if(session()->has('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session()->get('error') }}
+                            </div>
+                        @endif
                         <form action="{{ route('articles.store') }}" method="post">
+                            @csrf
+
                             <div class="mb-3">
                                 <label for="title" class="form-label">{{ __('knowledgebase.Title') }}</label>
                                 <input type="text" name="title" class="form-control" id="title">
@@ -31,7 +38,7 @@
 
                             <div class="mb-3">
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
-                                <select name="tag" id="tag" class="form-select" multiple>
+                                <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
                                         <option value="{{ $tag->id }}">{{ $tag->name }}</option>

@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  * Класс тегов статей базы знаний
  *
  * @property int $id
- * @property string $tag        - Тег
- * @property Carbon $created_at - Дата создания тега
- * @property Carbon $updated_at - Дата изменения тега
- *
+ * @property string $tag         - Тег
+ * @property Carbon $created_at  - Дата создания тега
+ * @property Carbon $updated_at  - Дата изменения тега
+ * @property Article[] $articles - Статьи с данным тегом
  * Class Tag
  * @package App\Models
  */
@@ -36,5 +36,15 @@ class Tag extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
+
+    /**
+     * Статьи в которых указан данный тег
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 
 }
