@@ -18,22 +18,43 @@
 
                             <div class="mb-3">
                                 <label for="title" class="form-label">{{ __('knowledgebase.Title') }}</label>
-                                <input type="text" name="title" class="form-control" id="title">
+                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                       id="title" value="{{ old('title') }}">
+
+                                @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
-                                <select name="category" id="category" class="form-select">
+                                <select name="category" id="category" class="form-select @error('category') is-invalid @enderror">
                                     <option value="0" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+
+                                @error('category')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">{{ __('knowledgebase.Content') }}</label>
-                                <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                                <textarea name="content" id="content" cols="30" rows="10" class="@error('content') is-invalid @enderror">
+                                    {{ old('content') }}
+                                </textarea>
+
+                                @error('content')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
