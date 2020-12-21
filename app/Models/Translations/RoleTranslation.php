@@ -2,6 +2,7 @@
 
 namespace App\Models\Translations;
 
+
 /**
  * Класс для перевода ролей пользователей
  *
