@@ -22,6 +22,8 @@ class CreateRoleTranslationsTable extends Migration
             $table->unique(['role_id', 'locale']);
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
+
+        (new \Database\Seeders\RoleSeeder())->run();
     }
 
     /**

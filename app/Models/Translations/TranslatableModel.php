@@ -13,9 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TranslatableModel extends Model
 {
-    use HasFactory;
+    protected $fillable = ['name'];
 
     public $timestamps = false;
-
-    protected $fillable = ['name'];
 }

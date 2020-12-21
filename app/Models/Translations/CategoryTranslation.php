@@ -2,9 +2,6 @@
 
 namespace App\Models\Translations;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Класс для перевода категорий
  *
@@ -13,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class CategoryTranslation
  * @package App\Models\Translations
  */
-class CategoryTranslation extends Model
+class CategoryTranslation extends TranslatableModel
 {
 
 }
