@@ -26,7 +26,12 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::query()
+            ->with(['category.translations', 'tags.translations', 'user'])
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('knowledgebase.index', compact('articles'));
     }
 
     /**

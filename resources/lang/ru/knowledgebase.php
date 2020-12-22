@@ -4,14 +4,17 @@
  */
 
 return [
-    'Category'       => "Категория",
-    'Content'        => "Контент",
-    'CreateArticle'  => "Создать статью",
-    'KB'             => "База знаний",
-    'NewArticle'     => "Новая статья",
-    'Save'           => "Сохранить",
-    'SelectCategory' => "Выберите категорию",
-    'SelectTags'     => "Выберите теги",
-    'Tag'            => "Тег",
-    'Title'          => "Заголовок",
+    'AllArticles'      => "Все статьи",
+    'ArticlesNotFound' => "Статьи не найдены",
+    'Category'         => "Категория",
+    'Content'          => "Контент",
+    'CreateArticle'    => "Создать статью",
+    'KB'               => "База знаний",
+    'NewArticle'       => "Новая статья",
+    'Save'             => "Сохранить",
+    'SelectCategory'   => "Выберите категорию",
+    'SelectTags'       => "Выберите теги",
+    'Tag'              => "Тег",
+    'Title'            => "Заголовок",
+    'View'             => "Просмотреть",
 ];

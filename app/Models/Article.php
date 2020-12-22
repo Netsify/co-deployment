@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon $deleted_at     - Дата удаления
  * @property User $user             - Пользователь
  * @property Tag[] $tags            - Теги к статье
+ * @property Category $category     - Категория
+ * @property string $preview        - Короткое превью контента
  *
  * Class Article
  * @package App\Models
@@ -55,5 +57,24 @@ class Article extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Возвращает категорию
+     *
+     * @return BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Превью статьи
+     * @return string
+     */
+    public function getPreviewAttribute()
+    {
+        return mb_substr(strip_tags($this->content), 0, 50, 'UTF-8');
     }
 }
