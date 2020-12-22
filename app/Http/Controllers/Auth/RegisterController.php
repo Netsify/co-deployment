@@ -39,6 +39,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+//        dd(getLocale());
+
         $this->middleware('guest');
     }
 
@@ -89,5 +91,10 @@ class RegisterController extends Controller
         $user->save();
 
         return $user;
+    }
+
+    protected function redirectTo()
+    {
+        return route('home');
     }
 }

@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => getLocale()], function () {
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('main');
 
     Auth::routes();
 
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//    Route::get('/articles/create', [\App\Http\Controllers\ArticlesController::class, 'create'])->name('articles.create');
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class);
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->middleware('auth');
 });
