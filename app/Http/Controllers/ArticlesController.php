@@ -75,7 +75,7 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('knowledgebase.show', compact('article'));
     }
 
     /**
@@ -86,6 +86,10 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
+        $categories = Category::query()->orderByTranslation('name')->get();
+        $tags = Tag::query()->orderByTranslation('name')->get();
+
+        return view('knowledgebase.form', compact('categories', 'tags', 'article'));
     }
 
     /**

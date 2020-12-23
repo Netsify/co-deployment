@@ -12,11 +12,15 @@
                         </div>
                         <div class="card-body">
                             <p class="text-muted float-right">{{ $article->user->full_name }}</p>
-                            {{ $article->preview  }}
+                            <p>{{ $article->preview  }}</p>
 
-                            <a href="#" class="card-link">{{ __('knowledgebase.View') }}</a>
+                            <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.View') }}</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ $article->created_at }}
                         </div>
                     </div>
+                    <hr>
                 @empty
                     <h4>{{ __('knowledgebase.ArticlesNotFound') }}</h4>
                 @endforelse

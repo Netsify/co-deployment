@@ -5,7 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header">{{ __('knowledgebase.NewArticle') }}</div>
+                    <div class="card-header">
+                        @isset($article)
+                            {{ __('knowledgebase.EditArticle') }}
+                        @else
+                            {{ __('knowledgebase.NewArticle') }}
+                        @endisset
+                    </div>
 
                     <div class="card-body">
                         @if(session()->has('error'))
@@ -18,8 +24,9 @@
 
                             <div class="mb-3">
                                 <label for="title" class="form-label">{{ __('knowledgebase.Title') }}</label>
-                                <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                       id="title" value="{{ old('title') }}">
+                                <input type="text" name="title"
+                                       class="form-control @error('title') is-invalid @enderror"
+                                       id="title" value="{{ old('title') ?? (isset($article) ? $article->title : '') }}">
 
                                 @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -30,10 +37,11 @@
 
                             <div class="mb-3">
                                 <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
-                                <select name="category" id="category" class="form-select @error('category') is-invalid @enderror">
+                                <select name="category" id="category"
+                                        class="form-select @error('category') is-invalid @enderror">
                                     <option value="0" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ (old('category')  ?? isset($article) ? $article->category->id : '') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -46,8 +54,9 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">{{ __('knowledgebase.Content') }}</label>
-                                <textarea name="content" id="content" cols="30" rows="10" class="@error('content') is-invalid @enderror">
-                                    {{ old('content') }}
+                                <textarea name="content" id="content" cols="30" rows="10"
+                                          class="@error('content') is-invalid @enderror">
+                                    {{ old('content') ?? (isset($article) ? $article->content : '') }}
                                 </textarea>
 
                                 @error('content')
@@ -55,6 +64,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                                {{--@dump($article->tags->pluck('id')->toArray())--}}
                             </div>
 
                             <div class="mb-3">
@@ -62,7 +72,9 @@
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}"
+                                        {{ in_array($tag->id, $article->tags->pluck('id')->toArray()) ? 'selected' : '' }}
+                                        >{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

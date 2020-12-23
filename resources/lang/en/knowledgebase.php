@@ -9,6 +9,8 @@ return [
     'Category'         => "Category",
     'Content'          => "Content",
     'CreateArticle'    => "Create article",
+    'Edit'             => "Edit",
+    'EditArticle'      => "Edit article",
     'KB'               => "Knowledge base",
     'NewArticle'       => "New article",
     'Save'             => "Save",
