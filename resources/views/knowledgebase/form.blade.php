@@ -19,8 +19,11 @@
                                 {{ session()->get('error') }}
                             </div>
                         @endif
-                        <form action="{{ route('articles.store') }}" method="post">
+                        <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}" method="post">
                             @csrf
+                            @isset($article)
+                                @method('PUT')
+                            @endisset
 
                             <div class="mb-3">
                                 <label for="title" class="form-label">{{ __('knowledgebase.Title') }}</label>
@@ -64,7 +67,6 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                                {{--@dump($article->tags->pluck('id')->toArray())--}}
                             </div>
 
                             <div class="mb-3">
@@ -72,9 +74,7 @@
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}"
-                                        {{ in_array($tag->id, $article->tags->pluck('id')->toArray()) ? 'selected' : '' }}
-                                        >{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{ $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

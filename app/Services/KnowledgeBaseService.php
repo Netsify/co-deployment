@@ -41,7 +41,7 @@ class KnowledgeBaseService
         if (!$article) {
             Log::error('Не удалось создать статью', [
                 'article' => $this->_article->toArray(),
-                'user'    => $this->_user->toArray()
+                'user' => $this->_user->toArray()
             ]);
 
             return false;
@@ -49,28 +49,50 @@ class KnowledgeBaseService
 
         $this->_article = $article;
 
-        if (!empty($tags)) {
-            if (!$this->setTagsToArticle($tags)) {
-                Log::error('Не удалось добавить теги к статье', [
-                    'article' => $this->_article,
-                    'tags'    => $tags
-                ]);
+        if (!$this->setTagsToArticle($tags)) {
+            Log::error('Не удалось добавить теги к статье', [
+                'article' => $this->_article,
+                'tags'    => $tags
+            ]);
 
-                return false;
-            }
+            return false;
         }
 
         return true;
     }
 
     /**
-     * Добавляет теги к статье
+     * Обновляет статью
+     *
+     * @param array|null $tags
+     * @return bool
+     */
+    public function updateArticle(array $tags = null): bool
+    {
+        if (!$this->_article->save()) {
+            return false;
+        }
+
+        if (!$this->setTagsToArticle($tags)) {
+            Log::error('Не удалось теги теги у статьи', [
+                'article' => $this->_article,
+                'tags'    => $tags
+            ]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Добавляет теги к статье или удаляет
      *
      * @param array $tags
-     * @return array
+     * @return int
      */
-    private function setTagsToArticle(array $tags): array
+    private function setTagsToArticle(array $tags): int
     {
-        return $this->_article->tags()->sync($tags);
+        return empty($tags) ? $this->_article->tags()->detach() : count($this->_article->tags()->sync($tags));
     }
 }

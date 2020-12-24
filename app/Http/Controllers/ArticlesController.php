@@ -75,6 +75,8 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
+        $article->load('tags.translations');
+
         return view('knowledgebase.show', compact('article'));
     }
 
@@ -95,13 +97,23 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ArticleRequest  $request
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
-        //
+        $article->title       = $request->get('title');
+        $article->category_id = $request->get('category');
+        $article->content     = $request->get('content');
+
+        $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
+        if ($knowledgeBaseService->updateArticle($request->get('tag'))) {
+            return redirect()->route('home');
+        }
+
+        Session::flash('error','При редактировании статьи возникли проблемы. Пожалуйста попробуйте позже.');
+        return redirect()->back();
     }
 
     /**
