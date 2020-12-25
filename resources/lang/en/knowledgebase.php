@@ -9,8 +9,15 @@ return [
     'Category'         => "Category",
     'Content'          => "Content",
     'CreateArticle'    => "Create article",
+    'Delete'           => "Delete",
     'Edit'             => "Edit",
     'EditArticle'      => "Edit article",
+
+    'errors'           => [
+        'delete' => "Could not delete article",
+        'update' => "Could not update article",
+    ],
+
     'KB'               => "Knowledge base",
     'NewArticle'       => "New article",
     'Save'             => "Save",

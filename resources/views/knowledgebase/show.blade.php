@@ -7,7 +7,15 @@
                 <div class="card">
                     <div class="card-header">
                         {{ $article->title }}
-                        <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-success" style="float: right">{{ __('knowledgebase.Edit') }}</a>
+                        <div class="btn-group" role="group" style="float: right">
+                            <form action="{{ route('articles.destroy', $article) }}" method="POST">
+                                <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        style="float: right">{{ __('knowledgebase.Delete') }}</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         {!! $article->content !!}

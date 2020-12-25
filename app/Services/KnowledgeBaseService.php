@@ -74,7 +74,7 @@ class KnowledgeBaseService
         }
 
         if (!$this->setTagsToArticle($tags)) {
-            Log::error('Не удалось теги теги у статьи', [
+            Log::error('Не удалось изменить теги у статьи', [
                 'article' => $this->_article,
                 'tags'    => $tags
             ]);

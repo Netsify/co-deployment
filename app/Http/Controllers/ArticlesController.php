@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -112,7 +113,7 @@ class ArticlesController extends Controller
             return redirect()->route('home');
         }
 
-        Session::flash('error','При редактировании статьи возникли проблемы. Пожалуйста попробуйте позже.');
+        Session::flash('error', __('knowledgebase.errors.update'));
         return redirect()->back();
     }
 
@@ -124,6 +125,25 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        try {
+            if (!$article->delete()) {
+                Session::flash('error', __('knowledgebase.errors.delete'));
+
+                Log::error("Не удалось удалить статью", ['article' => $article->toArray()]);
+            }
+        } catch (\Exception $e) {
+            Session::flash('error', __('knowledgebase.errors.delete'));
+
+            Log::error("Не удалось удалить статью", [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'article' => $article->toArray()
+            ]);
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('articles.index');
     }
 }
