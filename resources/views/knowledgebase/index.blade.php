@@ -14,7 +14,7 @@
                             <p class="text-muted float-right">{{ $article->user->full_name }}</p>
                             <p>{{ $article->preview  }}</p>
 
-                            <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.View') }}</a>
+                            <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.view') }}</a>
                         </div>
                         <div class="card-footer text-muted">
                             {{ $article->created_at }}
@@ -22,7 +22,7 @@
                     </div>
                     <hr>
                 @empty
-                    <h4>{{ __('knowledgebase.ArticlesNotFound') }}</h4>
+                    <h4>{{ __('knowledgebase.articles_not_found') }}</h4>
                 @endforelse
             </div>
         </div>

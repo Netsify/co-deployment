@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => getLocale()], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('main');
+    Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
     Auth::routes();
 
