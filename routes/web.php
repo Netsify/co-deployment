@@ -17,8 +17,12 @@ Route::group(['prefix' => getLocale()], function () {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
     Auth::routes();
+    Route::middleware('auth')->group(function () {
+        Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
+            ['index', 'show']);
+    });
 
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->middleware('auth');
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 });
