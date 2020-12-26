@@ -23,4 +23,11 @@ return [
     'SelectRole'         => "Выберите роль",
     'SignIn'             => "Войти",
     'SwitchTo'           => "RU",
+    'Profile'            => "Профиль",
+    'PersonalData'       => "Личные данные",
+    'Photo'              => "Фото",
+    'Phone'              => "Телефон",
+    'Organization'       => "Организация",
+    'Summary'            => "Дополнительная информация",
+    'EditProfile'        => "Редактировать личные данные",
 ];

@@ -23,4 +23,11 @@ return [
     'SelectRole'         => "Select role",
     'SignIn'             => "Sign in",
     'SwitchTo'           => "EN",
+    'Profile'            => "Profile",
+    'PersonalData'       => "Personal Data",
+    'Photo'              => "Photo",
+    'Phone'              => "Phone",
+    'Organization'       => "Organization",
+    'Summary'            => "Summary",
+    'EditProfile'        => "Edit Personal Data",
 ];
