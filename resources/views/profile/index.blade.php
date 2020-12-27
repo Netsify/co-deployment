@@ -16,27 +16,27 @@
 
                         <div class="mb-3">
                             <label for="first_name">{{ __('dictionary.FirstName') }}</label>
-                            <strong>{{ Auth::user()->first_name }}</strong>
+                            {{ $user->first_name }}
                         </div>
 
                         <div class="mb-3">
                             <label for="last_name">{{ __('dictionary.LastName') }}</label>
-                            <strong>{{ Auth::user()->last_name }}</strong>
+                            {{ $user->last_name }}
                         </div>
 
                         <div class="mb-3">
                             <label for="role">{{ __('dictionary.Role') }}</label>
-                            <strong>{{ Auth::user()->role->name }}</strong>
+                            {{ $user->role->name }}
                         </div>
 
                         <div class="mb-3">
                             <label for="phone">{{ __('dictionary.Phone') }}</label>
-                            <strong>{{ Auth::user()->phone }}</strong>
+                            {{ $user->phone }}
                         </div>
 
                         <div class="mb-3">
                             <label for="email">{{ __('dictionary.Email') }}</label>
-                            <strong>{{ Auth::user()->email }}</strong>
+                            {{ $user->email }}
                         </div>
 
                         <div class="mb-3">
@@ -45,13 +45,17 @@
 
                         <div class="mb-3">
                             <label for="organization">{{ __('dictionary.Organization') }}</label>
-                            <strong>{{ Auth::user()->organization }}</strong>
+                            {{ $user->organization }}
                         </div>
 
                         <div class="mb-3">
                             <label for="summary">{{ __('dictionary.Summary') }}</label>
-                            <strong>{{ Auth::user()->summary }}</strong>
+                            {{ $user->summary }}
                         </div>
+
+                        <a class="btn btn-success" href="{{ route('profile.edit', $user) }}">
+                            {{ __('dictionary.EditProfile') }}
+                        </a>
                     </div>
                 </div>
             </div>

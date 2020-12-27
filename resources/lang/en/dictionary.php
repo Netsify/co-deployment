@@ -30,4 +30,5 @@ return [
     'Organization'       => "Organization",
     'Summary'            => "Summary",
     'EditProfile'        => "Edit Personal Data",
+    'Save'               => "Save",
 ];

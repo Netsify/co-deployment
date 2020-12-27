@@ -23,5 +23,5 @@ Route::group(['prefix' => getLocale()], function () {
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->middleware('auth');
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-        ->only('index', 'edit')->middleware('auth');
+        ->only('index', 'store', 'edit', 'update')->middleware('auth');
 });
