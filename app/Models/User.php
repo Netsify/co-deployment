@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -19,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $last_activity_at   - Метка последней активности
  * @property boolean $active            - Статус
  * @property Article[] $articles        - Статьи пользователя
+ * @property Role $role                 - Роль пользователя
  *
  * Class User
  * @package App\Models
@@ -74,8 +77,28 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function articles()
+    public function articles() : HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    /**
+     * Является ли пользователь админом
+     *
+     * @return bool
+     */
+    public function isAdmin() :bool
+    {
+        return $this->role->slug == Role::ROLE_ADMIN;
+    }
+
+    /**
+     * Роль пользователя
+     *
+     * @return HasOne
+     */
+    public function role() : HasOne
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }
