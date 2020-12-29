@@ -42,6 +42,8 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request, User $profile)
     {
+        $request->file('photo_path')->store('photo', 'public');
+
         $profile->save($request->validated());
 
         return back();

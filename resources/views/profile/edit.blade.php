@@ -10,13 +10,13 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('profile.update', $user) }}" method="post">
+                        <form action="{{ route('profile.update', $user) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label for="photo">{{ __('dictionary.Photo') }}</label>
-                                <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
+                                <label for="photo_path">{{ __('dictionary.Photo') }}</label>
+                                <input type="file" name="photo_path" class="form-control @error('photo_path') is-invalid @enderror">
 
                                 @error('photo')
                                     <span class="invalid-feedback" role="alert">
