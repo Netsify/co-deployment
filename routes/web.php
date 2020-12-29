@@ -22,6 +22,10 @@ Route::group(['prefix' => getLocale()], function () {
 
         Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
             ['index', 'show']);
+
+        Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+        });
     });
 
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
