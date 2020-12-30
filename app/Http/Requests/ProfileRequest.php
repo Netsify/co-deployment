@@ -22,14 +22,14 @@ class ProfileRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'photo'             => ['nullable'],
-            'first_name'        => ['nullable', 'string:255'],
-            'last_name'         => ['nullable', 'string:255'],
+            'first_name'        => ['string:255'],
+            'last_name'         => ['string:255'],
             'role'              => ['required', 'integer', 'exists:roles,id'],
-            'phone'             => ['nullable', 'string:255'],
+            'phone'             => ['nullable', 'integer'],
             'email'             => ['string:255', 'email', Rule::unique('users')->ignore($this->user())],
             'organization'      => ['nullable', 'string:255'],
             'summary'           => ['nullable', 'string:255'],

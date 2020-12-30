@@ -12,6 +12,11 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="photo">{{ __('dictionary.Photo') }}</label>
+                            @if ($user->photo_path)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $user->photo_path) }}">
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mb-3">
@@ -37,10 +42,6 @@
                         <div class="mb-3">
                             <label for="email">{{ __('dictionary.Email') }}</label>
                             {{ $user->email }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password">{{ __('dictionary.Password') }}</label>
                         </div>
 
                         <div class="mb-3">

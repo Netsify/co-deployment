@@ -6,7 +6,9 @@ use App\Http\Requests\ProfileRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -38,13 +40,21 @@ class ProfileController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param User $profile
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function update(ProfileRequest $request, User $profile)
+    public function update(ProfileRequest $request, User $profile): RedirectResponse
     {
-        $request->file('photo_path')->store('photo', 'public');
+        $profile->fill($request->validated());
+        if ($request->has('photo')) {
+            $profile->photo_path = $request->file('photo')->store('photo', 'public');
+        }
 
-        $profile->save($request->validated());
+        if ($profile->save()) {
+            session()->flash('message', __('dictionary.ProfileSaved'));
+        } else {
+            session()->flash('message', __('dictionary.ProfileNotSaved'));
+            Log::error(__('dictionary.ProfileNotSaved'), compact('profile'));
+        }
 
         return back();
     }
