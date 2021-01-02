@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -20,6 +21,11 @@ use Illuminate\Support\Facades\Session;
  */
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+//        $this->authorizeResource(Article::class, 'article');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -89,6 +95,10 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
+        if (Auth::user()->cannot('update', $article)) {
+            abort(403);
+        }
+
         $categories = Category::query()->orderByTranslation('name')->get();
         $tags = Tag::query()->orderByTranslation('name')->get();
 
@@ -104,6 +114,10 @@ class ArticlesController extends Controller
      */
     public function update(ArticleRequest $request, Article $article)
     {
+        if (Auth::user()->cannot('update', $article)) {
+            abort(403);
+        }
+        
         $article->title       = $request->get('title');
         $article->category_id = $request->get('category');
         $article->content     = $request->get('content');
