@@ -74,6 +74,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Путь до фото профиля
+     *
+     * @return string
+     */
+    public function getPhotoAttribute() : string
+    {
+        return 'storage/' . $this->photo_path;
+    }
+
+    /**
      * Статьи пользователя
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

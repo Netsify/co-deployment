@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        {{ __('dictionary.PersonalData') }}
+                        {{ __('dictionary.EditProfile') }}
                     </div>
 
                     <div class="card-body">
@@ -22,10 +22,10 @@
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label for="photo">{{ __('dictionary.Photo') }}</label>
+                                <label for="photo" class="col-form-label">{{ __('dictionary.Photo') }}</label>
                                 @if ($user->photo_path)
-                                    <div class="mb-2">
-                                        <img src="{{ asset('storage/' . $user->photo_path) }}">
+                                    <div class="mb-3">
+                                        <img src="{{ asset($user->photo) }}">
                                     </div>
                                 @endif
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="first_name">{{ __('dictionary.FirstName') }}</label>
+                                <label for="first_name" class="col-form-label">{{ __('dictionary.FirstName') }}</label>
                                 <input type="text" name="first_name"
                                        class="form-control @error('first_name') is-invalid @enderror"
                                        value="{{ old('first_name') ?? $user->first_name }}">
@@ -51,7 +51,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="last_name">{{ __('dictionary.LastName') }}</label>
+                                <label for="last_name" class="col-form-label">{{ __('dictionary.LastName') }}</label>
                                 <input type="text" name="last_name"
                                        class="form-control @error('last_name') is-invalid @enderror"
                                        value="{{ old('last_name') ?? $user->last_name }}">
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="role">{{ __('dictionary.Role') }}</label>
+                                <label for="role" class="col-form-label">{{ __('dictionary.Role') }}</label>
                                 <select name="role" class="form-control @error('role') is-invalid @enderror">
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}" {{ (old('role') ?? $user->role->id) === $role->id ? 'selected' : '' }}>
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone">{{ __('dictionary.Phone') }}</label>
+                                <label for="phone" class="col-form-label">{{ __('dictionary.Phone') }}</label>
                                 <input type="tel" name="phone"
                                        class="form-control @error('phone') is-invalid @enderror"
                                        value="{{ old('phone') ?? $user->phone }}">
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="email">{{ __('dictionary.Email') }}</label>
+                                <label for="email" class="col-form-label">{{ __('dictionary.Email') }}</label>
                                 <input type="text" name="email"
                                        class="form-control @error('email') is-invalid @enderror"
                                        value="{{ old('email') ?? $user->email }}">
@@ -107,11 +107,29 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password">{{ __('dictionary.Password') }}</label>
+                                <label for="password" class="col-form-label">{{ __('dictionary.Password') }}</label>
+                                <input id="password" type="password"
+                                       class="form-control @error('password') is-invalid @enderror"
+                                       name="password" autocomplete="new-password"
+                                       placeholder="{{ __('dictionary.UpdatePassword') }}">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="organization">{{ __('dictionary.Organization') }}</label>
+                                <label for="password-confirm" class="col-form-label">{{ __('dictionary.ConfirmPassword') }}</label>
+
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation" autocomplete="new-password"
+                                       placeholder="{{ __('dictionary.UpdatePassword') }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="organization" class="col-form-label">{{ __('dictionary.Organization') }}</label>
                                 <input type="text" name="organization"
                                        class="form-control @error('organization') is-invalid @enderror"
                                        value="{{ old('organization') ?? $user->organization }}">
@@ -124,7 +142,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="summary">{{ __('dictionary.Summary') }}</label>
+                                <label for="summary" class="col-form-label">{{ __('dictionary.Summary') }}</label>
                                 <input type="text" name="summary"
                                        class="form-control @error('summary') is-invalid @enderror"
                                        value="{{ old('summary') ?? $user->summary }}">
@@ -136,7 +154,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
+                            <button type="submit" class="btn btn-success">{{ __('dictionary.Save') }}</button>
                         </form>
                     </div>
                 </div>

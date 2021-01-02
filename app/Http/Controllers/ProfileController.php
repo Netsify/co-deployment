@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
@@ -45,15 +46,20 @@ class ProfileController extends Controller
     public function update(ProfileRequest $request, User $profile): RedirectResponse
     {
         $profile->fill($request->validated());
+
         if ($request->has('photo')) {
             $profile->photo_path = $request->file('photo')->store('photo', 'public');
+        }
+
+        if ($request->has('password')) {
+            $profile->password = Hash::make($request->password);
         }
 
         if ($profile->save()) {
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
             session()->flash('message', __('dictionary.ProfileNotSaved'));
-            Log::error(__('dictionary.ProfileNotSaved'), compact('profile'));
+            Log::error('Не удалось обновить профиль', compact('profile'));
         }
 
         return back();
