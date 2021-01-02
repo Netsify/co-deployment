@@ -8,13 +8,18 @@
                     <div class="card-header">
                         {{ $article->title }}
                         <div class="btn-group" role="group" style="float: right">
-                            <form action="{{ route('articles.destroy', $article) }}" method="POST">
-                                <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                        style="float: right">{{ __('knowledgebase.Delete') }}</button>
-                            </form>
+                            @can('update', $article)
+                                <a href="{{ route('articles.edit', $article) }}"
+                                   class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
+                            @endcan
+                            @can('delete', $article)
+                                <form action="{{ route('articles.destroy', $article) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            style="float: right">{{ __('knowledgebase.Delete') }}</button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
                     <div class="card-body">

@@ -17,11 +17,19 @@ Route::group(['prefix' => getLocale()], function () {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
     Auth::routes();
+    Route::middleware('auth')->group(function () {
+        Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
+            ['index', 'show']);
 
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->middleware('auth');
-
-    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
+        Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'store', 'edit', 'update')->middleware('auth');
+
+        Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+        });
+    });
+
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 });

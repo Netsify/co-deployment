@@ -44,7 +44,7 @@
                                         class="form-select @error('category') is-invalid @enderror">
                                     <option value="0" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('category')  ?? isset($article) ? $article->category->id : '') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ (!isset($article) ? old('category') : $article->category->id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -74,7 +74,7 @@
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" {{ $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('title');
             $table->text('content');
-            $table->boolean('published')->default(1);
+            $table->boolean('published')->nullable()->comment("null не обработано, 0 - отклонено, 1 - подверждено (опубликовано)");
             $table->timestamps();
             $table->softDeletes();
 
