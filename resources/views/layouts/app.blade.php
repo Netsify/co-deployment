@@ -61,7 +61,7 @@
                 </ul>
                 <!-- Right Side Of Navbar -->
                 @auth
-                    <img src="{{ Auth::user()->photo }}">
+                    <img src="{{ Auth::user()->photo }}" height="40">
                 @endauth
 
                 <ul class="navbar-nav ml-auto">

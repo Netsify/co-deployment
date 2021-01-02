@@ -25,7 +25,7 @@
                                 <label for="photo" class="col-form-label">{{ __('dictionary.Photo') }}</label>
 
                                 <div class="mb-3">
-                                    <img src="{{ $user->photo }}">
+                                    <img src="{{ $user->photo }}" height="300">
                                 </div>
 
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
