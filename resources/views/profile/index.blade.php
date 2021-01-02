@@ -13,11 +13,9 @@
                         <div class="row mb-3">
                             <label for="photo" class="col-sm-3">{{ __('dictionary.Photo') }}</label>
 
-                            @if ($user->photo_path)
-                                <div class="col-sm-9">
-                                    <img src="{{ asset($user->photo) }}">
-                                </div>
-                            @endif
+                            <div class="col-sm-9">
+                                <img src="{{ $user->photo }}">
+                            </div>
                         </div>
 
                         <div class="row mb-3">

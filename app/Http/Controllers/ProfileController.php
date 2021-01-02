@@ -52,7 +52,7 @@ class ProfileController extends Controller
         }
 
         if ($request->has('password')) {
-            $profile->password = Hash::make($request->password);
+            $profile->password = Hash::make($request->input('password'));
         }
 
         if ($profile->save()) {

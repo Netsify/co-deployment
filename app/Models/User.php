@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Класс пользователей
@@ -27,6 +28,11 @@ use Illuminate\Support\Carbon;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    /**
+     * Путь до фото профиля по умолчанию
+     */
+    const DEFAULT_PHOTO = 'photo/default.svg';
 
     /**
      * The attributes that are mass assignable.
@@ -80,7 +86,7 @@ class User extends Authenticatable
      */
     public function getPhotoAttribute() : string
     {
-        return 'storage/' . $this->photo_path;
+        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
     }
 
     /**

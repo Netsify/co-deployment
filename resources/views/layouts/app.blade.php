@@ -45,6 +45,8 @@
                         </li>
                     </ul>
                     <!-- Right Side Of Navbar -->
+                    <img src="{{ Auth::user()->photo }}">
+
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest

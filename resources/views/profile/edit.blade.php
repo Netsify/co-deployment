@@ -23,11 +23,11 @@
 
                             <div class="mb-3">
                                 <label for="photo" class="col-form-label">{{ __('dictionary.Photo') }}</label>
-                                @if ($user->photo_path)
-                                    <div class="mb-3">
-                                        <img src="{{ asset($user->photo) }}">
-                                    </div>
-                                @endif
+
+                                <div class="mb-3">
+                                    <img src="{{ $user->photo }}">
+                                </div>
+
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
 
                                 @error('photo')
