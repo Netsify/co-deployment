@@ -60,10 +60,6 @@
                     @endauth
                 </ul>
                 <!-- Right Side Of Navbar -->
-                @auth
-                    <img src="{{ Auth::user()->photo }}" height="40">
-                @endauth
-
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
@@ -80,9 +76,11 @@
                             </li>
                         @endif
                     @else
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="{{ Auth::user()->photo }}" height="40">
                                 {{ Auth::user()->full_name }}
                             </a>
 
