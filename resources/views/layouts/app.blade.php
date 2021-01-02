@@ -60,7 +60,9 @@
                     @endauth
                 </ul>
                 <!-- Right Side Of Navbar -->
-                <img src="{{ Auth::user()->photo }}">
+                @auth
+                    <img src="{{ Auth::user()->photo }}">
+                @endauth
 
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->

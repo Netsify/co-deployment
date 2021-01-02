@@ -25,7 +25,7 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photo'             => ['nullable'],
+            'photo'             => ['nullable', 'image'],
             'first_name'        => ['string:255'],
             'last_name'         => ['string:255'],
             'role'              => ['required', 'integer', 'exists:roles,id'],

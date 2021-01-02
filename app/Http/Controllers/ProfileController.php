@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Контроллер профиля пользователя
+ *
+ * Class ProfileController
+ * @package App\Http\Controllers
+ */
 class ProfileController extends Controller
 {
     /**
