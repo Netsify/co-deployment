@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Класс пользователей
@@ -31,6 +32,11 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * Путь до фото профиля по умолчанию
+     */
+    const DEFAULT_PHOTO = 'photo/default.svg';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -40,7 +46,10 @@ class User extends Authenticatable
         'last_name',
         'role_id',
         'email',
-        'password',
+        'photo_path',
+        'phone',
+        'organization',
+        'summary'
     ];
 
     /**
@@ -73,6 +82,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Путь до фото профиля
+     *
+     * @return string
+     */
+    public function getPhotoAttribute() : string
+    {
+        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
+    }
+
+    /**
      * Статьи пользователя
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -83,22 +102,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Роль пользователя
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role() : BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
      * Является ли пользователь админом
      *
      * @return bool
      */
-    public function isAdmin() :bool
+    public function isAdmin() : bool
     {
         return $this->role->slug == Role::ROLE_ADMIN;
-    }
-
-    /**
-     * Роль пользователя
-     *
-     * @return HasOne
-     */
-    public function role() : HasOne
-    {
-        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 }

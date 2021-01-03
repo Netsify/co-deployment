@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AlterTableUsers extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('phone')->nullable()->after('email_verified_at');
+            $table->string('organization')->nullable()->after('phone');
+            $table->string('summary')->nullable()->after('organization');
+            $table->string('photo_path')->nullable()->after('summary');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['phone', 'organization', 'summary', 'photo_path']);
+        });
+    }
+}

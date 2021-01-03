@@ -51,7 +51,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $roles = Role::query()->where('slug', '!=', Role::ROLE_ADMIN)->oldest('id')->get();
+        $roles = Role::selection()->get();
 
         return view('auth.register', compact('roles'));
     }
@@ -65,10 +65,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name'        => ['required', 'string', 'max:255'],
-            'last_name'         => ['required', 'string', 'max:255'],
-            'role'              => ['required', 'integer'],
-            'email'             => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'first_name'        => ['required', 'string:255'],
+            'last_name'         => ['required', 'string:255'],
+            'role'              => ['required', 'integer', 'exists:roles,id'],
+            'email'             => ['required', 'string:255', 'email', 'unique:users'],
             'password'          => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
