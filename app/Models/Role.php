@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,4 +45,15 @@ class Role extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
+
+    /**
+     * Все роли на выбор кроме администратора
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeSelection(Builder $query) : Builder
+    {
+        return $query->where('slug', '!=', Role::ROLE_ADMIN)->oldest('id');
+    }
 }

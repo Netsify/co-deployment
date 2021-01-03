@@ -76,16 +76,20 @@
                             </li>
                         @endif
                     @else
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <img src="{{ Auth::user()->photo }}" height="40">
                                 {{ Auth::user()->full_name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.index') }}">{{ __('dictionary.Profile') }}</a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                     {{ __('dictionary.Logout') }}
                                 </a>
 
@@ -97,8 +101,7 @@
                     @endguest
                     <li class="nav-item">
                         <a href="{{ currentRoute() }}" class="nav-link">
-                            {{ __('dictionary.SwitchTo') }} <img src="{{ getFlag() }}" class="img" width="20px"
-                                                                 alt="flag">
+                            {{ __('dictionary.SwitchTo') }} <img src="{{ getFlag() }}" class="img" width="20px" alt="flag">
                         </a>
                     </li>
                 </ul>
