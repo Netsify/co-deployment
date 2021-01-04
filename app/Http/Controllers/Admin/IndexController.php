@@ -10,12 +10,10 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $publishedArticles = Article::query()->where('published', 1)->orderByDesc('created_at')->get();
+        return redirect()->route('admin.articles.unchecked');
 
-        $deletedArticles = Article::onlyTrashed()->orWhere('published', 0)->get();
-
-        dump($publishedArticles, $deletedArticles);
-
-        return view('admin.index');
+        /*$uncheckedArticles = Article::unchecked()->orderByDesc('created_at')->get();
+        dump($uncheckedArticles);
+        return view('admin.index', compact('uncheckedArticles'));*/
     }
 }
