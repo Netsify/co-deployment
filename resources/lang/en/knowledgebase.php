@@ -24,7 +24,7 @@ return [
     'new_article'                => "New article",
     'publicate'                  => "Publicate",
     'published_articles'         => "Published articles",
-    'reject'                     => "Отклонить",
+    'reject'                     => "Reject",
     'rejected_deleted_articles'  => "Rejected and deleted articles",
     'Save'                       => "Save",
     'SelectCategory'             => "Select a category",
