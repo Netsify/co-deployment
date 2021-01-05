@@ -34,9 +34,10 @@ Route::group(['prefix' => getLocale()], function () {
              */
             Route::prefix('articles')->name('articles.')->group(function () {
                 Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
+                Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
+                Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
 
-                Route::put('/{article}/publicate', [\App\Http\Controllers\Admin\ArticlesController::class, 'publicate'])->name('publicate');
-                Route::put('/{article}/reject', [\App\Http\Controllers\Admin\ArticlesController::class, 'reject'])->name('reject');
+                Route::put('/{article}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
             });
         });
     });

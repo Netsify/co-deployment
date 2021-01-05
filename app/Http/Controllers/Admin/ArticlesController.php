@@ -18,6 +18,32 @@ use Illuminate\View\View;
 class ArticlesController extends Controller
 {
     /**
+     * Опубликованные статьи
+     *
+     * @return View
+     */
+    public function published() : View
+    {
+        $articles = Article::published()->orderByDesc('created_at')->get();
+        $title = __('knowledgebase.published_articles');
+
+        return view('admin.articles.index', compact('articles', 'title'));
+    }
+
+    /**
+     * Отклонённые или удалённые статьи
+     *
+     * @return View
+     */
+    public function rejectedAndDeleted() : View
+    {
+        $articles = Article::rejectedAndDeleted()->orderByDesc('created_at')->get();
+        $title = __('knowledgebase.rejected_deleted_articles');
+
+        return view('admin.articles.index', compact('articles', 'title'));
+    }
+
+    /**
      * Непроверенные статьи
      *
      * @return View
@@ -30,21 +56,28 @@ class ArticlesController extends Controller
         return view('admin.articles.index', compact('articles', 'title'));
     }
 
-    public function publicate(Article $article)
+    /**
+     * Верификация статьи
+     *
+     * @param Article $article
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function verify(Article $article, Request $request)
     {
         try {
             $article->checked_by_admin = true;
-            $article->published = true;
+            $article->published = $request->has('publicate');
 
             if (!$article->save()) {
                 Session::flash('error', __('knowledgebase.errors.is_not_publicated'));
 
-                Log::error("Не удалось опубликовать статью", ['article' => $article->toJson()]);
+                Log::error("Не удалось провести действие над статьёй", ['article' => $article->toJson()]);
             }
         } catch (\Exception $e) {
             Session::flash('error', __('knowledgebase.errors.is_not_publicated'));
 
-            Log::error("Не удалось опубликовать статью", [
+            Log::error("Не удалось провести действие над статьёй", [
                 'message' => $e->getMessage(),
                 'code'    => $e->getCode(),
                 'trace'   => $e->getTrace()
@@ -52,10 +85,5 @@ class ArticlesController extends Controller
         } finally {
             return redirect()->back();
         }
-    }
-
-    public function reject(Article $article)
-    {
-
     }
 }

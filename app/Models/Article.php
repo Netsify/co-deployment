@@ -92,6 +92,16 @@ class Article extends Model
     }
 
     /**
+     * Отклонённые или удалённые статьи
+     *
+     * @return Builder
+     */
+    public function scopeRejectedAndDeleted() : Builder
+    {
+        return $this->onlyTrashed()->orWhere('published', 0);
+    }
+
+    /**
      * Непроверенные статьи
      *
      * @param Builder $query
