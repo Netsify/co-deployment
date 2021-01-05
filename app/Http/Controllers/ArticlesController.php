@@ -33,7 +33,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::query()
+        $articles = Article::published()
             ->with(['category.translations', 'tags.translations', 'user'])
             ->orderByDesc('created_at')
             ->get();

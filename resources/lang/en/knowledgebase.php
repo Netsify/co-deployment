@@ -13,18 +13,23 @@ return [
     'Edit'                => "Edit",
     'EditArticle'         => "Edit article",
 
-    'errors'              => [
-        'delete' => "Could not delete article",
-        'update' => "Could not update article",
+    'errors'                 => [
+        'delete'            => "Could not delete article",
+        'is_not_publicated' => "The article is not publicated",
+        'update'            => "Could not update article",
     ],
 
     'KB'                  => "Knowledge base",
     'last_added_articles' => "Last added articles in knowledgebase",
-    'NewArticle'          => "New article",
+    'new_article'         => "New article",
+    'publicate'           => "Publicate",
+    'published_articles'  => "Published articles",
+    'reject'              => "Отклонить",
     'Save'                => "Save",
     'SelectCategory'      => "Select a category",
     'SelectTags'          => "Select tags",
     'Tag'                 => "Tag",
     'Title'               => "Title",
+    'unchecked_articles'  => "Unchecked articles",
     'view'                => "View",
 ];

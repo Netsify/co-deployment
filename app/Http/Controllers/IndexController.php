@@ -14,7 +14,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $articles = Article::query()
+        $articles = Article::published()
             ->with(['category.translations', 'user'])
             ->orderByDesc('created_at')
             ->limit(10)

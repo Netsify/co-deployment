@@ -9,7 +9,7 @@
                         @isset($article)
                             {{ __('knowledgebase.EditArticle') }}
                         @else
-                            {{ __('knowledgebase.NewArticle') }}
+                            {{ __('knowledgebase.new_article') }}
                         @endisset
                     </div>
 
