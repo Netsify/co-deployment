@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -51,7 +52,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $roles = Role::selection()->get();
+        $roles = Role::withoutAdmin()->get();
 
         return view('auth.register', compact('roles'));
     }
@@ -67,7 +68,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name'        => ['required', 'string:255'],
             'last_name'         => ['required', 'string:255'],
-            'role'              => ['required', 'integer', 'exists:roles,id'],
+            'role'              => ['required', 'integer', 'exists:roles,id', 'not_in:' . Role::ROLE_ADMIN_ID],
             'email'             => ['required', 'string:255', 'email', 'unique:users'],
             'password'          => ['required', 'string', 'min:8', 'confirmed'],
         ]);

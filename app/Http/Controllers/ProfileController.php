@@ -37,7 +37,7 @@ class ProfileController extends Controller
      */
     public function edit(User $profile) : View
     {
-        $roles = Role::selection()->get();
+        $roles = $profile->isAdmin() ? Role::all() : Role::withoutAdmin()->get();
 
         return view('profile.edit', ['user' => $profile, 'roles' => $roles]);
     }
@@ -57,8 +57,20 @@ class ProfileController extends Controller
             $profile->photo_path = $request->file('photo')->store('photo', 'public');
         }
 
-        if ($request->has('password')) {
+        if ($request->filled('phone')) {
+            $profile->phone = $request->input('phone');
+        }
+
+        if ($request->filled('password')) {
             $profile->password = Hash::make($request->input('password'));
+        }
+
+        if ($request->filled('organization')) {
+            $profile->organization = $request->input('organization');
+        }
+
+        if ($request->filled('summary')) {
+            $profile->summary = $request->input('summary');
         }
 
         if ($profile->save()) {

@@ -17,6 +17,7 @@ Route::group(['prefix' => getLocale()], function () {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
     Auth::routes();
+
     Route::middleware('auth')->group(function () {
         Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -24,7 +25,7 @@ Route::group(['prefix' => getLocale()], function () {
             ['index', 'show']);
 
         Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-        ->only('index', 'store', 'edit', 'update')->middleware('auth');
+            ->only('index', 'store', 'edit', 'update');
 
         Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');

@@ -14,7 +14,7 @@
                             <label for="photo" class="col-sm-3">{{ __('dictionary.Photo') }}</label>
 
                             <div class="col-sm-9">
-                                <img src="{{ $user->photo }}" height="300">
+                                <img src="{{ $user->photo }}" height="200">
                             </div>
                         </div>
 

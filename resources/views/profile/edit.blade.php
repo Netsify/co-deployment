@@ -25,7 +25,7 @@
                                 <label for="photo" class="col-form-label">{{ __('dictionary.Photo') }}</label>
 
                                 <div class="mb-3">
-                                    <img src="{{ $user->photo }}" height="300">
+                                    <img src="{{ $user->photo }}" height="200">
                                 </div>
 
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
@@ -64,8 +64,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="role" class="col-form-label">{{ __('dictionary.Role') }}</label>
-                                <select name="role" class="form-control @error('role') is-invalid @enderror">
+                                <label for="role_id" class="col-form-label">{{ __('dictionary.Role') }}</label>
+                                <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}" {{ (old('role') ?? $user->role->id) === $role->id ? 'selected' : '' }}>
                                             {{ $role->name }}
@@ -73,7 +73,7 @@
                                     @endforeach
                                 </select>
 
-                                @error('role')
+                                @error('role_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
