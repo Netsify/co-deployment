@@ -39,7 +39,9 @@
                                             </div>
                                             @endarticleNotRejected
                                         </form>
-                                        <x-delete-button :article="$article" route="admin.articles.destroy"/>
+                                        @articleNotDeleted($article)
+                                            <x-delete-button :article="$article" route="admin.articles.destroy"/>
+                                        @endarticleNotDeleted
                                     </div>
                                 </div>
                             </div>

@@ -13,12 +13,7 @@
                                    class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
                             @endcan
                             @can('delete', $article)
-                                <form action="{{ route('articles.destroy', $article) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                            style="float: right">{{ __('knowledgebase.delete') }}</button>
-                                </form>
+                                    <x-delete-button :article="$article" route="articles.destroy"/>
                             @endcan
                         </div>
                     </div>

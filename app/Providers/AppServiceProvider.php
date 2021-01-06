@@ -40,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
             return $article->published !== 0;
         });
 
+        /**
+         * Директива если статья не удалена
+         */
+        Blade::if('articleNotDeleted', function (Article $article) {
+            return is_null($article->deleted_at);
+        });
+
         Blade::component(DeleteButtton::class, 'delete-button');
     }
 }

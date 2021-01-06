@@ -69,6 +69,10 @@ class ArticlesController extends SimpleArticleController
             $article->checked_by_admin = true;
             $article->published = $request->has('publicate');
 
+            if ($request->has('publicate')) {
+                $article->restore();
+            }
+
             if (!$article->save()) {
                 Session::flash('error', __('knowledgebase.errors.is_not_publicated'));
 

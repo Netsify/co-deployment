@@ -38,7 +38,7 @@ Route::group(['prefix' => getLocale()], function () {
                 Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
                 Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
 
-                Route::put('/{article}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
+                Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
 
                 Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
             });
