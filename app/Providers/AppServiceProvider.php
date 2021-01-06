@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\View\Components\DeleteButtton;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,8 +33,13 @@ class AppServiceProvider extends ServiceProvider
             return $article->published !== 1;
         });
 
+        /**
+         * Директива если статья отклонена
+         */
         Blade::if('articleNotRejected', function (Article $article) {
             return $article->published !== 0;
         });
+
+        Blade::component(DeleteButtton::class, 'delete-button');
     }
 }

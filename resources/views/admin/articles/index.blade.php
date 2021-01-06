@@ -21,25 +21,26 @@
                                     <h5 class="card-title">{{ $article->title }}</h5>
                                 </div>
                                 <div class="col col-sm-6">
-                                    <form action="{{ route('admin.articles.verify', $article) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="btn-toolbar" style="float: right" role="toolbar"
-                                             aria-label="Toolbar with button groups">
+                                    <div class="btn-toolbar" style="float: right" role="toolbar"
+                                         aria-label="Toolbar with button groups">
+                                        <form action="{{ route('admin.articles.verify', $article) }}" method="post">
+                                            @csrf
+                                            @method('PUT')
                                             @articleNotPublished($article)
                                             <div class="btn-group me-2" role="group" aria-label="First group">
                                                 <button type="submit" name="publicate"
-                                                        class="btn btn-success">{{ __('knowledgebase.publicate') }}</button>
+                                                        class="btn btn-success btn-sm">{{ __('knowledgebase.publicate') }}</button>
                                             </div>
                                             @endarticleNotPublished
                                             @articleNotRejected($article)
                                             <div class="btn-group me-2" role="group" aria-label="Second group">
                                                 <button type="submit" name="reject"
-                                                        class="btn btn-warning">{{ __('knowledgebase.reject') }}</button>
+                                                        class="btn btn-warning btn-sm">{{ __('knowledgebase.reject') }}</button>
                                             </div>
                                             @endarticleNotRejected
-                                        </div>
-                                    </form>
+                                        </form>
+                                        <x-delete-button :article="$article" route="admin.articles.destroy"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

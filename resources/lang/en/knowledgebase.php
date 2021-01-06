@@ -9,7 +9,7 @@ return [
     'Category'                   => "Category",
     'Content'                    => "Content",
     'CreateArticle'              => "Create article",
-    'Delete'                     => "Delete",
+    'delete'                     => "Delete",
     'Edit'                       => "Edit",
     'EditArticle'                => "Edit article",
 
