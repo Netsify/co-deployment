@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ArticlesController as SimpleArticleController;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +15,7 @@ use Illuminate\View\View;
  * Class ArticlesController
  * @package App\Http\Controllers\Admin
  */
-class ArticlesController extends Controller
+class ArticlesController extends SimpleArticleController
 {
     /**
      * Опубликованные статьи
@@ -85,5 +85,10 @@ class ArticlesController extends Controller
         } finally {
             return redirect()->back();
         }
+    }
+
+    public function destroy(Article $article, $redirectBack = true)
+    {
+        return parent::destroy($article, true);
     }
 }

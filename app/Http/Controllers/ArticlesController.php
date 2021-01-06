@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -135,9 +136,10 @@ class ArticlesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Article  $article
+     * @param bool $routeBack
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(Article $article, $routeBack = false)
     {
         try {
             if (!$article->delete()) {
@@ -155,6 +157,10 @@ class ArticlesController extends Controller
                 'article' => $article->toArray()
             ]);
 
+            return redirect()->back();
+        }
+
+        if ($routeBack) {
             return redirect()->back();
         }
 

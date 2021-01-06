@@ -9,7 +9,7 @@ return [
     'Category'                   => "Категория",
     'Content'                    => "Контент",
     'CreateArticle'              => "Создать статью",
-    'Delete'                     => "Удалить",
+    'delete'                     => "Удалить",
     'Edit'                       => "Редактировать",
     'EditArticle'                => "Редактировать статью",
 

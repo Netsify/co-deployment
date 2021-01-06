@@ -17,7 +17,7 @@
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger"
-                                            style="float: right">{{ __('knowledgebase.Delete') }}</button>
+                                            style="float: right">{{ __('knowledgebase.delete') }}</button>
                                 </form>
                             @endcan
                         </div>
