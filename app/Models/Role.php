@@ -25,8 +25,8 @@ class Role extends Model implements TranslatableContract
     /*
      * Роли
      */
-    const ROLE_ADMIN = 'admin';
     const ROLE_ADMIN_ID = 1;
+    const ROLE_ADMIN = 'admin';
     const ROLE_ROADS_OWNER = 'roads';
     const ROLE_ICT_OWNER = 'ict';
     const ROLE_CONTRIBUTOR = 'contributor';
@@ -55,6 +55,6 @@ class Role extends Model implements TranslatableContract
      */
     public function scopeWithoutAdmin(Builder $query) : Builder
     {
-        return $query->where('slug', '!=', Role::ROLE_ADMIN)->oldest('id');
+        return $query->where('id', '!=', Role::ROLE_ADMIN_ID);
     }
 }

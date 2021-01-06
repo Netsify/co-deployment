@@ -25,7 +25,7 @@ Route::group(['prefix' => getLocale()], function () {
             ['index', 'show']);
 
         Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-            ->only('index', 'store', 'edit', 'update');
+            ->only('index', 'edit', 'update');
 
         Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');

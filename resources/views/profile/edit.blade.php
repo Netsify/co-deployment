@@ -67,7 +67,7 @@
                                 <label for="role_id" class="col-form-label">{{ __('dictionary.Role') }}</label>
                                 <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                                     @foreach($roles as $role)
-                                        <option value="{{ $role->id }}" {{ (old('role') ?? $user->role->id) === $role->id ? 'selected' : '' }}>
+                                        <option value="{{ $role->id }}" {{ (old('role_id') ?? $user->role->id) === $role->id ? 'selected' : '' }}>
                                             {{ $role->name }}
                                         </option>
                                     @endforeach
