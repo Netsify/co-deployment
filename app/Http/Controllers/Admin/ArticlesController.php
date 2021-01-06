@@ -24,7 +24,7 @@ class ArticlesController extends Controller
      */
     public function published() : View
     {
-        $articles = Article::published()->orderByDesc('created_at')->get();
+        $articles = Article::published()->with('user')->orderByDesc('created_at')->get();
         $title = __('knowledgebase.published_articles');
 
         return view('admin.articles.index', compact('articles', 'title'));
@@ -37,7 +37,7 @@ class ArticlesController extends Controller
      */
     public function rejectedAndDeleted() : View
     {
-        $articles = Article::rejectedAndDeleted()->orderByDesc('created_at')->get();
+        $articles = Article::rejectedAndDeleted()->with('user')->orderByDesc('created_at')->get();
         $title = __('knowledgebase.rejected_deleted_articles');
 
         return view('admin.articles.index', compact('articles', 'title'));
@@ -50,7 +50,7 @@ class ArticlesController extends Controller
      */
     public function unchecked() : View
     {
-        $articles = Article::unchecked()->orderByDesc('created_at')->get();
+        $articles = Article::unchecked()->with('user')->orderByDesc('created_at')->get();
         $title = __('knowledgebase.unchecked_articles');
 
         return view('admin.articles.index', compact('articles', 'title'));
