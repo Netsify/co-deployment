@@ -50,7 +50,7 @@
                             <p class="text-muted float-right">{{ $article->user->full_name }}</p>
                             <p>{{ $article->preview  }}</p>
 
-                            <a href="{{ route('articles.show', $article) }}"
+                            <a href="{{ route('admin.articles.show', $article) }}"
                                class="card-link">{{ __('knowledgebase.view') }}</a>
                         </div>
                         <div class="card-footer text-muted">

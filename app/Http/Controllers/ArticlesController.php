@@ -81,11 +81,11 @@ class ArticlesController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Article $article, $fromAdminPanel = false)
     {
         $article->load('tags.translations');
 
-        return view('knowledgebase.show', compact('article'));
+        return view('knowledgebase.show', compact('article', 'fromAdminPanel'));
     }
 
     /**

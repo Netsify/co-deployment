@@ -9,7 +9,7 @@
                         {{ $article->title }}
                         <div class="btn-group" role="group" style="float: right">
                             @can('update', $article)
-                                <a href="{{ route('articles.edit', $article) }}"
+                                <a href="{{ route(($fromAdminPanel ? 'admin.' : '' ) . 'articles.edit', $article) }}"
                                    class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
                             @endcan
                             @can('delete', $article)
