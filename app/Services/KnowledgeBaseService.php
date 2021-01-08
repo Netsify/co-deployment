@@ -34,7 +34,7 @@ class KnowledgeBaseService
      * @param array|null $tags
      * @return bool
      */
-    public function createArticle(array $tags = null): bool
+    public function createArticle(array $tags = null, array $files = null): bool
     {
         $article = $this->_user->articles()->save($this->_article);
 
@@ -56,6 +56,10 @@ class KnowledgeBaseService
             ]);
 
             return false;
+        }
+
+        foreach ($files as $file) {
+            // создание файлов в отдельной таблице
         }
 
         return true;

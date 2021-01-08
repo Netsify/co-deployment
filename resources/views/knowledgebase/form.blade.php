@@ -19,7 +19,8 @@
                                 {{ session()->get('error') }}
                             </div>
                         @endif
-                        <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}" method="post">
+                        <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}"
+                              method="post" enctype="multipart/form-data">
                             @csrf
                             @isset($article)
                                 @method('PUT')
@@ -77,6 +78,10 @@
                                         <option value="{{ $tag->id }}" {{isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror">
                             </div>
 
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>

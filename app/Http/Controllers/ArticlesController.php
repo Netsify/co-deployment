@@ -67,11 +67,12 @@ class ArticlesController extends Controller
         $article->category_id = $request->get('category');
 
         $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
-        if ($knowledgeBaseService->createArticle($request->get('tag'))) {
+        if ($knowledgeBaseService->createArticle($request->get('tag'), $request->file('files'))) {
             return redirect()->route('home');
         }
 
         Session::flash('error','При создании статьи возникли проблемы. Пожалуйста попробуйте позже.');
+
         return redirect()->back();
     }
 
@@ -118,7 +119,7 @@ class ArticlesController extends Controller
         if (Auth::user()->cannot('update', $article)) {
             abort(403);
         }
-        
+
         $article->title       = $request->get('title');
         $article->category_id = $request->get('category');
         $article->content     = $request->get('content');
