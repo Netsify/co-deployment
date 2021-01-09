@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -58,9 +59,7 @@ class KnowledgeBaseService
             return false;
         }
 
-        foreach ($files as $file) {
-            // создание файлов в отдельной таблице
-        }
+
 
         return true;
     }
@@ -98,5 +97,17 @@ class KnowledgeBaseService
     private function setTagsToArticle(array $tags): int
     {
         return empty($tags) ? $this->_article->tags()->detach() : count($this->_article->tags()->sync($tags));
+    }
+
+    private function attachFilesToArticle(array $files)
+    {
+        foreach ($files as $file) {
+            $storedPath = $file->store('articles', 'public');
+
+            $this->_article->files()->create([
+                'path' => $storedPath,
+                'name' => $file->getClientOriginalName(),
+            ]);
+        }
     }
 }

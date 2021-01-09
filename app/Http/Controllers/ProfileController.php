@@ -49,12 +49,12 @@ class ProfileController extends Controller
      * @param User $profile
      * @return RedirectResponse
      */
-    public function update(ProfileRequest $request, User $profile): RedirectResponse
+    public function update(ProfileRequest $request, User $profile) : RedirectResponse
     {
         $profile->fill($request->validated());
 
         if ($request->has('photo')) {
-            $profile->photo_path = $request->file('photo')->store('photo', 'public');
+            $profile->photo_path = $request->file('photo')->store('profiles', 'public');
         }
 
         if ($request->filled('phone')) {
