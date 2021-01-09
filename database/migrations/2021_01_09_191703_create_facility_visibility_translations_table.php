@@ -22,6 +22,11 @@ class CreateFacilityVisibilityTranslationsTable extends Migration
             $table->unique(['visibility_id', 'locale']);
             $table->foreign('visibility_id')->references('id')->on('facility_visibilities')->onDelete('cascade');
         });
+
+        /**
+         * Заполнение таблицы начальными данными
+         */
+        (new \Database\Seeders\FacilityVisibilitySeeder())->run();
     }
 
     /**

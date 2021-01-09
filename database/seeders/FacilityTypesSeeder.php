@@ -33,7 +33,7 @@ class FacilityTypesSeeder extends Seeder
             [
                 'slug' => "railway",
                 'en'   => ['name' => "Railway"],
-                'ru'   => ['name' => "Железная дорого"]
+                'ru'   => ['name' => "Железная дорога"]
             ],
             [
                 'slug' => "other",

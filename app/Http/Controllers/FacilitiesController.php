@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
+use App\Models\Facilities\FacilityVisibility;
 use Illuminate\Http\Request;
 
 /**
@@ -32,11 +33,9 @@ class FacilitiesController extends Controller
     public function create()
     {
         $types = FacilityType::query()->orderByTranslation('name')->get();
-        foreach ($types as $type) {
-            dump($type->name);
-        }
+        $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
 
-        return 'form';
+        return view('facilities.form', compact('types', 'visibilities'));
     }
 
     /**
