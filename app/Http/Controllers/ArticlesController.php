@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 /**
- * Контроллер
+ * Контроллер для работы со статьями в базе знаний
  *
  * Class ArticlesController
  * @package App\Http\Controllers
