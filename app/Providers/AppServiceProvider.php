@@ -47,6 +47,13 @@ class AppServiceProvider extends ServiceProvider
             return is_null($article->deleted_at);
         });
 
+        /**
+         * Директива является ли пользователь админом
+         */
+        Blade::if('admin', function () {
+            return auth()->user()->isAdmin();
+        });
+
         Blade::component(DeleteButtton::class, 'delete-button');
     }
 }

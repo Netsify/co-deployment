@@ -8,7 +8,8 @@
                     {{ __('facility.new_facility') }}
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ route('facilities.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="mb-3 row">
                             <label for="title" class="col-sm-2 col-form-label">{{ __('facility.title') }}</label>
                             <div class="col-sm-10">
@@ -47,6 +48,20 @@
                             <label for="location" class="col-sm-2 col-form-label">{{ __('facility.location') }}</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="location" name="location" value="{{ old('location') }}">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="description" class="col-sm-2 col-form-label">{{ __('facility.description') }}</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="description" name="description">
+                                    {{ old('description') }}
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="attachments" class="col-sm-2 col-form-label">{{ __('facility.attachments') }}</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" id="attachments" name="attachments[]" multiple>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

@@ -69,11 +69,11 @@
                         </ul>
                     </li>
                     @auth
-                        @if (auth()->user()->isAdmin())
+                        @admin
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.index') }}">{{ __('admin.admin_panel') }}</a>
                             </li>
-                        @endif
+                        @endadmin
                     @endauth
                 </ul>
                 <!-- Right Side Of Navbar -->
