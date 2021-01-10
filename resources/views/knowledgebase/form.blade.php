@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror">
+                                <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror" multiple>
                             </div>
 
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>

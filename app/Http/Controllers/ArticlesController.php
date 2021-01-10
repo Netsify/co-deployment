@@ -125,7 +125,7 @@ class ArticlesController extends Controller
         $article->content     = $request->get('content');
 
         $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
-        if ($knowledgeBaseService->updateArticle($request->get('tag'))) {
+        if ($knowledgeBaseService->updateArticle($request->get('tag'), $request->file('files'))) {
             return redirect()->route('home');
         }
 
