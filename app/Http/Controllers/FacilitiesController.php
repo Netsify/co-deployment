@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
+use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
 
 /**
@@ -46,7 +47,16 @@ class FacilitiesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $facility = new Facility($request->only('title', 'description', 'location'));
+        $facility->type_id = $request->input('type');
+        $facility->visibility_id = $request->input('visibility');
+        $facilityService = new FacilitiesService($facility);
+
+        if($request->has('attachments')) {
+            $facilityService->attachFiles($request->file('attachments'));
+        }
+
+        dd($facilityService->save());
     }
 
     /**
