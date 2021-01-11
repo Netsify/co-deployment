@@ -51,12 +51,29 @@
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ __('facility.facilities') }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item"
+                                   href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                   href="{{ route('articles.index') }}">{{ __('knowledgebase.AllArticles') }}</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
                     @auth
-                        @if (auth()->user()->isAdmin())
+                        @admin
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.index') }}">{{ __('admin.admin_panel') }}</a>
                             </li>
-                        @endif
+                        @endadmin
                     @endauth
                 </ul>
                 <!-- Right Side Of Navbar -->
