@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->string('path');
             $table->string('name');
             $table->morphs('fileable');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
