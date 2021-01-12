@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Auth\Access\Gate;
@@ -104,6 +105,8 @@ class ArticlesController extends Controller
         $categories = Category::query()->orderByTranslation('name')->get();
         $tags = Tag::query()->orderByTranslation('name')->get();
 
+        $article->with('files');
+
         return view('knowledgebase.form', compact('categories', 'tags', 'article'));
     }
 
@@ -163,6 +166,36 @@ class ArticlesController extends Controller
 
         if ($routeBack) {
             return redirect()->back();
+        }
+
+        return redirect()->route('articles.index');
+    }
+
+    /**
+     * Удалить файл у статьи
+     *
+     * @param File $file
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteFile(File $file)
+    {
+        try {
+            if (!$file->delete()) {
+                Session::flash('error', __('knowledgebase.errors.deleteFile'));
+
+                Log::error("Не удалось удалить файл у статьи", compact('file'));
+            }
+        } catch (\Exception $e) {
+            Session::flash('error', __('knowledgebase.errors.deleteFile'));
+
+            Log::error("Не удалось удалить файл у статьи", [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'file'    => $file
+            ]);
+
+            return back();
         }
 
         return redirect()->route('articles.index');

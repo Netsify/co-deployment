@@ -12,11 +12,13 @@ return [
     'delete'                     => "Delete",
     'Edit'                       => "Edit",
     'EditArticle'                => "Edit article",
+    'Files'                      => "Attached files:",
 
     'errors'                     => [
         'delete'            => "Could not delete article",
         'is_not_publicated' => "The article is not publicated",
         'update'            => "Could not update article",
+        'deleteFile'        => "Could not delete file from article"
     ],
 
     'KB'                         => "Knowledge base",

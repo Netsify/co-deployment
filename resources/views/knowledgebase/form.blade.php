@@ -75,7 +75,7 @@
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" {{isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{ isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -86,6 +86,24 @@
 
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>
                         </form>
+
+                        @if ($article->files)
+                            <div class="mb-4">
+                                <label>{{ __('knowledgebase.Files') }}</label>
+
+                                @foreach($article->files as $file)
+                                    <form action="{{ route('admin.articles.delete_file', $file) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <div class="mb-1">
+                                            <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+                                            <button type="submit" class="btn btn-danger">Удалить файл</button>
+                                        </div>
+                                    </form>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>

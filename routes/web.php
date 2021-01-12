@@ -45,6 +45,8 @@ Route::group(['prefix' => getLocale()], function () {
 
                 Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
 
+                Route::delete('{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])->name('delete_file');
+
                 Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
             });
         });
