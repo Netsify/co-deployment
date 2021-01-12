@@ -16,6 +16,7 @@ return [
     'errors'                     => [
         'delete'            => "Could not delete article",
         'is_not_publicated' => "The article is not publicated",
+        'store'             => "There are some problems by creating new article. Please, try later",
         'update'            => "Could not update article",
     ],
 
