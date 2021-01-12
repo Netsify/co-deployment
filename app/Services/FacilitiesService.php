@@ -94,11 +94,13 @@ class FacilitiesService
 
         if (!$facility->files()->saveMany($files)) {
             Log::error("Не удалось прикрепить файлы к объекту", [
-                'facility'    => $this->_facility->toArray(),
+                'facility'    => $facility->toArray(),
                 'attachments' => $files
             ]);
 
             return false;
         }
+
+        return true;
     }
 }

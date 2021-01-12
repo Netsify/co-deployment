@@ -51,7 +51,6 @@ class FacilitiesController extends Controller
     public function store(FacilityRequest $request)
     {
         $identitficator = Str::random(rand(20, 50));
-        dd($identitficator);
 
         $facility = new Facility($request->only('title', 'description', 'location'));
         $facility->type_id = $request->input('type');

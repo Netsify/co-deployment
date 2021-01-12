@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'attachments' => "Прикреплённые файлы",
     'create_facility' => "Создать объект",
-    'facilities'      => "Объекты"
+    'description' => "Описание",
+    'facilities' => "Объекты",
+    'facility_id' => "Идентификатор",
+    'facility_id_description' => "Уникальный идентификатор объекта (создаётся автоматически)",
+    'location' => "Расположение",
+    'new_facility' => "Новый объект",
+    'select_visibility' => "Выберите отображение объекта",
+    'select_type' => "Выберите тип объекта",
+    'visibility' => "Отображение",
+    'title' => "Название объекта",
+    'type' => "Тип",
 ];

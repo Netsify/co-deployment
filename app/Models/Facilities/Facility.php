@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int $visibility_id             - ИД видимости объекта
  * @property string $title                  - Название
  * @property string $location               - Местоположение
- * @property string $descdription           - Описание
+ * @property string $description            - Описание
  * @property-read string $identificator     - Уникальный идентификатор объекта
  * @property-read string $locale            - В какой локали создавался объект
  * @property Carbon $created_at             - Дата создания
@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property FacilityType $type             - Тип
  * @property FacilityVisibility $visibility - Кому виден объект
  * @property File[] $files                  - Файлы приклеплённые к объекту
+ *
  * Class Facility
  * @package App\Models\Facilities
  */
