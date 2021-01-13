@@ -9,5 +9,8 @@
         <li class="list-group-item text-center">
             <a href="{{ route('admin.articles.rejected_deleted') }}" class="btn btn-link">{{ __('knowledgebase.rejected_deleted_articles') }}</a>
         </li>
+        <li class="list-group-item text-center">
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-link">{{ __('knowledgebase.Categories') }}</a>
+        </li>
     </ul>
 </div>

@@ -32,6 +32,8 @@ Route::group(['prefix' => getLocale()], function () {
         Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
 
+            Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+
             /**
              * Роуты для работы со статьями базы знаний в админке
              */

@@ -7,6 +7,7 @@ return [
     'AllArticles'                => "Все статьи",
     'articles_not_found'         => "Статьи не найдены",
     'Category'                   => "Категория",
+    'Categories'                 => "Категории",
     'Content'                    => "Контент",
     'CreateArticle'              => "Создать статью",
     'delete'                     => "Удалить",

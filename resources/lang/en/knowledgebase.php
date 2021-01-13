@@ -7,6 +7,7 @@ return [
     'AllArticles'                => "All articles",
     'articles_not_found'         => "The articles are not found",
     'Category'                   => "Category",
+    'Categories'                 => "Categories",
     'Content'                    => "Content",
     'CreateArticle'              => "Create article",
     'delete'                     => "Delete",
