@@ -87,22 +87,24 @@
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>
                         </form>
 
-                        @if ($article->files)
-                            <div class="mb-4">
-                                <label>{{ __('knowledgebase.Files') }}</label>
+                        @articleFilesNotDeleted($article)
+                            <div class="my-4">
+                                <label class="form-label">{{ __('knowledgebase.Files') }}</label>
 
-                                @foreach($article->files as $file)
-                                    <form action="{{ route('admin.articles.delete_file', $file) }}" method="POST">
-                                        @method('DELETE')
-                                        @csrf
+                                <form method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    @foreach($article->files as $file)
                                         <div class="mb-1">
                                             <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
-                                            <button type="submit" class="btn btn-danger">Удалить файл</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.articles.delete_file', $file) }}">
+                                                Удалить файл
+                                            </button>
                                         </div>
-                                    </form>
-                                @endforeach
+                                    @endforeach
+                                </form>
                             </div>
-                        @endif
+                        @endarticleFilesNotDeleted
 
                     </div>
                 </div>

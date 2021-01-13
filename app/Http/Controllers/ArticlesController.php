@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Auth\Access\Gate;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
@@ -175,9 +176,9 @@ class ArticlesController extends Controller
      * Удалить файл у статьи
      *
      * @param File $file
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function deleteFile(File $file)
+    public function deleteFile(File $file): RedirectResponse
     {
         try {
             if (!$file->delete()) {

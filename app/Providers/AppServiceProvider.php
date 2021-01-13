@@ -54,6 +54,13 @@ class AppServiceProvider extends ServiceProvider
             return auth()->user()->isAdmin();
         });
 
+        /**
+         * Директива есть ли у статьи неудаленные файлы
+         */
+        Blade::if('articleFilesNotDeleted', function (Article $article) {
+            return $article->files->isNotEmpty();
+        });
+
         Blade::component(DeleteButtton::class, 'delete-button');
     }
 }
