@@ -32,9 +32,7 @@
                                        id="title" value="{{ old('title') ?? (isset($article) ? $article->title : '') }}">
 
                                 @error('title')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
@@ -49,9 +47,7 @@
                                 </select>
 
                                 @error('category')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
@@ -63,9 +59,7 @@
                                 </textarea>
 
                                 @error('content')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
