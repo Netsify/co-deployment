@@ -81,24 +81,26 @@
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>
                         </form>
 
-                        @articleFilesNotDeleted($article)
-                            <div class="my-4">
-                                <label class="form-label">{{ __('knowledgebase.Files') }}</label>
+                        @isset($article)
+                            @articleFilesNotDeleted($article)
+                                <div class="my-4">
+                                    <label class="form-label">{{ __('knowledgebase.Files') }}</label>
 
-                                <form method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    @foreach($article->files as $file)
-                                        <div class="mb-1">
-                                            <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
-                                            <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.articles.delete_file', $file) }}">
-                                                Удалить файл
-                                            </button>
-                                        </div>
-                                    @endforeach
-                                </form>
-                            </div>
-                        @endarticleFilesNotDeleted
+                                    <form method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        @foreach($article->files as $file)
+                                            <div class="mb-1">
+                                                <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+                                                <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.articles.delete_file', $file) }}">
+                                                    Удалить файл
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </form>
+                                </div>
+                            @endarticleFilesNotDeleted
+                        @endisset
 
                     </div>
                 </div>
