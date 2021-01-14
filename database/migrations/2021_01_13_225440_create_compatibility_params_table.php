@@ -16,11 +16,13 @@ class CreateCompatibilityParamsTable extends Migration
         Schema::create('compatibility_params', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique();
-            $table->integer('group_id');
+            $table->integer('group_id')->unsigned();
             $table->integer('min_val');
             $table->integer('max_val');
             $table->integer('default_val');
             $table->timestamps();
+
+            $table->foreign('group_id')->references('id')->on('compatibility_param_groups');
         });
     }
 

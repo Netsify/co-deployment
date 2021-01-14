@@ -47,6 +47,13 @@ Route::group(['prefix' => getLocale()], function () {
 
                 Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
             });
+
+            /**
+             * Роуты для работы с объектами инфраструктуры
+             */
+            Route::prefix('facilities')->name('facilities.')->group(function () {
+                Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
+            });
         });
     });
 
