@@ -22,6 +22,8 @@ class CreateCompatibilityParamGroupTranslationsTable extends Migration
             $table->unique(['param_group_id', 'locale'], 'gid_loc');
             $table->foreign('param_group_id')->references('id')->on('compatibility_param_groups')->onDelete('cascade');
         });
+
+        (new \Database\Seeders\CompatibilityParamGroupSeeder())->run();
     }
 
     /**
