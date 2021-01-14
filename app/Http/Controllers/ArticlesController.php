@@ -74,7 +74,7 @@ class ArticlesController extends Controller
         }
 
         Session::flash('error', __('knowledgebase.errors.store'));
-      
+
         return redirect()->back();
     }
 
@@ -178,7 +178,7 @@ class ArticlesController extends Controller
      * @param File $file
      * @return RedirectResponse
      */
-    public function deleteFile(File $file): RedirectResponse
+    public function deleteFile(File $file) : RedirectResponse
     {
         try {
             if (!$file->delete()) {
@@ -195,10 +195,8 @@ class ArticlesController extends Controller
                 'trace'   => $e->getTrace(),
                 'file'    => $file
             ]);
-
-            return back();
         }
 
-        return redirect()->route('articles.index');
+        return back();
     }
 }

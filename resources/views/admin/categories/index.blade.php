@@ -21,31 +21,41 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="title" class="form-label">{{ __('knowledgebase.Title') }}</label>
-                                <input type="text" name="title"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       id="title" value="{{ old('title') ?? (isset($category) ? $category->title : '') }}">
+                                <label for="en" class="form-label">{{ __('knowledgebase.TitleEn') }}</label>
+                                <input type="text" name="en"
+                                       class="form-control @error('en') is-invalid @enderror"
+                                       value="{{ old('en') ?? (isset($category) ? $category->name : '') }}">
 
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                @error('en')
+                                    <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
-                                <select name="category" id="category" class="form-select @error('category') is-invalid @enderror">
-                                    <option value="0" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
+                                <label for="ru" class="form-label">{{ __('knowledgebase.TitleRu') }}</label>
+                                <input type="text" name="ru"
+                                       class="form-control @error('ru') is-invalid @enderror"
+                                       value="{{ old('ru') ?? (isset($category) ? $category->name : '') }}">
+
+                                @error('ru')
+                                    <x-invalid-feedback :message="$message"/>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="parent_id" class="form-label">{{ __('knowledgebase.CategoryParent') }}</label>
+
+                                <select name="parent_id" class="form-select @error('parent_id') is-invalid @enderror">
+                                    <option value="" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('category') ?? $category) === $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ (old('parent_id') ?? $category) === $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
 
-                                @error('category')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                @error('parent_id')
+                                    <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 

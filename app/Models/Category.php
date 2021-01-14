@@ -31,7 +31,10 @@ class Category extends Model implements TranslatableContract
      *
      * @var array
      */
-    protected $fillable = ['slug'];
+    protected $fillable = [
+        'slug',
+        'parent_id'
+    ];
 
     /**
      * Поле, которое должно быть переведено

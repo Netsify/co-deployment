@@ -8,6 +8,7 @@ return [
     'AllArticles'                => "All articles",
     'articles_not_found'         => "The articles are not found",
     'ArticlesCount'              => "Number of articles",
+    'Category'                   => "Category",
     'CategoryParent'             => "Parent Category",
     'Categories'                 => "Categories",
     'Content'                    => "Content",
@@ -21,6 +22,7 @@ return [
         'delete'            => "Could not delete article",
         'is_not_publicated' => "The article is not publicated",
         'store'             => "There are some problems by creating new article. Please, try later",
+        'storeCategory'     => "There are some problems by creating new category. Please, try later",
         'update'            => "Could not update article",
         'deleteFile'        => "Could not delete file from article",
         'deleteCategory'    => "Could not delete category"
@@ -38,6 +40,8 @@ return [
     'SelectTags'                 => "Select tags",
     'Tag'                        => "Tag",
     'Title'                      => "Title",
+    'TitleEn'                    => "Title (English)",
+    'TitleRu'                    => "Title (Russian)",
     'unchecked_articles'         => "Unchecked articles",
     'view'                       => "View",
 ];
