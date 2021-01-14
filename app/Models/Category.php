@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Класс категорий базы знаний
@@ -22,7 +24,7 @@ use Astrotomic\Translatable\Translatable;
  */
 class Category extends Model implements TranslatableContract
 {
-    use HasFactory, Translatable;
+    use HasFactory, Translatable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -37,4 +39,14 @@ class Category extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
+
+    /**
+     * Возвращает статьи
+     *
+     * @return HasMany
+     */
+    public function articles() : HasMany
+    {
+        return $this->hasMany(Article::class);
+    }
 }

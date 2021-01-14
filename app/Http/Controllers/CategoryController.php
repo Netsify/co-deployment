@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -13,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index');
+        $categories = Category::query()->orderByTranslation('name')->get();
+
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -34,7 +40,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -74,11 +80,28 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
+        try {
+            if (!$category->delete()) {
+                Session::flash('error', __('knowledgebase.errors.deleteCategory'));
+
+                Log::error("Не удалось удалить категорию", ['category' => $category->toArray()]);
+            }
+        } catch (\Exception $e) {
+            Session::flash('error', __('knowledgebase.errors.deleteCategory'));
+
+            Log::error("Не удалось удалить категорию", [
+                'message'  => $e->getMessage(),
+                'code'     => $e->getCode(),
+                'trace'    => $e->getTrace(),
+                'category' => $category->toArray()
+            ]);
+        }
+
+        return back();
     }
 }

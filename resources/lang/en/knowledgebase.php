@@ -4,9 +4,11 @@
  */
 
 return [
+    'AddNew'                     => "Add new",
     'AllArticles'                => "All articles",
     'articles_not_found'         => "The articles are not found",
-    'Category'                   => "Category",
+    'ArticlesCount'              => "Number of articles",
+    'CategoryParent'             => "Parent Category",
     'Categories'                 => "Categories",
     'Content'                    => "Content",
     'CreateArticle'              => "Create article",
@@ -19,7 +21,8 @@ return [
         'delete'            => "Could not delete article",
         'is_not_publicated' => "The article is not publicated",
         'update'            => "Could not update article",
-        'deleteFile'        => "Could not delete file from article"
+        'deleteFile'        => "Could not delete file from article",
+        'deleteCategory'    => "Could not delete category"
     ],
 
     'KB'                         => "Knowledge base",

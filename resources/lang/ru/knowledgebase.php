@@ -4,9 +4,11 @@
  */
 
 return [
+    'AddNew'                     => "Добавить новую",
     'AllArticles'                => "Все статьи",
     'articles_not_found'         => "Статьи не найдены",
-    'Category'                   => "Категория",
+    'ArticlesCount'              => "Количество статей",
+    'Category'                   => "Родительская категория",
     'Categories'                 => "Категории",
     'Content'                    => "Контент",
     'CreateArticle'              => "Создать статью",
