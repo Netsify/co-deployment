@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Article;
 use App\View\Components\DeleteButtton;
+use App\View\Components\InvalidFeedback;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -62,5 +63,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::component(DeleteButtton::class, 'delete-button');
+
+        Blade::component(InvalidFeedback::class, 'invalid-feedback');
     }
 }
