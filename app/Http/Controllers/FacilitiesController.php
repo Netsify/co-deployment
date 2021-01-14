@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FacilityRequest;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
+use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 /**
  * Контроллер для работы с объектами
@@ -22,7 +26,7 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        //
+        return view('facilities.index');
     }
 
     /**
@@ -41,12 +45,33 @@ class FacilitiesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FacilityRequest $request)
     {
-        dd($request->all());
+        $identitficator = Str::random(rand(20, 50));
+
+        $facility = new Facility($request->only('title', 'description', 'location'));
+        $facility->type_id = $request->input('type');
+        $facility->visibility_id = $request->input('visibility');
+        $facility->setIdentificator($identitficator);
+        $facility->setLocale(app()->getLocale());
+
+
+        $facilityService = new FacilitiesService($facility);
+
+        if($request->has('attachments')) {
+            $facilityService->attachFiles($request->file('attachments'));
+        }
+
+        if ($facilityService->store()) {
+            return redirect()->route('facilities.index');
+        }
+
+        Session::flash('error', __('facility.errors.store'));
+
+        return redirect()->back();
     }
 
     /**

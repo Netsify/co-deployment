@@ -148,7 +148,10 @@ return [
     */
 
     'attributes' => [
-        'photo' => 'Photo'
+        'location'    => 'Location',
+        'photo'       => 'Photo',
+        'type'        => 'Type',
+        'visibility'  => 'Visibility'
     ],
 
 ];

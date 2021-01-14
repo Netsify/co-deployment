@@ -30,4 +30,9 @@ class File extends Model
     {
         return Storage::url($this->path);
     }
+  
+    public function fileable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Facilities\Facility;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Storage;
  * @property boolean $active            - Статус
  * @property Article[] $articles        - Статьи пользователя
  * @property Role $role                 - Роль пользователя
+ * @property Facility[] $facilities     - Объекты пользователя
  *
  * Class User
  * @package App\Models
@@ -119,5 +121,15 @@ class User extends Authenticatable
     public function isAdmin() : bool
     {
         return $this->role->slug == Role::ROLE_ADMIN;
+    }
+
+    /**
+     * Объекты пользователя
+     *
+     * @return HasMany
+     */
+    public function facilities() : HasMany
+    {
+        return $this->hasMany(Facility::class);
     }
 }

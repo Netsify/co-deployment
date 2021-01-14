@@ -73,8 +73,8 @@ class ArticlesController extends Controller
             return redirect()->route('home');
         }
 
-        Session::flash('error','При создании статьи возникли проблемы. Пожалуйста попробуйте позже.');
-
+        Session::flash('error', __('knowledgebase.errors.store'));
+      
         return redirect()->back();
     }
 
