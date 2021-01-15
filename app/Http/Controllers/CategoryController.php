@@ -40,11 +40,21 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request): RedirectResponse
     {
-        if (Category::create($request->validated())) {
-            return back();
+        $params = [
+            'slug'      => strtolower(preg_replace('/\s+/', '_', $request->input('name_en'))),
+            'parent_id' => $request->input('parent_category'),
+            'en'        => ['name' => $request->input('name_en')],
+            'ru'        => ['name' => $request->input('name_ru')],
+        ];
+
+        if (Category::create($params)) {
+            Session::flash('message', __('knowledgebase.CategoryAdded'));
+        } else {
+            Session::flash('message', __('knowledgebase.errors.storeCategory'));
+            Log::error('Не удалось создать категорию', $params);
         }
 
-        Session::flash('error', __('knowledgebase.errors.storeCategory'));
+        return back();
     }
 
     /**

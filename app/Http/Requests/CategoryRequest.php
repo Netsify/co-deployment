@@ -24,9 +24,9 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en'   => ['required', 'string'],
-            'name_ru'   => ['required', 'string'],
-            'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'name_en'         => ['required', 'string'],
+            'name_ru'         => ['required', 'string'],
+            'parent_category' => ['nullable', 'integer', 'exists:categories,id'],
         ];
     }
 }

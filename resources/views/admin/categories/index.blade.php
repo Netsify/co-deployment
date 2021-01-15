@@ -11,9 +11,9 @@
 
                     <div class="card-body">
 
-                        @if(session()->has('error'))
-                            <div class="alert alert-danger" role="alert">
-                                {{ session()->get('error') }}
+                        @if(session()->has('message'))
+                            <div class="alert alert-info" role="alert">
+                                {{ session('message') }}
                             </div>
                         @endif
 
@@ -21,40 +21,40 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="en" class="form-label">{{ __('knowledgebase.TitleEn') }}</label>
-                                <input type="text" name="en"
-                                       class="form-control @error('en') is-invalid @enderror"
-                                       value="{{ old('en') ?? (isset($category) ? $category->name : '') }}">
+                                <label for="name_en" class="form-label">{{ __('knowledgebase.TitleEn') }}</label>
+                                <input type="text" name="name_en"
+                                       class="form-control @error('name_en') is-invalid @enderror"
+                                       value="{{ old('name_en') ?? (isset($category) ? $category->name : '') }}">
 
-                                @error('en')
+                                @error('name_en')
                                     <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="ru" class="form-label">{{ __('knowledgebase.TitleRu') }}</label>
-                                <input type="text" name="ru"
-                                       class="form-control @error('ru') is-invalid @enderror"
-                                       value="{{ old('ru') ?? (isset($category) ? $category->name : '') }}">
+                                <label for="name_ru" class="form-label">{{ __('knowledgebase.TitleRu') }}</label>
+                                <input type="text" name="name_ru"
+                                       class="form-control @error('name_ru') is-invalid @enderror"
+                                       value="{{ old('name_ru') ?? (isset($category) ? $category->name : '') }}">
 
-                                @error('ru')
+                                @error('name_ru')
                                     <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="parent_id" class="form-label">{{ __('knowledgebase.CategoryParent') }}</label>
+                                <label for="parent_category" class="form-label">{{ __('knowledgebase.CategoryParent') }}</label>
 
-                                <select name="parent_id" class="form-select @error('parent_id') is-invalid @enderror">
-                                    <option value="" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
+                                <select name="parent_category" class="form-select @error('parent_category') is-invalid @enderror">
+                                    <option hidden></option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('parent_id') ?? $category) === $category->id ? 'selected' : '' }}>
+                                        <option value="{{ $category->id }}" {{ (old('parent_category') ?? $category) === $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
 
-                                @error('parent_id')
+                                @error('parent_category')
                                     <x-invalid-feedback :message="$message"/>
                                 @enderror
                             </div>
