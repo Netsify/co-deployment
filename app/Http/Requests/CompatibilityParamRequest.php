@@ -29,6 +29,11 @@ class CompatibilityParamRequest extends FormRequest
             'min_val' => ['required', 'integer', 'min:0'],
             'max_val' => ['required', 'integer', 'min:0'],
             'default_val' => ['required', 'integer', 'min:0'],
+            'road_desc.*' => ['required'],
+            'railway_desc.*' => ['required'],
+            'energy_desc.*' => ['required'],
+            'ict_desc.*' => ['required'],
+            'other_desc.*' => ['required'],
         ];
     }
 }

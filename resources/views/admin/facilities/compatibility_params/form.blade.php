@@ -42,14 +42,18 @@
 
                     <div class="row mb-3">
                         @foreach(['min_val', 'max_val', 'default_val'] as $value)
-                        <div class="col col-sm-4">
-                            <label for="{{ $value }}" class="form-label">{{ __("compatibility_param.$value") }}</label>
-                            <input type="number" min="0" class="form-control form-control-sm @error($value) is-invalid @enderror" id="{{ $value }}"
-                                   name="{{ $value }}">
-                            @error($value)
-                            <x-invalid-feedback :message="$message"/>
-                            @enderror
-                        </div>
+                            <div class="col col-sm-4">
+                                <label for="{{ $value }}"
+                                       class="form-label">{{ __("compatibility_param.$value") }}</label>
+                                <input type="number" min="0"
+                                       class="form-control form-control-sm @error($value) is-invalid @enderror"
+                                       id="{{ $value }}"
+                                       name="{{ $value }}"
+                                       value="{{ old($value) }}">
+                                @error($value)
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
+                            </div>
                         @endforeach
                     </div>
                     <hr>
@@ -65,7 +69,10 @@
                                             <label for="road_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="road_desc[{{ $locale }}]" id="road_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm"></textarea>
+                                                      class="form-control form-control-sm @error('road_desc.'.$locale) is-invalid @enderror">{{ old("road_desc.$locale") }}</textarea>
+                                            @error("road_desc.$locale")
+                                            <x-invalid-feedback :message="$message"/>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach
@@ -84,7 +91,10 @@
                                             <label for="railway_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="railway_desc[{{ $locale }}]" id="railway_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm"></textarea>
+                                                      class="form-control form-control-sm @error('railway_desc.'.$locale) is-invalid @enderror">{{ old("railway_desc.$locale") }}</textarea>
+                                            @error("railway_desc.$locale")
+                                            <x-invalid-feedback :message="$message"/>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach
@@ -103,7 +113,10 @@
                                             <label for="energy_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="energy_desc[{{ $locale }}]" id="energy_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm"></textarea>
+                                                      class="form-control form-control-sm @error('energy_desc.'.$locale) is-invalid @enderror">{{ old("energy_desc.$locale") }}</textarea>
+                                            @error("energy_desc.$locale")
+                                            <x-invalid-feedback :message="$message"/>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach
@@ -122,7 +135,10 @@
                                             <label for="ict_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="ict_desc[{{ $locale }}]" id="ict_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm"></textarea>
+                                                      class="form-control form-control-sm @error('ict_desc.'.$locale) is-invalid @enderror">{{ old("ict_desc.$locale") }}</textarea>
+                                            @error("ict_desc.$locale")
+                                            <x-invalid-feedback :message="$message"/>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach
@@ -140,7 +156,10 @@
                                             <label for="other_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="other_desc[{{ $locale }}]" id="other_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm"></textarea>
+                                                      class="form-control form-control-sm @error('other_desc.'.$locale) is-invalid @enderror">{{ old("other_desc.$locale") }}</textarea>
+                                            @error("other_desc.$locale")
+                                            <x-invalid-feedback :message="$message"/>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach

@@ -43,7 +43,6 @@ class CompatibilityParamsController extends Controller
     public function store(CompatibilityParamRequest $request)
     {
         $data = $request->except('_token');
-        dd($data);
         $slug = trim(preg_replace('/\s{1,}/', '_', mb_strtolower($data['name']['en'], 'UTF-8')));
 
         $c_param = [
