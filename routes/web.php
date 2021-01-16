@@ -24,6 +24,9 @@ Route::group(['prefix' => getLocale()], function () {
         Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
             ['index', 'show']);
 
+        Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
+            ->name('articles.delete_file');
+
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
 
         Route::resource('profile', \App\Http\Controllers\ProfileController::class)
@@ -48,8 +51,6 @@ Route::group(['prefix' => getLocale()], function () {
                 Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
 
                 Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
-
-                Route::delete('article/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])->name('delete_file');
             });
         });
     });

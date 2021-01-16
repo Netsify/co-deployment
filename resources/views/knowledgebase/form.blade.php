@@ -92,7 +92,7 @@
                                         @foreach($article->files as $file)
                                             <div class="mb-1">
                                                 <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
-                                                <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.articles.delete_file', $file) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('articles.delete_file', [$article, $file]) }}">
                                                     Удалить файл
                                                 </button>
                                             </div>

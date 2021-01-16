@@ -26,7 +26,7 @@ class ArticlesController extends Controller
 {
     public function __construct()
     {
-//        $this->authorizeResource(Article::class, 'article');
+        $this->authorizeResource(Article::class, 'article');
     }
 
     /**
@@ -175,10 +175,11 @@ class ArticlesController extends Controller
     /**
      * Удалить файл у статьи
      *
+     * @param Article $article
      * @param File $file
      * @return RedirectResponse
      */
-    public function deleteFile(File $file) : RedirectResponse
+    public function deleteFile(Article $article, File $file) : RedirectResponse
     {
         try {
             if (!$file->delete()) {
