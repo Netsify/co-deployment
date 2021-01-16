@@ -52,6 +52,8 @@ Route::group(['prefix' => getLocale()], function () {
              * Роуты для работы с объектами инфраструктуры
              */
             Route::prefix('facilities')->name('facilities.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
+
                 Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
             });
         });

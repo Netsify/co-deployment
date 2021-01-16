@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class FacilitiesController extends Controller
 {
-    //
+    public function index()
+    {
+
+    }
 }
