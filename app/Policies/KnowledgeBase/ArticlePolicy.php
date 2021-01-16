@@ -17,10 +17,10 @@ class ArticlePolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    /*public function viewAny(User $user)
+    public function viewAny(User $user)
     {
         return true;
-    }*/
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -31,6 +31,7 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article)
     {
+//        dd(1);
         return true;
     }
 

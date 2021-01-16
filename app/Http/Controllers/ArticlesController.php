@@ -24,7 +24,7 @@ class ArticlesController extends Controller
 {
     public function __construct()
     {
-//        $this->authorizeResource(Article::class, 'article');
+        $this->authorizeResource(Article::class, 'article');
     }
 
     /**

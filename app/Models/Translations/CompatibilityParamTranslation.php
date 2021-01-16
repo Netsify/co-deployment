@@ -3,9 +3,17 @@
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class CompatibilityParamTranslation extends Model
+class CompatibilityParamTranslation extends TranslatableModel
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description_road',
+        'description_railway',
+        'description_energy',
+        'description_other',
+        'description_ict'
+    ];
 }

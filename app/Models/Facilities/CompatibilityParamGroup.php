@@ -7,6 +7,7 @@ use Astrotomic\Translatable\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Класс групп параметров совместимости объектов
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name - Название (в нужной локале)
  * @property Carbon $created_at  - Дата создания
  * @property Carbon $updated_at  - Дата изменения
+ * @property CompatibilityParam[] $params - Параметры
  *
  * Class CompatibilityParamGroup
  * @package App\Models\Facilities
@@ -45,4 +47,13 @@ class CompatibilityParamGroup extends Model implements TranslatableContract
      */
     public $translatedAttributes = ['name'];
 
+    /**
+     * Параметры
+     *
+     * @return HasMany
+     */
+    public function params() : HasMany
+    {
+        return $this->hasMany(CompatibilityParam::class, 'group_id');
+    }
 }

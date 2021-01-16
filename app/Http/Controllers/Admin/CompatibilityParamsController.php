@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompatibilityParamRequest;
 use App\Models\Facilities\CompatibilityParam;
 use App\Models\Facilities\CompatibilityParamGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class CompatibilityParamsController extends Controller
 {
@@ -16,7 +19,7 @@ class CompatibilityParamsController extends Controller
      */
     public function index()
     {
-        //
+        dump("OK");
     }
 
     /**
@@ -34,12 +37,45 @@ class CompatibilityParamsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompatibilityParamRequest $request)
     {
-        dd($request->all());
+        $data = $request->except('_token');
+        dd($data);
+        $slug = trim(preg_replace('/\s{1,}/', '_', mb_strtolower($data['name']['en'], 'UTF-8')));
+
+        $c_param = [
+            'slug'        => $slug,
+            'min_val'     => $data['min_val'],
+            'max_val'     => $data['max_val'],
+            'default_val' => $data['default_val'],
+        ];
+
+        foreach ($data['name'] as $locale => $name) {
+            $c_param[$locale] = [
+                'name'                => $name,
+                'description_road'    => $data['road_desc'][$locale],
+                'description_railway' => $data['railway_desc'][$locale],
+                'description_energy'  => $data['energy_desc'][$locale],
+                'description_ict'     => $data['ict_desc'][$locale],
+                'description_other'   => $data['other_desc'][$locale],
+            ];
+        }
+
+        $c_param = new CompatibilityParam($c_param);
+        $c_param->group_id = $data['group'];
+
+
+        if (!$c_param->save()) {
+            Log::error('Не удалось сохранить параметр', $request->all());
+            Session::flash('error', __('compatibility_param.errors.save'));
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.facilities.compatibility_params.index');
     }
 
     /**
