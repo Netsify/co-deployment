@@ -37,6 +37,7 @@ return [
     'reject'                     => "Отклонить",
     'rejected_deleted_articles'  => "Отклонённые или удалённые статьи",
     'Save'                       => "Сохранить",
+    'Search'                     => "Поиск",
     'SelectCategory'             => "Выберите категорию",
     'SelectTags'                 => "Выберите теги",
     'Tag'                        => "Тег",

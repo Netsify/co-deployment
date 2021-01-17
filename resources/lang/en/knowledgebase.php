@@ -37,6 +37,7 @@ return [
     'reject'                     => "Reject",
     'rejected_deleted_articles'  => "Rejected and deleted articles",
     'Save'                       => "Save",
+    'Search'                     => "Search",
     'SelectCategory'             => "Select a category",
     'SelectTags'                 => "Select tags",
     'Tag'                        => "Tag",
