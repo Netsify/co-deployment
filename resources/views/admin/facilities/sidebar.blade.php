@@ -6,8 +6,5 @@
         <li class="list-group-item text-center">
             <a href="{{ route('admin.facilities.index') }}" class="btn btn-link">{{ __('admin.facilities') }}</a>
         </li>
-        <li class="list-group-item text-center">
-            <a href="{{ route('admin.facilities.compatibility_params.index') }}" class="btn btn-link">{{ __('admin.compatibility_params') }}</a>
-        </li>
     </ul>
 </div>

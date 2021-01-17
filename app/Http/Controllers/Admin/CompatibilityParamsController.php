@@ -19,7 +19,12 @@ class CompatibilityParamsController extends Controller
      */
     public function index()
     {
-        dump("OK");
+        $param_groups = CompatibilityParamGroup::query()
+            ->with('params.translations')
+            ->orderByTranslation('param_group_id')
+            ->get();
+
+        return view('admin.facilities.compatibility_params.index', compact('param_groups'));
     }
 
     /**
