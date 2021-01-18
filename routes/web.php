@@ -36,6 +36,8 @@ Route::group(['prefix' => getLocale()], function () {
              * Роуты для работы со статьями базы знаний в админке
              */
             Route::prefix('articles')->name('articles.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'articles'])->name('index');
+
                 Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
                 Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
                 Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
@@ -46,6 +48,15 @@ Route::group(['prefix' => getLocale()], function () {
                 Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
 
                 Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
+            });
+
+            /**
+             * Роуты для работы с объектами инфраструктуры
+             */
+            Route::prefix('facilities')->name('facilities.')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
+
+                Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
             });
         });
     });
