@@ -7,6 +7,8 @@ return [
     'add' => "Add",
     'default_val' => "Default value",
     'description' => "Описание",
+    'edit' => "Edit",
+    'edit_parameter' => "Edit parameter",
     'en' => "In english",
     'energy_description' => "Energy description",
 

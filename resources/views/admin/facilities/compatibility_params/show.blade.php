@@ -10,6 +10,8 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('compatibility_param.param_view') }}
+                        <a href="{{ route('admin.facilities.compatibility_params.edit', $compatibilityParam) }}"
+                           class="btn btn-sm btn-success" style="float: right;">{{ __('compatibility_param.edit') }}</a>
                     </div>
                     <div class="card-body">
                         <p>
@@ -33,7 +35,24 @@
                             <b>{{ __('compatibility_param.default_val') }}: </b>
                             {{ $compatibilityParam->default_val}}
                         </p>
-
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                            <tr>
+                                @foreach(['road', 'railway', 'energy', 'ict', 'other'] as $header)
+                                <th scope="col">{{ __("compatibility_param.{$header}_description") }}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(config('app.locales') as $locale)
+                            <tr>
+                                @foreach(['road', 'railway', 'energy', 'ict', 'other'] as $header)
+                                <td>{{ $compatibilityParam->translate($locale)->{"description_{$header}"} }}</td>
+                                @endforeach
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

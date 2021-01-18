@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title',
+(isset($compatibilityParam) ? __("compatibility_param.edit_parameter") : __("compatibility_param.new_param")))
+
 @section('content')
     <div class="container">
         <h4>{{ __('admin.welcome_to_admin_panel') }}</h4>
@@ -8,8 +11,11 @@
                 {{ __('compatibility_param.new_param') }}
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.facilities.compatibility_params.store') }}" method="post">
+                <form action="{{ $form_action }}" method="post">
                     @csrf
+                    @isset($compatibilityParam)
+                        @method('PUT')
+                    @endisset
                     <div class="row mb-3">
                         @foreach(config('app.locales') as $locale)
                             <div class="col col-sm-6">
@@ -18,7 +24,7 @@
                                 <input type="text"
                                        class="form-control form-control-sm @error('name.'.$locale) is-invalid @enderror"
                                        id="name_{{ $locale }}" name="name[{{ $locale }}]"
-                                       value="{{ old("name.$locale") }}">
+                                       value="{{ old("name.$locale") ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->name : "") }}">
                                 @error("name.$locale")
                                 <x-invalid-feedback :message="$message"/>
                                 @enderror
@@ -32,7 +38,7 @@
                                 class="form-control form-control-sm @error('group') is-invalid @enderror">
                             <option value="">{{ __('compatibility_param.select_group') }}</option>
                             @foreach($param_groups as $group)
-                                <option value="{{ $group->id }}" {{ old('group') == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
+                                <option value="{{ $group->id }}" {{ old('group') ??  (isset($compatibilityParam) ? $compatibilityParam->group_id : '') == $group->id ? 'selected' : '' }}>{{ $group->name }}</option>
                             @endforeach
                         </select>
                         @error("group")
@@ -49,7 +55,7 @@
                                        class="form-control form-control-sm @error($value) is-invalid @enderror"
                                        id="{{ $value }}"
                                        name="{{ $value }}"
-                                       value="{{ old($value) }}">
+                                       value="{{ old($value) ?? (isset($compatibilityParam) ? $compatibilityParam->$value : '') }}">
                                 @error($value)
                                 <x-invalid-feedback :message="$message"/>
                                 @enderror
@@ -69,7 +75,7 @@
                                             <label for="road_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="road_desc[{{ $locale }}]" id="road_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm @error('road_desc.'.$locale) is-invalid @enderror">{{ old("road_desc.$locale") }}</textarea>
+                                                      class="form-control form-control-sm @error('road_desc.'.$locale) is-invalid @enderror">{{ old("road_desc.$locale") ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->description_road : "") }}</textarea>
                                             @error("road_desc.$locale")
                                             <x-invalid-feedback :message="$message"/>
                                             @enderror
@@ -91,7 +97,7 @@
                                             <label for="railway_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="railway_desc[{{ $locale }}]" id="railway_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm @error('railway_desc.'.$locale) is-invalid @enderror">{{ old("railway_desc.$locale") }}</textarea>
+                                                      class="form-control form-control-sm @error('railway_desc.'.$locale) is-invalid @enderror">{{ old("railway_desc.$locale") ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->description_railway : "") }}</textarea>
                                             @error("railway_desc.$locale")
                                             <x-invalid-feedback :message="$message"/>
                                             @enderror
@@ -113,7 +119,7 @@
                                             <label for="energy_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="energy_desc[{{ $locale }}]" id="energy_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm @error('energy_desc.'.$locale) is-invalid @enderror">{{ old("energy_desc.$locale") }}</textarea>
+                                                      class="form-control form-control-sm @error('energy_desc.'.$locale) is-invalid @enderror">{{ old("energy_desc.$locale")  ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->description_energy : "")}}</textarea>
                                             @error("energy_desc.$locale")
                                             <x-invalid-feedback :message="$message"/>
                                             @enderror
@@ -135,7 +141,7 @@
                                             <label for="ict_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="ict_desc[{{ $locale }}]" id="ict_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm @error('ict_desc.'.$locale) is-invalid @enderror">{{ old("ict_desc.$locale") }}</textarea>
+                                                      class="form-control form-control-sm @error('ict_desc.'.$locale) is-invalid @enderror">{{ old("ict_desc.$locale") ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->description_ict : "")}}</textarea>
                                             @error("ict_desc.$locale")
                                             <x-invalid-feedback :message="$message"/>
                                             @enderror
@@ -156,7 +162,7 @@
                                             <label for="other_desc_{{ $locale }}"
                                                    class="form-label">{{ __('compatibility_param.'.$locale) }}</label>
                                             <textarea name="other_desc[{{ $locale }}]" id="other_desc_{{ $locale }}"
-                                                      class="form-control form-control-sm @error('other_desc.'.$locale) is-invalid @enderror">{{ old("other_desc.$locale") }}</textarea>
+                                                      class="form-control form-control-sm @error('other_desc.'.$locale) is-invalid @enderror">{{ old("other_desc.$locale") ?? (isset($compatibilityParam) ? $compatibilityParam->translate($locale)->description_other : "") }}</textarea>
                                             @error("other_desc.$locale")
                                             <x-invalid-feedback :message="$message"/>
                                             @enderror

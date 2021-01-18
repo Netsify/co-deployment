@@ -24,6 +24,8 @@ class CompatibilityParamsController extends Controller
             ->orderByTranslation('param_group_id')
             ->get();
 
+        $form_action = route('admin.facilities.compatibility_params.store');
+
         return view('admin.facilities.compatibility_params.index', compact('param_groups'));
     }
 
@@ -35,8 +37,9 @@ class CompatibilityParamsController extends Controller
     public function create()
     {
         $param_groups = CompatibilityParamGroup::query()->orderByTranslation('name')->get();
+        $form_action = route('admin.facilities.compatibility_params.store');
 
-        return view('admin.facilities.compatibility_params.form', compact('param_groups'));
+        return view('admin.facilities.compatibility_params.form', compact('param_groups', 'form_action'));
     }
 
     /**
@@ -101,7 +104,12 @@ class CompatibilityParamsController extends Controller
      */
     public function edit(CompatibilityParam $compatibilityParam)
     {
-        //
+        $param_groups = CompatibilityParamGroup::query()->orderByTranslation('name')->get();
+
+        $form_action = route('admin.facilities.compatibility_params.update', $compatibilityParam);
+
+        return view('admin.facilities.compatibility_params.form',
+            compact('compatibilityParam', 'param_groups', 'form_action'));
     }
 
     /**
@@ -111,9 +119,33 @@ class CompatibilityParamsController extends Controller
      * @param  \App\Models\Facilities\CompatibilityParam  $compatibilityParam
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CompatibilityParam $compatibilityParam)
+    public function update(CompatibilityParamRequest $request, CompatibilityParam $compatibilityParam)
     {
-        //
+        $data = $request->except(['_token', '_method']);
+
+        $compatibilityParam->group_id = $data['group'];
+
+        foreach (config('app.locales') as $locale) {
+            $compatibilityParam->translate($locale)->name = $data['name'][$locale];
+            $compatibilityParam->translate($locale)->description_road = $data['road_desc'][$locale];
+            $compatibilityParam->translate($locale)->description_railway = $data['railway_desc'][$locale];
+            $compatibilityParam->translate($locale)->description_energy = $data['energy_desc'][$locale];
+            $compatibilityParam->translate($locale)->description_ict = $data['ict_desc'][$locale];
+            $compatibilityParam->translate($locale)->description_other = $data['other_desc'][$locale];
+        }
+
+        $compatibilityParam->min_val = $data['min_val'];
+        $compatibilityParam->max_val = $data['max_val'];
+        $compatibilityParam->default_val = $data['default_val'];
+
+        if (!$compatibilityParam->save()) {
+            Log::error('Не удалось сохранить параметр', $request->all());
+            Session::flash('error', __('compatibility_param.errors.save'));
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.facilities.compatibility_params.show', $compatibilityParam);
     }
 
     /**
