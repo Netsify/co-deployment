@@ -24,6 +24,7 @@ return [
     'new_param' => "New parameter",
     'other_description' => "Other description",
     'param_name' => "Param name",
+    'param_view' => "Param view",
     'params_not_found' => "Parameters not found",
     'railway_description' => "Railway description",
     'road_description' => "Road description",

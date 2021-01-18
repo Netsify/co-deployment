@@ -7,6 +7,7 @@ use Astrotomic\Translatable\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Модель параметров совместимости объектов
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $default_val - Значение по умолчанию
  * @property Carbon $created_at  - Дата создания
  * @property Carbon $updated_at  - Дата изменения
+ * @property CompatibilityParamGroup $group - Группа, в которую входит параметр
  *
  * Class CompatibilityParam
  * @package App\Models\Facilities
@@ -54,4 +56,13 @@ class CompatibilityParam extends Model implements TranslatableContract
         'description_other'
     ];
 
+    /**
+     * Группа
+     *
+     * @return BelongsTo
+     */
+    public function group() : BelongsTo
+    {
+        return $this->belongsTo(CompatibilityParamGroup::class);
+    }
 }

@@ -7,6 +7,8 @@
                 @include('admin.sidebar')
             </div>
             <div class="col col-sm-10">
+                <a href="{{ route('admin.facilities.compatibility_params.create') }}" class="btn btn-sm btn-success">{{ __('compatibility_param.add') }}</a>
+                <hr>
                 <div class="card ">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">

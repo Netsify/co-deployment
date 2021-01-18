@@ -24,6 +24,7 @@ return [
     'new_param' => "Новый параметр",
     'other_description' => "Описание для другое",
     'param_name' => "Имя параметра",
+    'param_view' => "Просмотр параметра",
     'params_not_found' => "Параметры не найдены",
     'railway_description' => "Описание для железной дороги",
     'road_description' => "Описание для дороги",

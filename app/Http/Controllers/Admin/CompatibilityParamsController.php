@@ -90,7 +90,7 @@ class CompatibilityParamsController extends Controller
      */
     public function show(CompatibilityParam $compatibilityParam)
     {
-        //
+        return view('admin.facilities.compatibility_params.show', compact('compatibilityParam'));
     }
 
     /**
