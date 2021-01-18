@@ -43,7 +43,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="parent_category" class="form-label">{{ __('knowledgebase.CategoryParent') }}</label>
+                                <label for="parent_category" class="form-label">{{ __('knowledgebase.CategoryParent') . ' ' . __('knowledgebase.Optional') }}</label>
 
                                 <select name="parent_category" class="form-select @error('parent_category') is-invalid @enderror">
                                     <option hidden></option>
@@ -66,6 +66,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('knowledgebase.Title') }}</th>
+                                    <th scope="col">{{ __('knowledgebase.CategoryParent') }}</th>
                                     <th scope="col">{{ __('knowledgebase.ArticlesCount') }}</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -78,6 +79,7 @@
                                     @foreach($categories as $category)
                                         <tr>
                                             <td>{{ $category->name }}</td>
+                                            <td>{{ $category->parent->name ?? '' }}</td>
                                             <td>{{ $category->articles()->count() }}</td>
                                             <td>
                                                 <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.categories.destroy', $category) }}">

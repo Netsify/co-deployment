@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Auth\Access\Gate;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -199,5 +200,19 @@ class ArticlesController extends Controller
         }
 
         return back();
+    }
+
+    /**
+     * Поиск статей в базе знаний
+     *
+     * @return View
+     */
+    public function search() : View
+    {
+        $categories = Category::query()->orderByTranslation('name')->get();
+
+        $tags = Tag::query()->orderByTranslation('name')->get();
+
+        return view('knowledgebase.search', compact('categories', 'tags'));
     }
 }
