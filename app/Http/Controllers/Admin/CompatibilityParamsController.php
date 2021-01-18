@@ -156,6 +156,29 @@ class CompatibilityParamsController extends Controller
      */
     public function destroy(CompatibilityParam $compatibilityParam)
     {
-        //
+        try {
+            if (!$compatibilityParam->delete()) {
+                Log::error('Не удалось удалить параметр совместимости', [
+                    'c_param' => $compatibilityParam->toArray()
+                ]);
+
+                Session::flash('error', __('compatibility_param.errors.delete'));
+
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            Log::error('Не удалось удалить параметр совместимости', [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'c_param' => $compatibilityParam->toArray()
+            ]);
+
+            Session::flash('error', __('compatibility_param.errors.delete'));
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.facilities.compatibility_params.index');
     }
 }

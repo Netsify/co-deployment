@@ -6,6 +6,7 @@
 return [
     'add' => "Add",
     'default_val' => "Default value",
+    'delete' => "Delete",
     'description' => "Описание",
     'edit' => "Edit",
     'edit_parameter' => "Edit parameter",
@@ -13,7 +14,8 @@ return [
     'energy_description' => "Energy description",
 
     'errors' => [
-        'save' => "There is an error by parameter's saving. Please, try later"
+        'save' => "There is an error by parameter's saving. Please, try later",
+        'delete' => "There is an error by parameter's removing. Please, try later"
     ],
 
     'group' => "Group",

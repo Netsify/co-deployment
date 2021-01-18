@@ -10,8 +10,16 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('compatibility_param.param_view') }}
-                        <a href="{{ route('admin.facilities.compatibility_params.edit', $compatibilityParam) }}"
-                           class="btn btn-sm btn-success" style="float: right;">{{ __('compatibility_param.edit') }}</a>
+                        <div class="btn-toolbar" style="float: right">
+                            <form action="{{ route('admin.facilities.compatibility_params.destroy', $compatibilityParam) }}" method="post">
+                                <a href="{{ route('admin.facilities.compatibility_params.edit', $compatibilityParam) }}"
+                                   class="btn btn-sm btn-success">{{ __('compatibility_param.edit') }}</a>
+
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-sm btn-danger">{{ __('compatibility_param.delete') }}</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <p>
