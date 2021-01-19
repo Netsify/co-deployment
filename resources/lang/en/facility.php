@@ -5,6 +5,7 @@ return [
     'create_facility' => "Create facility",
     'description' => "Description",
     'facilities' => "Facilities",
+    'facility' => "Facility",
     'facility_id' => "Identifier",
     'facility_id_description' => "Facility's unique identifier (created automatically)",
     'location' => "Location",

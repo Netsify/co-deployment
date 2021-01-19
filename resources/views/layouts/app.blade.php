@@ -136,5 +136,8 @@
         @yield('content')
     </main>
 </div>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

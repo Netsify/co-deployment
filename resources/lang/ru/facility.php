@@ -5,6 +5,7 @@ return [
     'create_facility' => "Создать объект",
     'description' => "Описание",
     'facilities' => "Объекты",
+    'facility' => "Объект",
     'facility_id' => "Идентификатор",
     'facility_id_description' => "Уникальный идентификатор объекта (создаётся автоматически)",
     'location' => "Расположение",
