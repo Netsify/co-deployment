@@ -11,13 +11,6 @@ class ReferenceBookController extends Controller
 {
     public function getFacilityTypeDescription(FacilityType $facility_type)
     {
-        $property = "description_$facility_type->slug";
-
-        $compatibility_params = CompatibilityParam::query()
-            ->orderByTranslation('param_id')
-            ->get();
-        foreach ($compatibility_params as $param){
-            dump($param->$property);
-        }
+        dump(CompatibilityParam::query()->find(1)->translate()->descriptions);
     }
 }

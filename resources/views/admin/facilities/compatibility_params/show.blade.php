@@ -46,7 +46,7 @@
                         <table class="table table-sm table-bordered">
                             <thead>
                             <tr>
-                                @foreach(['road', 'railway', 'energy', 'ict', 'other'] as $header)
+                                @foreach(['road', 'railway', 'electricity', 'ict', 'other'] as $header)
                                 <th scope="col">{{ __("compatibility_param.{$header}_description") }}</th>
                                 @endforeach
                             </tr>

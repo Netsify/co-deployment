@@ -53,7 +53,6 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $roles = Role::withoutAdmin()->get();
-
         return view('auth.register', compact('roles'));
     }
 

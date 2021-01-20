@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => getLocale()], function () {
+//Route::group(['prefix' => getLocale()], function () {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
     Auth::routes();
@@ -62,4 +62,4 @@ Route::group(['prefix' => getLocale()], function () {
     });
 
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
-});
+//});
