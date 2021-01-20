@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/ref-book/facility_type/{facility_type}/description',
+    [\App\Http\Controllers\API\ReferenceBookController::class, 'getFacilityTypeDescription']);

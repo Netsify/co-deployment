@@ -35,12 +35,11 @@
     <label for="type" class="col-sm-2 col-form-label">{{ __('facility.type') }}</label>
     <div class="col-sm-10">
         <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" @change="getType">
-            <option {{--disabled--}}>{{ __('facility.select_type') }}</option>
+            <option value="0">{{ __('facility.select_type') }}</option>
             @foreach($types as $type)
                 <option value="{{ $type->id }}" {{ old('type') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
             @endforeach
         </select>
-        <p>@{{ type }}</p>
         @error('type')
         <x-invalid-feedback :message="$message"/>
         @enderror
