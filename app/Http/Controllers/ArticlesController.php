@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\File;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
-use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -26,7 +26,7 @@ class ArticlesController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Article::class, 'article');
+//        $this->authorizeResource(Article::class, 'article');
     }
 
     /**
@@ -179,8 +179,12 @@ class ArticlesController extends Controller
      * @param File $file
      * @return RedirectResponse
      */
-    public function deleteFile(Article $article, File $file) : RedirectResponse
+    public function deleteFile(Article $article, File $file) /*: RedirectResponse*/
     {
+        if (Gate::denies('deleteFile', [/*$article, */$file])) {
+            abort(403);
+        }
+
         try {
             if (!$file->delete()) {
                 Session::flash('error', __('knowledgebase.errors.deleteFile'));

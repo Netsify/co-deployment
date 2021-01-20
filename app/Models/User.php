@@ -132,4 +132,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Facility::class);
     }
+
+    public function articleFiles()
+    {
+        return $this->hasManyThrough(File::class, Article::class, 'user_id', 'fileable_id');
+    }
 }
