@@ -23,11 +23,6 @@ use Illuminate\Support\Facades\Session;
  */
 class ArticlesController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Article::class, 'article');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -180,10 +175,8 @@ class ArticlesController extends Controller
      */
     public function deleteFile(Article $article, File $file) : RedirectResponse
     {
-        if (Gate::denies('deleteFile', [$article, $file])) {
-            Session::flash('error', __('knowledgebase.errors.deleteFile'));
-
-            return back();
+        if (Gate::denies('deleteFile', [$file, $article])) {
+            abort(403);
         }
 
         try {

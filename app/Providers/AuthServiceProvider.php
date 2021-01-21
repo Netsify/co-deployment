@@ -17,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Article::class => ArticlePolicy::class
+        Article::class => ArticlePolicy::class,
+        File::class => ArticlePolicy::class
     ];
 
     /**
@@ -28,9 +29,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('deleteFile', function (User $user, Article $article, File $file) {
-            return $article->files->contains($file);
-        });
     }
 }

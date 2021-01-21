@@ -3,6 +3,7 @@
 namespace App\Policies\KnowledgeBase;
 
 use App\Models\Article;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
@@ -91,6 +92,19 @@ class ArticlePolicy
     public function forceDelete(User $user, Article $article)
     {
         return false;
+    }
+
+    /**
+     * Содержит ли статья удаляемый файл
+     *
+     * @param User $user
+     * @param File $file
+     * @param Article $article
+     * @return mixed
+     */
+    public function deleteFile(User $user, File $file, Article $article)
+    {
+        return $article->files->contains($file);
     }
 
     /**
