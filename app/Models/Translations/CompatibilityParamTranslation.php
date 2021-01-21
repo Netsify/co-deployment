@@ -12,7 +12,7 @@ class CompatibilityParamTranslation extends TranslatableModel
         'name',
         'description_road',
         'description_railway',
-        'description_energy',
+        'description_electricity',
         'description_other',
         'description_ict'
     ];

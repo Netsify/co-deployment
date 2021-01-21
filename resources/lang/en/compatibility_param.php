@@ -11,7 +11,7 @@ return [
     'edit' => "Edit",
     'edit_parameter' => "Edit parameter",
     'en' => "In english",
-    'energy_description' => "Energy description",
+    'electricity_description' => "Electricity description",
 
     'errors' => [
         'save' => "There is an error by parameter's saving. Please, try later",

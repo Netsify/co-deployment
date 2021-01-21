@@ -46,16 +46,16 @@
                         <table class="table table-sm table-bordered">
                             <thead>
                             <tr>
-                                @foreach(['road', 'railway', 'energy', 'ict', 'other'] as $header)
-                                <th scope="col">{{ __("compatibility_param.{$header}_description") }}</th>
+                                @foreach($facility_types as $type)
+                                    <th scope="col">{{ __("compatibility_param.{$type->slug}_description") }}</th>
                                 @endforeach
                             </tr>
                             </thead>
                             <tbody>
                             @foreach(config('app.locales') as $locale)
                             <tr>
-                                @foreach(['road', 'railway', 'energy', 'ict', 'other'] as $header)
-                                <td>{{ $compatibilityParam->translate($locale)->{"description_{$header}"} }}</td>
+                                @foreach($facility_types as $type)
+                                <td>{{ $compatibilityParam->translate($locale)->{"description_{$type->slug}"} }}</td>
                                 @endforeach
                             </tr>
                             @endforeach

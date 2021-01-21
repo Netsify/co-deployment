@@ -31,7 +31,7 @@ class CompatibilityParamRequest extends FormRequest
             'default_val' => ['required', 'integer', 'min:0', 'gte:min_val', 'lte:max_val'],
             'road_desc.*' => ['required'],
             'railway_desc.*' => ['required'],
-            'energy_desc.*' => ['required'],
+            'electricity_desc.*' => ['required'],
             'ict_desc.*' => ['required'],
             'other_desc.*' => ['required'],
         ];

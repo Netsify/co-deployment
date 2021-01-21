@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompatibilityParamRequest;
 use App\Models\Facilities\CompatibilityParam;
 use App\Models\Facilities\CompatibilityParamGroup;
+use App\Models\Facilities\FacilityType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -36,10 +37,14 @@ class CompatibilityParamsController extends Controller
      */
     public function create()
     {
+        $compatibilityParam = new CompatibilityParam();
+
         $param_groups = CompatibilityParamGroup::query()->orderByTranslation('name')->get();
         $form_action = route('admin.facilities.compatibility_params.store');
+        $facility_types = FacilityType::all();
 
-        return view('admin.facilities.compatibility_params.form', compact('param_groups', 'form_action'));
+        return view('admin.facilities.compatibility_params.form', compact
+        ('compatibilityParam', 'param_groups', 'form_action', 'facility_types'));
     }
 
     /**
@@ -62,12 +67,12 @@ class CompatibilityParamsController extends Controller
 
         foreach ($data['name'] as $locale => $name) {
             $c_param[$locale] = [
-                'name'                => $name,
-                'description_road'    => $data['road_desc'][$locale],
-                'description_railway' => $data['railway_desc'][$locale],
-                'description_energy'  => $data['energy_desc'][$locale],
-                'description_ict'     => $data['ict_desc'][$locale],
-                'description_other'   => $data['other_desc'][$locale],
+                'name'                    => $name,
+                'description_road'        => $data['road_desc'][$locale],
+                'description_railway'     => $data['railway_desc'][$locale],
+                'description_electricity' => $data['electricity_desc'][$locale],
+                'description_ict'         => $data['ict_desc'][$locale],
+                'description_other'       => $data['other_desc'][$locale],
             ];
         }
 
@@ -93,7 +98,10 @@ class CompatibilityParamsController extends Controller
      */
     public function show(CompatibilityParam $compatibilityParam)
     {
-        return view('admin.facilities.compatibility_params.show', compact('compatibilityParam'));
+        $facility_types = FacilityType::all();
+
+        return view('admin.facilities.compatibility_params.show',
+            compact('compatibilityParam', 'facility_types'));
     }
 
     /**
@@ -105,11 +113,12 @@ class CompatibilityParamsController extends Controller
     public function edit(CompatibilityParam $compatibilityParam)
     {
         $param_groups = CompatibilityParamGroup::query()->orderByTranslation('name')->get();
+        $facility_types = FacilityType::all();
 
         $form_action = route('admin.facilities.compatibility_params.update', $compatibilityParam);
 
         return view('admin.facilities.compatibility_params.form',
-            compact('compatibilityParam', 'param_groups', 'form_action'));
+            compact('compatibilityParam', 'param_groups', 'form_action', 'facility_types'));
     }
 
     /**
@@ -129,7 +138,7 @@ class CompatibilityParamsController extends Controller
             $compatibilityParam->translate($locale)->name = $data['name'][$locale];
             $compatibilityParam->translate($locale)->description_road = $data['road_desc'][$locale];
             $compatibilityParam->translate($locale)->description_railway = $data['railway_desc'][$locale];
-            $compatibilityParam->translate($locale)->description_energy = $data['energy_desc'][$locale];
+            $compatibilityParam->translate($locale)->description_electricity = $data['electricity_desc'][$locale];
             $compatibilityParam->translate($locale)->description_ict = $data['ict_desc'][$locale];
             $compatibilityParam->translate($locale)->description_other = $data['other_desc'][$locale];
         }

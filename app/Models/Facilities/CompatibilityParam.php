@@ -51,7 +51,7 @@ class CompatibilityParam extends Model implements TranslatableContract
         'name',
         'description_road',
         'description_railway',
-        'description_energy',
+        'description_electricity',
         'description_ict',
         'description_other'
     ];

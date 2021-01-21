@@ -20,7 +20,7 @@ class CreateCompatibilityParamTranslationsTable extends Migration
             $table->string('name');
             $table->string('description_road', 500)->nullable();
             $table->string('description_railway', 500)->nullable();
-            $table->string('description_energy', 500)->nullable();
+            $table->string('description_electricity', 500)->nullable();
             $table->string('description_other', 500)->nullable();
             $table->string('description_ict', 500)->nullable();
 
