@@ -21,7 +21,7 @@ class CreateCompatibilityParamDescriptionsTable extends Migration
 
             $table->unique(['param_translation_id', 'type_id'], 'pt_type_unique');
 
-            $table->foreign('param_translation_id')->references('id')->on('compatibility_param_translations');
+            $table->foreign('param_translation_id')->references('id')->on('compatibility_param_translations')->cascadeOnDelete();
             $table->foreign('type_id')->references('id')->on('facility_types');
         });
     }
