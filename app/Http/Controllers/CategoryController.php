@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::query()->orderByTranslation('name')->get();
+        $categories = Category::orderByTranslation('name')->get();
 
         return view('admin.categories.index', compact('categories'));
     }

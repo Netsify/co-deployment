@@ -37,7 +37,9 @@ class ProfileController extends Controller
      */
     public function edit(User $profile) : View
     {
-        $roles = $profile->isAdmin() ? Role::all() : Role::withoutAdmin()->get();
+        $roles = $profile->isAdmin()
+            ? Role::orderByTranslation('id')->get()
+            : Role::orderByTranslation('id')->get()->except(Role::ROLE_ADMIN_ID);
 
         return view('profile.edit', ['user' => $profile, 'roles' => $roles]);
     }

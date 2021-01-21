@@ -40,8 +40,6 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-//        dd(getLocale());
-
         $this->middleware('guest');
     }
 
@@ -52,7 +50,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $roles = Role::withoutAdmin()->get();
+        $roles = Role::orderByTranslation('id')->get()->except(Role::ROLE_ADMIN_ID);
 
         return view('auth.register', compact('roles'));
     }

@@ -43,7 +43,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="parent_category" class="form-label">{{ __('knowledgebase.CategoryParent') . ' ' . __('knowledgebase.Optional') }}</label>
+                                <label for="parent_category" class="form-label">
+                                    {{ __('knowledgebase.CategoryParent') . ' ' . __('knowledgebase.Optional') }}
+                                </label>
 
                                 <select name="parent_category" class="form-select @error('parent_category') is-invalid @enderror">
                                     <option hidden></option>
