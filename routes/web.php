@@ -27,7 +27,7 @@ Route::group(['prefix' => getLocale()], function () {
         Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
             ->name('articles.delete_file');
 
-        Route::get('/articles/search', [\App\Http\Controllers\ArticleSearchController::class, 'index'])
+        Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
             ->name('articles.search');
 
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
