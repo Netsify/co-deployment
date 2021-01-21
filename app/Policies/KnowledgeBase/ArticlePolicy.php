@@ -94,9 +94,17 @@ class ArticlePolicy
         return false;
     }
 
-    public function deleteFile(User $user, File $file)
+    /**
+     * Содержит ли статья удаляемый файл
+     *
+     * @param User $user
+     * @param File $file
+     * @param Article $article
+     * @return mixed
+     */
+    public function deleteFile(User $user, File $file, Article $article)
     {
-        return $user->articleFiles->contains($file);
+        return $article->files->contains($file);
     }
 
     /**

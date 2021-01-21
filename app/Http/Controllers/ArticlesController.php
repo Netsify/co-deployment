@@ -179,9 +179,9 @@ class ArticlesController extends Controller
      * @param File $file
      * @return RedirectResponse
      */
-    public function deleteFile(Article $article, File $file) /*: RedirectResponse*/
+    public function deleteFile(Article $article, File $file) : RedirectResponse
     {
-        if (Gate::denies('deleteFile', [/*$article, */$file])) {
+        if (Gate::denies('deleteFile', [$file, $article])) {
             abort(403);
         }
 
