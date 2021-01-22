@@ -82,7 +82,7 @@
                                         <tr>
                                             <td>{{ $category->name }}</td>
                                             <td>{{ $category->parent->name ?? '' }}</td>
-                                            <td>{{ $category->articles()->count() }}</td>
+                                            <td>{{ $category->articles->count() }}</td>
                                             <td>
                                                 <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.categories.destroy', $category) }}">
                                                     {{ __('knowledgebase.delete') }}
