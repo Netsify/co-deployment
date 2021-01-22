@@ -49749,7 +49749,18 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    type_id: 0,
+    selected_type: ''
+  },
+  methods: {
+    getType: function getType(event) {
+      var select = event.target;
+      this.selected_type = select.options[select.selectedIndex].text;
+      this.type_id = select.value;
+    }
+  }
 });
 
 /***/ }),

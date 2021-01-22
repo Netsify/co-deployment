@@ -8,7 +8,7 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">{{ __('facility.new_facility') }}
-                            <span v-show="type_id > 0"><b>Тип: </b>@{{ type }}</span>
+                            <span v-if="type_id > 0"><b>Тип: </b>@{{ selected_type }}</span>
                             <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#facility"
