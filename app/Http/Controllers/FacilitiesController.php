@@ -66,8 +66,9 @@ class FacilitiesController extends Controller
         $facility->setIdentificator($identitficator);
         $facility->setLocale(app()->getLocale());
 
+        $c_params = $request->input('c_param');
 
-        $facilityService = new FacilitiesService($facility);
+        $facilityService = new FacilitiesService($facility, $c_params);
 
         if($request->has('attachments')) {
             $facilityService->attachFiles($request->file('attachments'));

@@ -29,6 +29,7 @@ class FacilityRequest extends FormRequest
             'description' => ['required'],
             'type'        => ['required', 'exists:facility_types,id'],
             'visibility'  => ['required', 'exists:facility_visibilities,id'],
+            'c_param.*'   => ['required', 'integer']
         ];
     }
 }

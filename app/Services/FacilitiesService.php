@@ -30,14 +30,22 @@ class FacilitiesService
     private $_attachments = [];
 
     /**
+     * Параметры совместимости
+     *
+     * @var array
+     */
+    private $_c_params =[];
+
+    /**
      * Конструктор
      * 
      * FacilitiesService constructor.
      * @param Facility $facility
      */
-    public function __construct(Facility $facility)
+    public function __construct(Facility $facility, array $c_params)
     {
         $this->_facility = $facility;
+        $this->_c_params = $c_params;
     }
 
     /**
@@ -60,6 +68,13 @@ class FacilitiesService
         $facility = Auth::user()->facilities()->save($this->_facility);
 
         if ($facility) {
+            if (!$this->setCompatibilityParams($this->_facility)) {
+                Log::error("Ошибка при сохранении параметров совместимости", [
+                    'facility' => $facility->toArray(),
+                    'c_params' => $this->_c_params,
+                ]);
+            }
+
             if (!empty($this->_attachments)) {
                 return $this->storeFiles($facility);
             }
@@ -99,6 +114,17 @@ class FacilitiesService
             ]);
 
             return false;
+        }
+
+        return true;
+    }
+
+    protected function setCompatibilityParams(Facility $facility)
+    {
+        foreach ($this->_c_params as $id => $value) {
+            if ($facility->compatibilityParams()->attach($id, ['value' => $value])) {
+                return false;
+            }
         }
 
         return true;
