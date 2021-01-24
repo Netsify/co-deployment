@@ -37,7 +37,7 @@
                                href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
                         </li>
                         <li><a class="dropdown-item"
-                               href="{{ route('articles.index') }}">{{ __('knowledgebase.AllArticles') }}</a></li>
+                               href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

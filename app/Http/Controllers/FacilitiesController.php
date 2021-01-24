@@ -27,7 +27,9 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        return view('facilities.index');
+        $facilities = Facility::query()->with(['type', 'visibility', 'user'])->get();
+
+        return view('facilities.index', compact('facilities'));
     }
 
     /**
