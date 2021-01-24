@@ -1,10 +1,10 @@
 <template>
-    <h1>Hello</h1>
+    <h1>Hello Kolyan</h1>
 </template>
 
 <script>
     export default {
-        name: "compatibility-params"
+        // name: "compatibility-params"
     }
 </script>
 

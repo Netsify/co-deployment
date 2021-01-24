@@ -36,7 +36,7 @@ const app = new Vue({
         selected_type: ''
     },
     components: {
-        CompatibilityParams
+        'c-params': CompatibilityParams
     },
     methods: {
         getType: function (event) {
