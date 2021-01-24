@@ -206,10 +206,29 @@ class ArticlesController extends Controller
      */
     public function search() : View
     {
-        $categories = Category::query()->orderByTranslation('name')->get();
+        $categories = Category::orderByTranslation('name')->get();
 
-        $tags = Tag::query()->orderByTranslation('name')->get();
+        $tags = Tag::orderByTranslation('name')->get();
 
-        return view('knowledgebase.search', compact('categories', 'tags'));
+        $articles = Article::query();
+
+        if (request()->has('content')) {
+            $articles->where(fn($q) => $q
+                ->where('title', 'LIKE', '%' . request('content') . '%')
+                ->orWhere('content', 'LIKE', '%' . request('content') . '%')
+            );
+        }
+
+        if (request()->has('category')) {
+            $articles->whereHas('category', fn($q) => $q->where('categories.id', request('category')));
+        }
+
+        if (request()->has('tag')) {
+            $articles->whereHas('tags', fn($q) => $q->whereIn('tags.id', request('tag')));
+        }
+
+        $articles = $articles->get();
+
+        return view('knowledgebase.search', compact('categories', 'tags', 'articles'));
     }
 }
