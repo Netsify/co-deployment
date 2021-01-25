@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -32,9 +33,10 @@ class KnowledgeBaseService
      * Создаём статью
      *
      * @param array|null $tags
+     * @param array|null $files
      * @return bool
      */
-    public function createArticle(array $tags = null): bool
+    public function createArticle(array $tags = null, array $files = null): bool
     {
         $article = $this->_user->articles()->save($this->_article);
 
@@ -58,6 +60,15 @@ class KnowledgeBaseService
             return false;
         }
 
+        if (!$this->attachFilesToArticle($files)) {
+            Log::error('Не удалось добавить файлы к статье', [
+                'article' => $this->_article,
+                'files'   => $files
+            ]);
+
+            return false;
+        }
+
         return true;
     }
 
@@ -65,9 +76,10 @@ class KnowledgeBaseService
      * Обновляет статью
      *
      * @param array|null $tags
+     * @param array|null $files
      * @return bool
      */
-    public function updateArticle(array $tags = null): bool
+    public function updateArticle(array $tags = null, array $files = null): bool
     {
         if (!$this->_article->save()) {
             return false;
@@ -77,6 +89,15 @@ class KnowledgeBaseService
             Log::error('Не удалось изменить теги у статьи', [
                 'article' => $this->_article,
                 'tags'    => $tags
+            ]);
+
+            return false;
+        }
+
+        if (!$this->attachFilesToArticle($files)) {
+            Log::error('Не удалось изменить файлы у статьи', [
+                'article' => $this->_article,
+                'files'   => $files
             ]);
 
             return false;
@@ -94,5 +115,24 @@ class KnowledgeBaseService
     private function setTagsToArticle(array $tags): int
     {
         return empty($tags) ? $this->_article->tags()->detach() : count($this->_article->tags()->sync($tags));
+    }
+
+    /**
+     * Прикрепляет файлы к статье
+     *
+     * @param array $files
+     */
+    private function attachFilesToArticle(array $files)
+    {
+        foreach ($files as $file) {
+            $storedPath = $file->store('articles', 'public');
+
+             $this->_article->files()->create([
+                'path' => $storedPath,
+                'name' => $file->getClientOriginalName(),
+            ]);
+        }
+
+        return true;
     }
 }

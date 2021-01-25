@@ -37,7 +37,9 @@ class ProfileController extends Controller
      */
     public function edit(User $profile) : View
     {
-        $roles = $profile->isAdmin() ? Role::all() : Role::withoutAdmin()->get();
+        $roles = $profile->isAdmin()
+            ? Role::orderByTranslation('id')->get()
+            : Role::orderByTranslation('id')->get()->except(Role::ROLE_ADMIN_ID);
 
         return view('profile.edit', ['user' => $profile, 'roles' => $roles]);
     }
@@ -49,12 +51,12 @@ class ProfileController extends Controller
      * @param User $profile
      * @return RedirectResponse
      */
-    public function update(ProfileRequest $request, User $profile): RedirectResponse
+    public function update(ProfileRequest $request, User $profile) : RedirectResponse
     {
         $profile->fill($request->validated());
 
         if ($request->has('photo')) {
-            $profile->photo_path = $request->file('photo')->store('photo', 'public');
+            $profile->photo_path = $request->file('photo')->store('profiles', 'public');
         }
 
         if ($request->filled('phone')) {

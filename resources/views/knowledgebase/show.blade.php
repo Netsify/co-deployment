@@ -19,6 +19,19 @@
                     </div>
                     <div class="card-body">
                         {!! $article->content !!}
+
+                        @isset($article)
+                            <div class="mb-4">
+                                <label>{{ __('knowledgebase.Files') }}</label>
+
+                                @foreach($article->files as $file)
+                                    <div class="mb-1">
+                                        <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endisset
+
                         <hr>
                         {{ $article->tags->pluck('name')->implode(', ') }}
                     </div>

@@ -19,7 +19,8 @@
                                 {{ session()->get('error') }}
                             </div>
                         @endif
-                        <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}" method="post">
+                        <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}"
+                              method="post" enctype="multipart/form-data">
                             @csrf
                             @isset($article)
                                 @method('PUT')
@@ -68,13 +69,39 @@
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" {{isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{ isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
+                            <div class="mb-3">
+                                <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror" multiple>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>
                         </form>
+
+                        @isset($article)
+                            @articleFilesNotDeleted($article)
+                                <div class="my-4">
+                                    <label class="form-label">{{ __('knowledgebase.Files') }}</label>
+
+                                    <form method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        @foreach($article->files as $file)
+                                            <div class="mb-1">
+                                                <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+                                                <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('articles.delete_file', [$article, $file]) }}">
+                                                    Удалить файл
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </form>
+                                </div>
+                            @endarticleFilesNotDeleted
+                        @endisset
+
                     </div>
                 </div>
             </div>

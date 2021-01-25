@@ -46,15 +46,4 @@ class Role extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
-
-    /**
-     * Все роли на выбор кроме администратора
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWithoutAdmin(Builder $query) : Builder
-    {
-        return $query->where('id', '!=', Role::ROLE_ADMIN_ID);
-    }
 }
