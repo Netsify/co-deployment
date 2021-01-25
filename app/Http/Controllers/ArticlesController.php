@@ -212,31 +212,33 @@ class ArticlesController extends Controller
 
         $tags = Tag::orderByTranslation('name')->get();
 
-        $articles = Article::query();
-
-        if ($request->has('content')) {
-            $articles->where(fn($q) => $q
-                ->where('title', 'LIKE', '%' . $request->input('content') . '%')
-                ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
-            );
-        }
-
-        if ($request->has('category')) {
-            $articles->whereHas('category',
-                fn($q) => $q->where('categories.id', $request->input('category'))
-            );
-        }
-
-        if ($request->has('tag')) {
-            $articles->whereHas('tags',
-                fn($q) => $q->whereIn('tags.id', $request->input('tag'))
-            );
-        }
+        $vars = compact('categories', 'tags');
 
         if ($request->hasAny(['content', 'category', 'tag'])) {
-            $articles = $articles->get();
+            $articles = Article::query();
+
+            if ($request->has('content')) {
+                $articles->where(fn($q) => $q
+                    ->where('title', 'LIKE', '%' . $request->input('content') . '%')
+                    ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
+                );
+            }
+
+            if ($request->has('category')) {
+                $articles->whereHas('category',
+                    fn($q) => $q->where('categories.id', $request->input('category'))
+                );
+            }
+
+            if ($request->has('tag')) {
+                $articles->whereHas('tags',
+                    fn($q) => $q->whereIn('tags.id', $request->input('tag'))
+                );
+            }
+
+            $vars['articles'] = $articles->get();
         }
 
-        return view('knowledgebase.search', compact('categories', 'tags', 'articles'));
+        return view('knowledgebase.search', $vars);
     }
 }

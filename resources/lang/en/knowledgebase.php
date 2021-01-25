@@ -18,6 +18,7 @@ return [
     'Edit'                       => "Edit",
     'EditArticle'                => "Edit article",
     'Files'                      => "Attached files:",
+    'FoundArticles'              => "Found articles",
 
     'errors'                     => [
         'delete'            => "Could not delete article",
