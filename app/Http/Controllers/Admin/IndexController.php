@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function articles()
     {
         return redirect()->route('admin.articles.unchecked');
+    }
 
-        /*$uncheckedArticles = Article::unchecked()->orderByDesc('created_at')->get();
-        dump($uncheckedArticles);
-        return view('admin.index', compact('uncheckedArticles'));*/
+    public function index()
+    {
+        return view('admin.index');
     }
 }

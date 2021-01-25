@@ -2,98 +2,38 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="card">
-                <div class="card-header">
-                    {{ __('facility.new_facility') }}
-                </div>
-                <div class="card-body">
-                    @if(session()->has('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session()->get('error') }}
+        <div class="row">
+            <div class="col">
+                <form action="{{ $route }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card">
+                        <div class="card-header">{{ __('facility.new_facility') }}
+                            <span v-if="type_id > 0"><b>Тип: </b>@{{ selected_type }}</span>
+                            <ul class="nav nav-tabs card-header-tabs pull-right" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#facility"
+                                       role="tab">{{ __('facility.facility') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#compatibility_params"
+                                       role="tab">{{ __('admin.compatibility_params') }}</a>
+                                </li>
+                            </ul>
                         </div>
-                    @endif
-                    <form action="{{ route('facilities.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3 row">
-                            <label for="title" class="col-sm-2 col-form-label">{{ __('facility.title') }}</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                                       name="title" value="{{ old('title') }}">
-                                @error('title')
-                                <x-invalid-feedback :message="$message"/>
-                                @enderror
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="facility" role="tabpanel">
+                                    @include('facilities.form_components.facility')
+                                </div>
+                                <div class="tab-pane fade" id="compatibility_params" role="tabpanel">
+                                    @include('facilities.form_components.c_params')
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="facility_id"
-                                   class="col-sm-2 col-form-label">{{ __('facility.facility_id') }}</label>
-                            <div class="col-sm-10">
-                                <div class="form-text">{{ __('facility.facility_id_description') }}</div>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="visibility"
-                                   class="col-sm-2 col-form-label">{{ __('facility.visibility') }}</label>
-                            <div class="col-sm-10">
-                                <select class="form-select @error('visibility') is-invalid @enderror" id="visibility"
-                                        name="visibility">
-                                    <option {{--disabled--}}>{{ __('facility.select_visibility') }}</option>
-                                    @foreach($visibilities as $visibility)
-                                        <option value="{{ $visibility->id }}" {{ (!isset($facility) ? old('visibility') : $facility->$visibility->id) == $visibility->id ? 'selected' : '' }}>{{ $visibility->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('visibility')
-                                <x-invalid-feedback :message="$message"/>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="type" class="col-sm-2 col-form-label">{{ __('facility.type') }}</label>
-                            <div class="col-sm-10">
-                                <select class="form-select @error('type') is-invalid @enderror" id="type" name="type">
-                                    <option {{--disabled--}}>{{ __('facility.select_type') }}</option>
-                                    @foreach($types as $type)
-                                        <option value="{{ $type->id }}" {{ (!isset($facility) ? old('type') : $facility->type->id) == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('type')
-                                <x-invalid-feedback :message="$message"/>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="location" class="col-sm-2 col-form-label">{{ __('facility.location') }}</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('location') is-invalid @enderror"
-                                       id="location" name="location" value="{{ old('location') }}">
-                                @error('location')
-                                <x-invalid-feedback :message="$message"/>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="description"
-                                   class="col-sm-2 col-form-label">{{ __('facility.description') }}</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror"
-                                          id="description" name="description">{{ old('description') }}</textarea>
-                                @error('description')
-                                <x-invalid-feedback :message="$message"/>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="attachments"
-                                   class="col-sm-2 col-form-label">{{ __('facility.attachments') }}</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="file" id="attachments" name="attachments[]" multiple>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">{{ __('facility.create_facility') }}</button>
-                    </form>
-                </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">{{ __('facility.create_facility') }}</button>
+                </form>
             </div>
         </div>
-    </div>
 @endsection

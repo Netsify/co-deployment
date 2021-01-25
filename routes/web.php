@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,16 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => getLocale()], function () {
-    Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
+Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
-    Auth::routes();
+Auth::routes();
 
-    Route::middleware('auth')->group(function () {
-        Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-        Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
-            ['index', 'show']);
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
+        ['index', 'show']);
+
+    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
+
+    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
+        ->only('index', 'edit', 'update');
 
         Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
             ->name('articles.delete_file');
@@ -31,32 +36,37 @@ Route::group(['prefix' => getLocale()], function () {
             ->name('articles.search');
 
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
+    Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
 
-        Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-            ->only('index', 'edit', 'update');
+        /**
+         * Роуты для работы со статьями базы знаний в админке
+         */
+        Route::prefix('articles')->name('articles.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'articles'])->name('index');
 
-        Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+            Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
+            Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
+            Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
 
             Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+            Route::get('/article/{article_with_trashed}', [\App\Http\Controllers\Admin\ArticlesController::class, 'show'])->name('show');
+            Route::get('/article/{article_with_trashed}/edit', [\App\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('edit');
 
-            /**
-             * Роуты для работы со статьями базы знаний в админке
-             */
-            Route::prefix('articles')->name('articles.')->group(function () {
-                Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
-                Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
-                Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
+            Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
 
-                Route::get('/article/{article_with_trashed}', [\App\Http\Controllers\Admin\ArticlesController::class, 'show'])->name('show');
-                Route::get('/article/{article_with_trashed}/edit', [\App\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('edit');
+            Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
+        });
 
-                Route::put('/{article_with_trashed}/verify', [\App\Http\Controllers\Admin\ArticlesController::class, 'verify'])->name('verify');
+        /**
+         * Роуты для работы с объектами инфраструктуры
+         */
+        Route::prefix('facilities')->name('facilities.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
 
-                Route::delete('{article}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'destroy'])->name('destroy');
-            });
+            Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
         });
     });
-
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 });
+
+Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);

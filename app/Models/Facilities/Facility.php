@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -28,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property FacilityType $type             - Тип
  * @property FacilityVisibility $visibility - Кому виден объект
  * @property File[] $files                  - Файлы приклеплённые к объекту
+ * @property CompatibilityParam[] $compatibilityParams - Параметры своместимости
  *
  * Class Facility
  * @package App\Models\Facilities
@@ -76,6 +79,16 @@ class Facility extends Model
     public function visibility() : BelongsTo
     {
         return $this->belongsTo(FacilityVisibility::class);
+    }
+
+    /**
+     * Праметры совместимости
+     *
+     * @return BelongsToMany
+     */
+    public function compatibilityParams() : BelongsToMany
+    {
+        return $this->belongsToMany(CompatibilityParam::class)->withPivot('value')->withTimestamps();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FacilityRequest;
+use App\Models\Facilities\CompatibilityParamGroup;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
@@ -26,7 +27,9 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        return view('facilities.index');
+        $facilities = Facility::query()->with(['type', 'visibility', 'user'])->get();
+
+        return view('facilities.index', compact('facilities'));
     }
 
     /**
@@ -36,10 +39,17 @@ class FacilitiesController extends Controller
      */
     public function create()
     {
+        $facility = new Facility();
         $types = FacilityType::query()->orderByTranslation('name')->get();
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
+        $compatibility_params = CompatibilityParamGroup::with('params.translations')
+            ->orderByTranslation('param_group_id')
+            ->get();
 
-        return view('facilities.form', compact('types', 'visibilities'));
+        $route = route('facilities.store');
+
+        return view('facilities.form',
+            compact('facility', 'types', 'visibilities', 'route', 'compatibility_params'));
     }
 
     /**
@@ -58,8 +68,9 @@ class FacilitiesController extends Controller
         $facility->setIdentificator($identitficator);
         $facility->setLocale(app()->getLocale());
 
+        $c_params = $request->input('c_param');
 
-        $facilityService = new FacilitiesService($facility);
+        $facilityService = new FacilitiesService($facility, $c_params);
 
         if($request->has('attachments')) {
             $facilityService->attachFiles($request->file('attachments'));
