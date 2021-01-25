@@ -14,30 +14,26 @@
                             <div class="input-group rounded mb-3">
                                 <input type="search" name="content" class="form-control rounded"
                                        placeholder="{{ __('knowledgebase.Search') }}"
-                                       aria-label="Search" aria-describedby="search-addon" />
+                                       aria-label="Search" aria-describedby="search-addon"
+                                       value="{{ request('content') }}" />
                             </div>
 
                             <div class="mb-3">
                                 <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
-                                <select name="category" id="category"
-                                        class="form-select @error('category') is-invalid @enderror">
-                                    <option value="" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
+                                <select name="category" id="category" class="form-select ">
+                                    <option value="" hidden>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (!isset($article) ? old('category') : $article->category->id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-
-                                @error('category')
-                                    <x-invalid-feedback :message="$message"/>
-                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
                                 <select name="tag[]" id="tag" class="form-select" multiple>
-                                    <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
+                                    <option value="" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" {{ isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -47,6 +43,32 @@
                             </div>
                         </form>
                     </div>
+
+                    @isset($articles)
+                        <div class="mt-4">
+                            @if ($articles->isEmpty())
+                                <h4 align="center" style="color: red">{{ __('knowledgebase.articles_not_found') }}</h4>
+                            @else
+                                <h2 align="center">{{ __('knowledgebase.FoundArticles') }}</h2>
+                                @foreach($articles as $article)
+                                    <div class="card mt-4">
+                                        <div class="card-header">
+                                            <h5 class="card-title">{{ $article->title }}</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{ $article->preview  }}</p>
+
+                                            <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.view') }}</a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            {{ $article->created_at }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    @endisset
+
                 </div>
             </div>
         </div>

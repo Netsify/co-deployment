@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -202,14 +203,42 @@ class ArticlesController extends Controller
     /**
      * Поиск статей в базе знаний
      *
+     * @param Request $request
      * @return View
      */
-    public function search() : View
+    public function search(Request $request) : View
     {
-        $categories = Category::query()->orderByTranslation('name')->get();
+        $categories = Category::orderByTranslation('name')->get();
 
-        $tags = Tag::query()->orderByTranslation('name')->get();
+        $tags = Tag::orderByTranslation('name')->get();
 
-        return view('knowledgebase.search', compact('categories', 'tags'));
+        $vars = compact('categories', 'tags');
+
+        if ($request->hasAny(['content', 'category', 'tag'])) {
+            $articles = Article::query();
+
+            if ($request->has('content')) {
+                $articles->where(fn($q) => $q
+                    ->where('title', 'LIKE', '%' . $request->input('content') . '%')
+                    ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
+                );
+            }
+
+            if ($request->has('category')) {
+                $articles->whereHas('category',
+                    fn($q) => $q->where('categories.id', $request->input('category'))
+                );
+            }
+
+            if ($request->has('tag')) {
+                $articles->whereHas('tags',
+                    fn($q) => $q->whereIn('tags.id', $request->input('tag'))
+                );
+            }
+
+            $vars['articles'] = $articles->get();
+        }
+
+        return view('knowledgebase.search', $vars);
     }
 }
