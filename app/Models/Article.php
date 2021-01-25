@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
-use Laravel\Scout\Searchable;
 
 /**
  * Класс статей базы знаний
@@ -34,7 +33,7 @@ use Laravel\Scout\Searchable;
  */
 class Article extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

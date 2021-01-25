@@ -22,7 +22,7 @@
                                 <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
                                 <select name="category" id="category"
                                         class="form-select @error('category') is-invalid @enderror">
-                                    <option value="" disabled>{{ __('knowledgebase.SelectCategory') }}</option>
+                                    <option value="">{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
