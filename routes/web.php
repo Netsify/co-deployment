@@ -21,23 +21,29 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->except(
-        ['index', 'show']);
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
+        ->except(['index', 'show']);
 
     Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
-        Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
-            ->name('articles.delete_file');
+    Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
+        ->name('articles.delete_file');
 
-        Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
-            ->name('articles.search');
+    Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
+        ->name('articles.search');
 
-        Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
+    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
+
+    /**
+     * Роуты для работы с админкой
+     */
     Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+
+        Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 
         /**
          * Роуты для работы со статьями базы знаний в админке
@@ -49,7 +55,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
             Route::get('/rejcected_and_deleted', [\App\Http\Controllers\Admin\ArticlesController::class, 'rejectedAndDeleted'])->name('rejected_deleted');
 
-            Route::resource('categories', \App\Http\Controllers\CategoryController::class);
             Route::get('/article/{article_with_trashed}', [\App\Http\Controllers\Admin\ArticlesController::class, 'show'])->name('show');
             Route::get('/article/{article_with_trashed}/edit', [\App\Http\Controllers\Admin\ArticlesController::class, 'edit'])->name('edit');
 
