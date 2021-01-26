@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         $categories = Category::with('articles')->orderByTranslation('name')->get();
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.articles.categories.index', compact('categories'));
     }
 
     /**
