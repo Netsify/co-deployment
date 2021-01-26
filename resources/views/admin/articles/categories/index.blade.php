@@ -17,7 +17,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('admin.categories.store') }}" method="post">
+                        <form action="{{ route('admin.articles.categories.store') }}" method="post">
                             @csrf
 
                             <div class="mb-3">
@@ -84,7 +84,8 @@
                                             <td>{{ $category->parent->name ?? '' }}</td>
                                             <td>{{ $category->articles->count() }}</td>
                                             <td>
-                                                <button type="submit" class="btn btn-danger btn-sm" formaction="{{ route('admin.categories.destroy', $category) }}">
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                        formaction="{{ route('admin.articles.categories.destroy', $category) }}">
                                                     {{ __('knowledgebase.delete') }}
                                                 </button>
                                             </td>

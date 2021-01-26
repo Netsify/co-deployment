@@ -43,13 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
 
-        Route::resource('categories', \App\Http\Controllers\CategoryController::class);
-
         /**
          * Роуты для работы со статьями базы знаний в админке
          */
         Route::prefix('articles')->name('articles.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'articles'])->name('index');
+
+            Route::resource('categories', \App\Http\Controllers\CategoryController::class);
 
             Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
             Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');
