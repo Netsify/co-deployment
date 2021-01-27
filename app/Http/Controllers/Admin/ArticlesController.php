@@ -50,8 +50,10 @@ class ArticlesController extends SimpleArticleController
      */
     public function unchecked() : View
     {
+
         $articles = Article::unchecked()->with('user')->orderByDesc('created_at')->get();
         $title = __('knowledgebase.unchecked_articles');
+
 
         return view('admin.articles.index', compact('articles', 'title'));
     }

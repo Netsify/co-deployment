@@ -8,6 +8,7 @@
             </div>
             <div class="col col-sm-9">
                 <h4>{{ $title }}</h4>
+
                 @if(session()->has('error'))
                     <div class="alert alert-danger" role="alert">
                         {{ session()->get('error') }}
@@ -40,7 +41,7 @@
                                             @endarticleNotRejected
                                         </form>
                                         @articleNotDeleted($article)
-                                            <x-delete-button :article="$article" route="admin.articles.destroy"/>
+                                        <x-delete-button :article="$article" route="admin.articles.destroy"/>
                                         @endarticleNotDeleted
                                     </div>
                                 </div>
