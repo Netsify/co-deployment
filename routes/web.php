@@ -29,6 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
+    Route::resource('projects', \App\Http\Controllers\ProjectController::class)
+        ->only('index', 'edit', 'update');
+
+    Route::resource('inbox', \App\Http\Controllers\InboxController::class)
+        ->only('index', 'update');
+
+    Route::resource('sent-proposals', \App\Http\Controllers\SentProposalController::class)
+        ->only('index', 'destroy');
+
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
 
