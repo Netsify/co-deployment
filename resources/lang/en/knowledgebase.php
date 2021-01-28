@@ -33,6 +33,7 @@ return [
     'KB'                         => "Knowledge base",
     'last_added_articles'        => "Last added articles in knowledgebase",
     'new_article'                => "New article",
+    'no_chosen_tags'             => "No one tag is chosen",
     'Optional'                   => "(optional)",
     'publicate'                  => "Publicate",
     'published_articles'         => "Published articles",

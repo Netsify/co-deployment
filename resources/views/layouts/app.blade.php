@@ -22,7 +22,7 @@
     <link href="{{ asset('css/bootstrap5.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app">
+<div>
     @include('layouts.navbar')
 
     <main class="py-4">
