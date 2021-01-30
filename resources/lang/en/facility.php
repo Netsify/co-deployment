@@ -11,6 +11,7 @@ return [
     'facility_id_description' => "Facility's unique identifier (created automatically)",
     'location' => "Location",
     'new_facility' => "New location",
+    'search' => "Search",
     'select_visibility' => "Select facility's visibility",
     'select_type' => "Select facility's type",
     'visibility' => "Visibility",

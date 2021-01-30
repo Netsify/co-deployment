@@ -9,6 +9,7 @@ use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
 use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -27,9 +28,10 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        $facilities = Facility::query()->with(['type', 'visibility', 'user'])->get();
+        $facilities = Auth::user()->facilities;
+        $facility_types = FacilityType::query()->orderByTranslation('name')->get();
 
-        return view('facilities.index', compact('facilities'));
+        return view('facilities.search-form', compact('facilities', 'facility_types'));
     }
 
     /**
@@ -128,5 +130,10 @@ class FacilitiesController extends Controller
     public function destroy(Facility $facility)
     {
         //
+    }
+
+    public function search()
+    {
+        dd(1);
     }
 }
