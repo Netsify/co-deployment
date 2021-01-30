@@ -24,7 +24,6 @@ class ProposalFactory extends Factory
     {
         return [
             'sender_id' => User::all()->random()->id,
-            'receiver_id' => User::all()->random()->id,
             'accepted' => $this->faker->boolean(50) ? rand(0, 1) : null,
             'description' => $this->faker->text,
             'deleted_at' => $this->faker->boolean(20) ? $this->faker->dateTime : null,

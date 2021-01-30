@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ProposalController extends Controller
@@ -14,7 +16,11 @@ class ProposalController extends Controller
      */
     public function index(): View
     {
-        return view('account.send-proposals.index');
+        $proposals = User::with('proposals')->find(Auth::user());
+
+//        @dd($proposals);
+
+        return view('account.send-proposals.index', compact('proposals'));
     }
 
     /**

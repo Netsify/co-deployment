@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Models\Facilities\Facility;
+use App\Models\Facilities\Proposal;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -131,5 +133,15 @@ class User extends Authenticatable
     public function facilities() : HasMany
     {
         return $this->hasMany(Facility::class);
+    }
+
+    /**
+     * Предложения пользователей
+     *
+     * @return HasMany
+     */
+    public function proposals() : HasMany
+    {
+        return $this->hasMany(Proposal::class, 'sender_id');
     }
 }
