@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('inbox', \App\Http\Controllers\InboxController::class)
         ->only('index', 'update');
 
-    Route::resource('sent-proposals', \App\Http\Controllers\SentProposalController::class)
+    Route::resource('send-proposals', \App\Http\Controllers\ProposalController::class)
         ->only('index', 'destroy');
 
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])

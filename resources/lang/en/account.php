@@ -7,5 +7,5 @@
 return [
     'projects' => 'Projects',
     'inbox' => 'Inbox',
-    'sent_proposals' => 'Sent Proposals',
+    'send_proposals' => 'Send Proposals',
 ];

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class SentProposalController extends Controller
+class ProposalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class SentProposalController extends Controller
      */
     public function index(): View
     {
-        return view('account.sent-proposals.index');
+        return view('account.send-proposals.index');
     }
 
     /**
