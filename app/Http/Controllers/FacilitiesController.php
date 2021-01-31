@@ -9,6 +9,7 @@ use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
 use App\Models\Role;
 use App\Services\FacilitiesService;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -31,9 +32,16 @@ class FacilitiesController extends Controller
     {
         $facilities = Auth::user()->facilities;
         $facilities->load('type.translations');
-        $facility_types = FacilityType::query()->orderByTranslation('name')->get();
 
-        return view('facilities.search-form', compact('facilities', 'facility_types'));
+        $types = FacilityType::query();
+        $types = match(true) {
+        Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', '!=', 'ict'),
+            Auth::user()->role->slug == Role::ROLE_ADMIN => $types,
+            default => $types->where('slug', 'ict'),
+        };
+        $types = $types->orderByTranslation('name')->get();
+
+        return view('facilities.search-form', compact('facilities', 'types'));
     }
 
     /**
@@ -140,8 +148,34 @@ class FacilitiesController extends Controller
         //
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        dd(1);
+        dump($request->all());
+        $type = $request->input('type');
+        $name_or_id =  $request->input('name_or_id');
+        $facilities = Facility::query();
+
+        if ($name_or_id) {
+            $facilities->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($name_or_id) {
+                $query->where('title', 'like', "%$name_or_id%")
+                    ->orWhere('identificator', $name_or_id);
+            });
+        }
+
+        if ($type) {
+            $facilities->where('type_id', function (Builder $query) use ($type) {
+                $query->select('id')
+                    ->from((new FacilityType())->getTable())
+                    ->where('slug', $type);
+            });
+        }
+
+        $facilities->whereIn('visibility_id', function (Builder $query) {
+            $query->select('id')
+                ->from((new FacilityVisibility())->getTable())
+                ->whereIn('slug', [FacilityVisibility::FOR_REGISTERED, FacilityVisibility::FOR_ALL]);
+        });
+
+        dump($facilities->get());
     }
 }

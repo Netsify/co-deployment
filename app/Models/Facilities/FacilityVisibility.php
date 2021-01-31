@@ -24,6 +24,10 @@ class FacilityVisibility extends Model implements TranslatableContract
 {
     use HasFactory, Translatable;
 
+    const ONLY_FOR_ME = 'only_for_me';
+    const FOR_REGISTERED = 'for_registered';
+    const FOR_ALL = 'for_all';
+
     /**
      * Внешний ключ из таблицы с переводами
      *

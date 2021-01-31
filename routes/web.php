@@ -24,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
         ->except(['index', 'show']);
 
+    Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesController::class, 'search'])
+        ->name('facilities.search');
+
     Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
