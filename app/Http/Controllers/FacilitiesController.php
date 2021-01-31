@@ -29,6 +29,7 @@ class FacilitiesController extends Controller
     public function index()
     {
         $facilities = Auth::user()->facilities;
+        $facilities->load('type.translations');
         $facility_types = FacilityType::query()->orderByTranslation('name')->get();
 
         return view('facilities.search-form', compact('facilities', 'facility_types'));
