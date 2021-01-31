@@ -5,8 +5,11 @@ namespace App\Models\Facilities;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Предложения пользователей
@@ -25,22 +28,50 @@ class Proposal extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * Пользователи получатели предложения
+     * Статус пользователя
      *
-     * @return HasMany
+     * @return string
      */
-    public function receivers() : HasMany
+    public function getStatusAttribute() : string
     {
-        return $this->hasMany(User::class, 'receiver_id');
+        try {
+            match ($this->accepted) {
+                null => 'на рассмотрении',
+                '0'  => 'отклонено',
+                '1'  => 'принято',
+            };
+        } catch (\UnhandledMatchError $e) {
+            Log::error('Неправильное значение свойства accepted модели Proposal', compact('e'));
+        }
+    }
+
+    /**
+     * Пользователь получатель предложения
+     *
+     * @return BelongsTo
+     */
+    public function sender() : BelongsTo
+    {
+        return $this->belongsTo(User::class,'sender_id');
+    }
+
+    /**
+     * Пользователь получатель предложения
+     *
+     * @return BelongsTo
+     */
+    public function receiver() : BelongsTo
+    {
+        return $this->belongsTo(User::class,'receiver_id');
     }
 
     /**
      * Объекты предложения
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function facilities() : HasMany
+    public function facilities() : BelongsToMany
     {
-        return $this->hasMany(Facility::class);
+        return $this->belongsToMany(Facility::class);
     }
 }

@@ -17,7 +17,7 @@ class ProposalFacilitySeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i <= 10; $i++) {
-            DB::table('proposal_facility')->insert(
+            DB::table('facility_proposal')->insert(
                 [
                     'proposal_id' => 1 /*Proposal::all()->random()->id*/,
                     'facility_id' => Facility::all()->random()->id,

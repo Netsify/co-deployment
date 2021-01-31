@@ -22,17 +22,19 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $email = $this->faker->unique()->safeEmail;
+
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'role_id' => rand(2, 4),
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $email,
             'photo_path' => null,
             'phone' => $this->faker->phoneNumber,
             'organization' => $this->faker->company,
             'summary' => $this->faker->text,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => $email,
             'remember_token' => Str::random(10),
             'last_activity_at' => $this->faker->boolean(20) ? $this->faker->dateTime : null,
             'active' => $this->faker->boolean(20) ? 0 : 1,

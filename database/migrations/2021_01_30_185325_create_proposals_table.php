@@ -16,7 +16,9 @@ class CreateProposalsTable extends Migration
         Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sender_id')->unsigned();
-            $table->foreign('sender_id')->references('id')->on('users');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('no action');
+            $table->integer('receiver_id')->unsigned();
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('no action');
             $table->boolean('accepted')
                 ->nullable()
                 ->comment("null на рассмотрении, 0 - отклонено, 1 - принято");

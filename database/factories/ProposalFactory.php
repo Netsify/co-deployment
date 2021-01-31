@@ -22,8 +22,11 @@ class ProposalFactory extends Factory
      */
     public function definition()
     {
+        $users = User::all();
+
         return [
-            'sender_id' => User::all()->random()->id,
+            'sender_id' => $users->random()->id,
+            'receiver_id' => $users->random()->id,
             'accepted' => $this->faker->boolean(50) ? rand(0, 1) : null,
             'description' => $this->faker->text,
             'deleted_at' => $this->faker->boolean(20) ? $this->faker->dateTime : null,

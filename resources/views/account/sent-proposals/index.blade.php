@@ -28,19 +28,17 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    @foreach($proposal->receivers as $receiver)
-                                        {{ $receiver->full_name }}
-                                        <hr>
-                                    @endforeach
+                                    {{ $proposal->receiver->full_name }}
                                 </td>
                                 <td>
                                     @foreach($proposal->facilities as $facility)
-                                        {{ $facility->name }}
-                                        <hr>
+                                        <div class="mb-1">
+                                            {{ $facility->title }}
+                                        </div>
                                     @endforeach
                                 </td>
                                 <td>{{ $proposal->description }}</td>
-                                <td>{{ $proposal->accepted }}</td>
+                                <td>{{ $proposal->status }}</td>
                                 <td>
                                     <button type="submit" class="btn btn-danger btn-sm"
                                             formaction="">{{ __('knowledgebase.delete') }}

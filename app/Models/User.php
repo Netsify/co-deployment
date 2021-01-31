@@ -134,14 +134,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Facility::class);
     }
-
-    /**
-     * Предложения пользователей
-     *
-     * @return HasMany
-     */
-    public function proposals() : HasMany
-    {
-        return $this->hasMany(Proposal::class, 'sender_id');
-    }
 }

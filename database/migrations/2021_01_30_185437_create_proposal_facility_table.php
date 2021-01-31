@@ -13,7 +13,7 @@ class CreateProposalFacilityTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposal_facility', function (Blueprint $table) {
+        Schema::create('facility_proposal', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('proposal_id')->unsigned();
             $table->foreign('proposal_id')->references('id')->on('proposals');
