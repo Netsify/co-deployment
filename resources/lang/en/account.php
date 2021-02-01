@@ -5,7 +5,11 @@
  */
 
 return [
-    'projects' => 'Projects',
-    'inbox' => 'Inbox',
-    'send_proposals' => 'Send Proposals',
+    'inbox'          => 'Inbox',
+    'open'           => 'Open',
+    'projects'       => 'Projects',
+    'receiver'       => 'To',
+    'sent_proposals' => 'Sent Proposals',
+    'subject'        => 'Short description',
+    'status'         => 'Status',
 ];

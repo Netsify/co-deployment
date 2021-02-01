@@ -87,7 +87,7 @@
 
                             <a class="dropdown-item" href="{{ route('inbox.index') }}">{{ __('account.inbox') }}</a>
 
-                            <a class="dropdown-item" href="{{ route('sent-proposals.index') }}">{{ __('account.send_proposals') }}</a>
+                            <a class="dropdown-item" href="{{ route('sent-proposals.index') }}">{{ __('account.sent_proposals') }}</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

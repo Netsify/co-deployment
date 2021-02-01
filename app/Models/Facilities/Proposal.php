@@ -32,16 +32,22 @@ class Proposal extends Model
      *
      * @return string
      */
-    public function getStatusAttribute() : string
+    public function getStatusAttribute()
     {
         try {
-            match ($this->accepted) {
-                null => 'на рассмотрении',
-                '0'  => 'отклонено',
-                '1'  => 'принято',
+            return match ($this->accepted) {
+                null => __('proposal.consideration'),
+                0    => __('proposal.rejected'),
+                1    => __('proposal.accepted'),
             };
         } catch (\UnhandledMatchError $e) {
-            Log::error('Неправильное значение свойства accepted модели Proposal', compact('e'));
+            Log::error('Неправильное значение свойства accepted модели Proposal', [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+            ]);
+
+            return __('proposal.wrong_value');
         }
     }
 
@@ -56,7 +62,7 @@ class Proposal extends Model
     }
 
     /**
-     * Пользователь получатель предложения
+     * Пользователь отправитель предложения
      *
      * @return BelongsTo
      */

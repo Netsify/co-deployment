@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                {{ __('account.send_proposals') }}
+                {{ __('account.sent_proposals') }}
             </div>
 
             <div class="card-body">
