@@ -7,8 +7,10 @@ use App\Models\Facilities\CompatibilityParamGroup;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
+use App\Models\Role;
 use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -40,7 +42,13 @@ class FacilitiesController extends Controller
     public function create()
     {
         $facility = new Facility();
-        $types = FacilityType::query()->orderByTranslation('name')->get();
+        $types = FacilityType::query();
+        $types = match(true) {
+            Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', 'ict'),
+            Auth::user()->role->slug == Role::ROLE_ADMIN => $types,
+            default => $types->where('slug', '!=', 'ict'),
+        };
+        $types = $types->orderByTranslation('name')->get();
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
         $compatibility_params = CompatibilityParamGroup::with('params.translations')
             ->orderByTranslation('param_group_id')

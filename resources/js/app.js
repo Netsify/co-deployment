@@ -27,16 +27,27 @@ Vue.component('example-component', require('./components/CompatibilityParams'));
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import CompatibilityParams from './components/CompatibilityParams'
+import CompatibilityParams from './components/CompatibilityParams';
+
+import App from './components/App';
+
+// import CKEditor from 'public/ckeditor/ckeditor';
+/*
+import '/public/ckeditor/ckeditor';
+CKEditor.replace('content');
+*/
 
 const app = new Vue({
     el: '#app',
-    data: {
-        type_id: 0,
-        selected_type: ''
+    data() {
+        return {
+            tst: 'some',
+            type_id: 0,
+            selected_type: ''
+        }
     },
     components: {
-        'c-params': CompatibilityParams
+        'app': App
     },
     methods: {
         getType: function (event) {

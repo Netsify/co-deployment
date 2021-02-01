@@ -78,6 +78,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
                             {{ Auth::user()->full_name }}
+                            <small>({{ Auth::user()->role->name }})</small>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
