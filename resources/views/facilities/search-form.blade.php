@@ -25,7 +25,7 @@
                 <select class="form-select" id="facility" name="facility">
                     <option value="0" selected>{{ __('facility.select_facility') }}</option>
                 @foreach($facilities as $facility)
-                        <option value="{{ $facility->id }}">{{ $facility->title }} ({{ $facility->type->name }})</option>
+                        <option value="{{ $facility->identificator }}">{{ $facility->title }} ({{ $facility->type->name }})</option>
                     @endforeach
                 </select>
             </div>
