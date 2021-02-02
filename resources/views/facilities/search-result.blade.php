@@ -11,7 +11,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <b>{{ $facility->title }}</b>
-                                    <a href="{{ route('facilities.show', $facility->identificator) }}"
+                                    <a href="{{ route('facilities.show', $facility->id) }}"
                                        class="btn btn-sm btn-info" style="float: right">{{ __('facility.open') }}</a>
                                 </div>
                                 <div class="card-body">

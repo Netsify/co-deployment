@@ -32,12 +32,15 @@ class FacilitiesController extends Controller
         $facilities = Auth::user()->facilities;
         $facilities->load('type.translations');
 
+        $users_role = Auth::user()->role;
+
         $types = FacilityType::query();
-        $types = match(true) {
-        Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', '!=', 'ict'),
-            Auth::user()->role->slug == Role::ROLE_ADMIN => $types,
-            default => $types->where('slug', 'ict'),
-        };
+
+        switch (true) {
+            case $users_role->slug == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
+            case $users_role->slug == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
+        }
+
         $types = $types->orderByTranslation('name')->get();
 
         return view('facilities.search-form', compact('facilities', 'types'));
@@ -112,7 +115,9 @@ class FacilitiesController extends Controller
      */
     public function show(Facility $facility)
     {
-        //
+        $facility->load('files');
+
+        return view('facilities.show', compact('facility'));
     }
 
     /**

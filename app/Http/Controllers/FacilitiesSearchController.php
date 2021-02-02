@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\FacilitiesSearchService;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 class FacilitiesSearchController extends Controller
@@ -30,7 +31,7 @@ class FacilitiesSearchController extends Controller
 
         $facilitiesSearchService->searchByVisibilities();
 
-        $facilities = $facilitiesSearchService->getSearched()->load('type', 'user');
+        $facilities = $facilitiesSearchService->getSearched();
 
         return view('facilities.search-result', compact('facilities'));
     }

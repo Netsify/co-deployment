@@ -14,6 +14,7 @@ return [
     'location' => "Location",
     'my_facilities' => "My facilities",
     'new_facility' => "New location",
+    'no_loaded_files' => "This facility has no loaded files",
     'no_results_found' => "No results were found for your search",
     'open' => "Open",
     'owner' => "Owner",
