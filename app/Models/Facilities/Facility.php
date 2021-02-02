@@ -106,4 +106,13 @@ class Facility extends Model
     {
         $this->locale = $locale;
     }
+
+    /**
+     * Превью статьи
+     * @return string
+     */
+    public function getPreviewAttribute()
+    {
+        return mb_substr(strip_tags($this->description), 0, 200, 'UTF-8');
+    }
 }

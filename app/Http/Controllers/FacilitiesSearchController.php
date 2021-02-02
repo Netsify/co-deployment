@@ -30,6 +30,8 @@ class FacilitiesSearchController extends Controller
 
         $facilitiesSearchService->searchByVisibilities();
 
-        dump($facilitiesSearchService->getSearched());
+        $facilities = $facilitiesSearchService->getSearched()->load('type', 'user');
+
+        return view('facilities.search-result', compact('facilities'));
     }
 }
