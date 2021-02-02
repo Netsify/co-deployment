@@ -5,6 +5,8 @@
  */
 
 return [
+    'delete'         => 'Delete',
+    'facilities'     => "Facilities",
     'inbox'          => 'Inbox',
     'open'           => 'Open',
     'projects'       => 'Projects',

@@ -32,11 +32,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', \App\Http\Controllers\ProjectController::class)
         ->only('index', 'edit', 'update');
 
-    Route::resource('inbox', \App\Http\Controllers\InboxController::class)
-        ->only('index', 'update');
+    Route::get('inbox', [\App\Http\Controllers\Account\InboxController::class, 'index'])
+        ->name('account.inbox.index');
 
-    Route::resource('sent-proposals', \App\Http\Controllers\ProposalController::class)
-        ->only('index', 'destroy');
+    Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
+        ->name('account.inbox.delete');
+
+    Route::get('sent-proposals', [\App\Http\Controllers\Account\SentProposalController::class, 'index'])
+        ->name('account.sent-proposals.index');
+
+    Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
+        ->name('account.sent-proposals.delete');
 
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');

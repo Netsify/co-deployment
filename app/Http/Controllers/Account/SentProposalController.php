@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Account;
 
+use App\Http\Controllers\Controller;
 use App\Models\Facilities\Proposal;
-use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
-class ProposalController extends Controller
+class SentProposalController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return \Illuminate\Http\Response
      */
-    public function index(): View
+    public function index()
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('sender_id', Auth::user()->id)
@@ -82,11 +84,24 @@ class ProposalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Proposal $proposal
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Proposal $proposal): RedirectResponse
     {
-        //
+        try {
+            $proposal->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', __('account.errors.deleteProposal'));
+
+            Log::error("Не удалось удалить предложение отправителем", [
+                'message'  => $e->getMessage(),
+                'code'     => $e->getCode(),
+                'trace'    => $e->getTrace(),
+                'proposal' => $proposal->toArray()
+            ]);
+        }
+
+        return back();
     }
 }

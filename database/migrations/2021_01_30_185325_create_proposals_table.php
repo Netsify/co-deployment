@@ -24,6 +24,7 @@ class CreateProposalsTable extends Migration
                 ->comment("null на рассмотрении, 0 - отклонено, 1 - принято");
             $table->text('description')->nullable();
             $table->softDeletes();
+//            $table->timestamp('deleted_at_by_receiver')->nullable();
             $table->timestamps();
         });
     }

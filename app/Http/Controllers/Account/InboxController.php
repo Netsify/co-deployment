@@ -1,8 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Account;
 
+use App\Http\Controllers\Controller;
+use App\Models\Facilities\Proposal;
+use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class InboxController extends Controller
@@ -14,7 +21,11 @@ class InboxController extends Controller
      */
     public function index(): View
     {
-        return view('account.inbox.index');
+        $proposals = Proposal::with('receiver', 'sender', 'facilities')
+            ->where('sender_id', Auth::user()->id)
+            ->get();
+
+        return view('account.sent-proposals.index', compact('proposals'));
     }
 
     /**
@@ -75,11 +86,26 @@ class InboxController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Proposal $proposal
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Proposal $proposal): RedirectResponse
     {
-        //
+        try {
+            $proposal->delete();
+            $proposal->deleted_at_by_receiver = Carbon::now();
+            $proposal->save();
+        } catch (\Exception $e) {
+            Session::flash('error', __('account.errors.deleteProposal'));
+
+            Log::error("Не удалось удалить предложение получателем", [
+                'message'  => $e->getMessage(),
+                'code'     => $e->getCode(),
+                'trace'    => $e->getTrace(),
+                'proposal' => $proposal->toArray()
+            ]);
+        }
+
+        return back();
     }
 }

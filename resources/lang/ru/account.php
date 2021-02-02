@@ -5,6 +5,8 @@
  */
 
 return [
+    'delete'         => 'Удалить',
+    'facilities'     => "Объекты",
     'inbox'          => 'Входящие',
     'open'           => 'Открыть',
     'projects'       => 'Проекты',
