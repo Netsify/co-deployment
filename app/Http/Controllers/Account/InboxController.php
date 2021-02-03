@@ -22,7 +22,7 @@ class InboxController extends Controller
     public function index(): View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
-            ->where('sender_id', Auth::user()->id)
+            ->where('receiver_id', Auth::user()->id)
             ->get();
 
         return view('account.sent-proposals.index', compact('proposals'));

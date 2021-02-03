@@ -14,40 +14,47 @@
 
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th scope="col">{{ __('account.open') }}</th>
-                            <th scope="col">{{ __('account.sender') }}</th>
-                            <th scope="col">{{ __('account.facilities') }}</th>
-                            <th scope="col">{{ __('account.subject') }}</th>
-                            <th scope="col">{{ __('account.status') }}</th>
-                            <th scope="col"></th>
-                        </tr>
+                            <tr>
+                                <th scope="col">{{ __('account.open') }}</th>
+                                <th scope="col">{{ __('account.sender') }}</th>
+                                <th scope="col">{{ __('account.facilities') }}</th>
+                                <th scope="col">{{ __('account.subject') }}</th>
+                                <th scope="col">{{ __('account.status') }}</th>
+                                <th scope="col"></th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($proposals as $proposal)
-                            <tr>
-                                <td></td>
-                                <td>
-                                    {{ $proposal->receiver->full_name }}
-                                </td>
-                                <td>
-                                    @foreach($proposal->facilities as $facility)
-                                        <div class="mb-1">
-                                            {{ $facility->title }}
-                                        </div>
-                                    @endforeach
-                                </td>
-                                <td>{{ $proposal->description }}</td>
-                                <td>{{ $proposal->status }}</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                            formaction="{{ route('account.sent-proposals.delete', $proposal) }}">
-                                        {{ __('account.delete') }}
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($proposals as $proposal)
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        {{ $proposal->receiver->full_name }}
+                                    </td>
+                                    <td>
+                                        @foreach($proposal->facilities as $facility)
+                                            <div class="mb-1">
+                                                {{ $facility->title }}
+                                            </div>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $proposal->description }}</td>
+                                    <td>
+                                        <select name="status" id="category" class="form-select @error('status') is-invalid @enderror">
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{ $proposal->status }}
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                formaction="{{ route('account.sent-proposals.delete', $proposal) }}">
+                                            {{ __('account.delete') }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </form>

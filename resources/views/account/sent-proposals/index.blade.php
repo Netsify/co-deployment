@@ -13,14 +13,14 @@
                     @csrf
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th scope="col">{{ __('account.open') }}</th>
-                            <th scope="col">{{ __('account.receiver') }}</th>
-                            <th scope="col">{{ __('account.facilities') }}</th>
-                            <th scope="col">{{ __('account.subject') }}</th>
-                            <th scope="col">{{ __('account.status') }}</th>
-                            <th scope="col"></th>
-                        </tr>
+                            <tr>
+                                <th scope="col">{{ __('account.open') }}</th>
+                                <th scope="col">{{ __('account.receiver') }}</th>
+                                <th scope="col">{{ __('account.facilities') }}</th>
+                                <th scope="col">{{ __('account.subject') }}</th>
+                                <th scope="col">{{ __('account.status') }}</th>
+                                <th scope="col"></th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -38,7 +38,9 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $proposal->description }}</td>
-                                    <td>{{ $proposal->status }}</td>
+                                    <td>
+                                        {{ $proposal->status }}
+                                    </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 formaction="{{ route('account.inbox.delete', $proposal) }}">

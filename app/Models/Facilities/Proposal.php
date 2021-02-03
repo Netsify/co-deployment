@@ -27,29 +27,29 @@ class Proposal extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * Статус пользователя
-     *
-     * @return string
-     */
-    public function getStatusAttribute()
-    {
-        try {
-            return match ($this->accepted) {
-                null => __('proposal.consideration'),
-                0    => __('proposal.rejected'),
-                1    => __('proposal.accepted'),
-            };
-        } catch (\UnhandledMatchError $e) {
-            Log::error('Неправильное значение свойства accepted модели Proposal', [
-                'message' => $e->getMessage(),
-                'code'    => $e->getCode(),
-                'trace'   => $e->getTrace(),
-            ]);
-
-            return __('proposal.wrong_value');
-        }
-    }
+//    /**
+//     * Статус пользователя
+//     *
+//     * @return string
+//     */
+//    public function getStatusAttribute()
+//    {
+//        try {
+//            return match ($this->accepted) {
+//                null => __('proposal.consideration'),
+//                0    => __('proposal.rejected'),
+//                1    => __('proposal.accepted'),
+//            };
+//        } catch (\UnhandledMatchError $e) {
+//            Log::error('Неправильное значение свойства accepted модели Proposal', [
+//                'message' => $e->getMessage(),
+//                'code'    => $e->getCode(),
+//                'trace'   => $e->getTrace(),
+//            ]);
+//
+//            return __('proposal.wrong_value');
+//        }
+//    }
 
     /**
      * Пользователь получатель предложения
