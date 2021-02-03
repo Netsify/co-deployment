@@ -29,16 +29,21 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        $facilities = Auth::user()->facilities;
-        $facilities->load('type.translations');
+        if (Auth::check()) {
+            $facilities = Auth::user()->facilities;
+            $facilities->load('type.translations');
 
-        $users_role = Auth::user()->role;
+            $users_role = Auth::user()->role->slug;
+        } else {
+            $users_role = null;
+            $facilities = null;
+        }
 
         $types = FacilityType::query();
 
         switch (true) {
-            case $users_role->slug == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
-            case $users_role->slug == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
+            case $users_role == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
+            case $users_role == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
         }
 
         $types = $types->orderByTranslation('name')->get();

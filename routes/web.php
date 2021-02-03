@@ -18,16 +18,17 @@ Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('
 
 Auth::routes();
 
+Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
+    ->name('facilities.search');
+
 Route::middleware('auth')->group(function () {
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
         ->except(['index', 'show']);
 
-    Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
-        ->name('facilities.search');
-
-    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
+    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
+        ->except('index', 'show');
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
@@ -78,6 +79,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
+
+Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
 
 /*Route::fallback(function () {
         return view('test');

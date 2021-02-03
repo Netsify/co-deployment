@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\Models\Article;
 use App\Models\File;
+use App\Models\Role;
 use App\Policies\KnowledgeBase\ArticlePolicy;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,5 +30,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('use-advanced-search', function (?User $user) {
+            $role = optional($user)->role;
+            return in_array(optional($role)->slug, [Role::ROLE_ICT_OWNER, Role::ROLE_ROADS_OWNER]);
+        });
     }
 }

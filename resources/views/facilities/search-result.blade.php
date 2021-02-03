@@ -19,6 +19,7 @@
                                     <p><b>{{ __('facility.type') }}: </b> {{ $facility->type->name }}</p>
                                     <p><b>{{ __('facility.location') }}: </b> {{ $facility->location }}</p>
                                     <p><b>{{ __('facility.owner') }}: </b> {{ $facility->user->full_name }}</p>
+                                    <hr>
                                 </div>
                             </div>
                         </div>

@@ -115,4 +115,15 @@ class Facility extends Model
     {
         return mb_substr(strip_tags($this->description), 0, 200, 'UTF-8');
     }
+
+    /**
+     * Объект по строковому идентификатору
+     *
+     * @param string $identificator
+     * @return Model|static
+     */
+    public static function findByIdentificator(string $identificator) : self
+    {
+        return self::query()->where('identificator', $identificator)->firstOrFail();
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Services;
 use App\Models\Facilities\Facility;
 use App\Models\File;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -128,5 +130,35 @@ class FacilitiesService
         }
 
         return true;
+    }
+
+    public static function getCompatibilityRating(Facility $facility, $objects)
+    {
+        $facility->load('compatibilityParams.translations');
+        $f_params = $facility->compatibilityParams->toArray();
+        $array = [];
+        $objects->load('compatibilityParams.translations');
+        if ($objects instanceof Collection) {
+            foreach ($objects as $object) {
+                dump(1);
+                /*$obj_params = $object->compatibilityParams->toArray();
+//                dump($obj_params);
+
+                foreach ($f_params as $param) {
+                    $group = $param['group_id'];
+                    $param_id = $param['pivot']['compatibility_param_id'];
+                    $array[$group][$param_id][] = $param;
+                }
+
+                foreach ($obj_params as $param) {
+                    $group = $param['group_id'];
+                    $param_id = $param['pivot']['compatibility_param_id'];
+                    $array[$group][$param_id][] = $param;
+                }*/
+
+//                echo "<hr>";
+            }
+        }
+        dump($array);
     }
 }
