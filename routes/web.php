@@ -24,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
         ->except(['index', 'show']);
 
+    Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
+        ->name('facilities.search');
+
     Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
@@ -76,6 +79,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 
-Route::fallback(function () {
+/*Route::fallback(function () {
         return view('test');
-});
+});*/

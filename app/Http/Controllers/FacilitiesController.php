@@ -29,9 +29,21 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        $facilities = Facility::query()->with(['type', 'visibility', 'user'])->get();
+        $facilities = Auth::user()->facilities;
+        $facilities->load('type.translations');
 
-        return view('facilities.index', compact('facilities'));
+        $users_role = Auth::user()->role;
+
+        $types = FacilityType::query();
+
+        switch (true) {
+            case $users_role->slug == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
+            case $users_role->slug == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
+        }
+
+        $types = $types->orderByTranslation('name')->get();
+
+        return view('facilities.search-form', compact('facilities', 'types'));
     }
 
     /**
@@ -43,11 +55,13 @@ class FacilitiesController extends Controller
     {
         $facility = new Facility();
         $types = FacilityType::query();
-        $types = match(true) {
+
+        match(true) {
             Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', 'ict'),
             Auth::user()->role->slug == Role::ROLE_ADMIN => $types,
             default => $types->where('slug', '!=', 'ict'),
         };
+
         $types = $types->orderByTranslation('name')->get();
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
         $compatibility_params = CompatibilityParamGroup::with('params.translations')
@@ -101,7 +115,9 @@ class FacilitiesController extends Controller
      */
     public function show(Facility $facility)
     {
-        //
+        $facility->load('files');
+
+        return view('facilities.show', compact('facility'));
     }
 
     /**
