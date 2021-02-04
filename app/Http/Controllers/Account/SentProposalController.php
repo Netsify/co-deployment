@@ -20,7 +20,7 @@ class SentProposalController extends Controller
      */
     public function index()
     {
-        $proposals = Proposal::with('receiver', 'sender', 'facilities', 'status')
+        $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('sender_id', Auth::user()->id)
             ->get();
 

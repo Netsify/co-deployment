@@ -11,6 +11,7 @@ return [
     'open'           => 'Open',
     'projects'       => 'Projects',
     'receiver'       => 'To',
+    'sender'         => 'Sender',
     'sent_proposals' => 'Sent Proposals',
     'subject'        => 'Short description',
     'status'         => 'Status',

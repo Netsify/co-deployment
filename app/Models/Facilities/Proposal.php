@@ -92,6 +92,6 @@ class Proposal extends Model
      */
     public function status() : HasOne
     {
-        return $this->hasOne(ProposalStatus::class, 'id');
+        return $this->hasOne(ProposalStatus::class,'id','status_id');
     }
 }

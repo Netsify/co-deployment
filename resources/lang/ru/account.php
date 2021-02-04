@@ -11,6 +11,7 @@ return [
     'open'           => 'Открыть',
     'projects'       => 'Проекты',
     'receiver'       => 'Кому',
+    'sender'         => 'Отправитель',
     'sent_proposals' => 'Отправленные предложения',
     'subject'        => 'Тема',
     'status'         => 'Статус',
