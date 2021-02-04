@@ -29,7 +29,7 @@ class FacilitiesSearchService
      */
     public function __construct()
     {
-        $this->builder = Facility::query();
+        $this->builder = Facility::query()->where('user_id', '!=', Auth::id());
     }
 
     /**
@@ -64,22 +64,21 @@ class FacilitiesSearchService
      */
     public function searchByAvailableTypes()
     {
-        switch (true) {
-            case Auth::user()->role->slug == Role::ROLE_ICT_OWNER :
-                $this->builder->whereIn('type_id', function (Builder $query) {
-                    $query->select('id')->from((new FacilityType())->getTable())
-                        ->where('slug', '!=', Role::ROLE_ICT_OWNER);
-                });
-                break;
-            case Auth::user()->role->slug == Role::ROLE_ADMIN :
-                $this->builder;
-                break;
-            default :
-                $this->builder->where('type_id', function (Builder $query) {
-                    $query->select('id')->from((new FacilityType())->getTable())
-                        ->where('slug', Role::ROLE_ICT_OWNER);
-                });
-                break;
+        if (Auth::check()) {
+            switch (true) {
+                case Auth::user()->role->slug == Role::ROLE_ICT_OWNER :
+                    $this->builder->whereIn('type_id', function (Builder $query) {
+                        $query->select('id')->from((new FacilityType())->getTable())
+                            ->where('slug', '!=', Role::ROLE_ICT_OWNER);
+                    });
+                    break;
+                case Auth::user()->role->slug == Role::ROLE_ROADS_OWNER :
+                    $this->builder->where('type_id', function (Builder $query) {
+                        $query->select('id')->from((new FacilityType())->getTable())
+                            ->where('slug', Role::ROLE_ICT_OWNER);
+                    });
+                    break;
+            }
         }
     }
 
@@ -88,10 +87,16 @@ class FacilitiesSearchService
      */
     public function searchByVisibilities()
     {
-        $this->builder->whereIn('visibility_id', function (Builder $query) {
+        $visibilities = [FacilityVisibility::FOR_ALL];
+
+        if (Auth::check()) {
+            $visibilities[] = FacilityVisibility::FOR_REGISTERED;
+        }
+
+        $this->builder->whereIn('visibility_id', function (Builder $query) use ($visibilities) {
             $query->select('id')
                 ->from((new FacilityVisibility())->getTable())
-                ->whereIn('slug', [FacilityVisibility::FOR_REGISTERED, FacilityVisibility::FOR_ALL]);
+                ->whereIn('slug', $visibilities);
         });
     }
 
@@ -116,6 +121,6 @@ class FacilitiesSearchService
      */
     public function getSearched()
     {
-        return $this->builder->get()->load('type', 'user');
+        return $this->builder->get()->load('type.translations', 'user', 'compatibilityParams');
     }
 }

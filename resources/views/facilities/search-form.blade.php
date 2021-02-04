@@ -20,15 +20,21 @@
                 <label for="owner" class="form-label">{{ __('facility.owner') }}</label>
                 <input type="text" class="form-control" id="owner" name="owner">
             </div>
-            <div class="mb-3">
-                <label for="facility" class="form-label">{{ __('facility.my_facilities') }}</label>
-                <select class="form-select" id="facility" name="facility">
-                    <option value="0" selected>{{ __('facility.select_facility') }}</option>
-                @foreach($facilities as $facility)
-                        <option value="{{ $facility->identificator }}">{{ $facility->title }} ({{ $facility->type->name }})</option>
-                    @endforeach
-                </select>
-            </div>
+            @can('use-advanced-search')
+                <div class="mb-3">
+                    <label for="level" class="form-label">{{ __('facility.min_c_level') }}</label>
+                    <input type="text" name="level" id="level" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="facility" class="form-label">{{ __('facility.my_facilities') }}</label>
+                    <select class="form-select" id="facility" name="facility">
+                        <option value="0" selected>{{ __('facility.select_facility') }}</option>
+                    @foreach($facilities as $facility)
+                            <option value="{{ $facility->id }}">{{ $facility->title }} ({{ $facility->type->name }})</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endcan
             <button type="submit" class="btn btn-primary">{{ __('facility.find') }}</button>
         </form>
     </div>

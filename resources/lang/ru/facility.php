@@ -3,6 +3,7 @@
 return [
     'attachments' => "Прикреплённые файлы",
     'create_facility' => "Создать объект",
+    'c_level' => "Уровень совместимости",
     'description' => "Описание",
     'facilities' => "Объекты",
     'facilities_not_found' => "Объекты не найдены",
@@ -12,6 +13,7 @@ return [
     'facility_name_or_id' => "Название или id объекта",
     'find' => "Найти",
     'location' => "Расположение",
+    'min_c_level' => "Минимальный уровень совместимости",
     'my_facilities' => "Мои объекты",
     'new_facility' => "Новый объект",
     'no_loaded_files' => "У этого объекта нет загруженных файлов",

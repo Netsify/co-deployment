@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -29,16 +30,21 @@ class FacilitiesController extends Controller
      */
     public function index()
     {
-        $facilities = Auth::user()->facilities;
-        $facilities->load('type.translations');
+        if (Auth::check()) {
+            $facilities = Auth::user()->facilities;
+            $facilities->load('type.translations');
 
-        $users_role = Auth::user()->role;
+            $users_role = Auth::user()->role->slug;
+        } else {
+            $users_role = null;
+            $facilities = null;
+        }
 
         $types = FacilityType::query();
 
         switch (true) {
-            case $users_role->slug == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
-            case $users_role->slug == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
+            case $users_role == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
+            case $users_role == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
         }
 
         $types = $types->orderByTranslation('name')->get();
@@ -54,6 +60,11 @@ class FacilitiesController extends Controller
     public function create()
     {
         $facility = new Facility();
+
+        if (Gate::denies('create', $facility)) {
+            abort(403);
+        }
+
         $types = FacilityType::query();
 
         match(true) {
@@ -115,6 +126,10 @@ class FacilitiesController extends Controller
      */
     public function show(Facility $facility)
     {
+        if (Gate::denies('view', $facility)) {
+            abort(403);
+        }
+
         $facility->load('files');
 
         return view('facilities.show', compact('facility'));
