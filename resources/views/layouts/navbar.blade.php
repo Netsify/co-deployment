@@ -36,9 +36,11 @@
                         {{ __('facility.facilities') }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item"
-                               href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
-                        </li>
+                        @can('create', \App\Models\Facilities\Facility::class)
+                            <li><a class="dropdown-item"
+                                   href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
+                            </li>
+                        @endcan
                         <li><a class="dropdown-item"
                                href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a></li>
                     </ul>
@@ -78,7 +80,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.index') }}">{{ __('dictionary.Profile') }}</a>
+                            <a class="dropdown-item"
+                               href="{{ route('profile.index') }}">{{ __('dictionary.Profile') }}</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

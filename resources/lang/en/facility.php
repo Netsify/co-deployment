@@ -13,6 +13,7 @@ return [
     'facility_name_or_id' => "Facility's name or id",
     'find' => "Find",
     'location' => "Location",
+    'min_c_level' => "Minimal compatibility level",
     'my_facilities' => "My facilities",
     'new_facility' => "New location",
     'no_loaded_files' => "This facility has no loaded files",

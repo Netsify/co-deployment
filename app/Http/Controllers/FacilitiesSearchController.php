@@ -6,6 +6,7 @@ use App\Models\Facilities\Facility;
 use App\Services\FacilitiesSearchService;
 use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class FacilitiesSearchController extends Controller
 {
@@ -15,7 +16,8 @@ class FacilitiesSearchController extends Controller
         $name_or_id = $request->input('name_or_id');
         $owner = trim(strip_tags($request->input('owner')));
 
-        $my_facility_identificator = strip_tags($request->input('facility'));
+        $my_facility_identificator = abs((int)$request->input('facility'));
+        $level = floatval($request->input('level'));
 
         $facilitiesSearchService = new FacilitiesSearchService();
 
@@ -37,10 +39,13 @@ class FacilitiesSearchController extends Controller
 
         $facilities = $facilitiesSearchService->getSearched();
 
-        if ($my_facility_identificator) {
-            $my_facility = Facility::findByIdentificator($my_facility_identificator);
+        if (Gate::allows('use-advanced-search')) {
+            if ($my_facility_identificator && $level) {
+                $my_facility = Facility::find($my_facility_identificator);
 
-            FacilitiesService::getCompatibilityRating($my_facility, $facilities);
+                FacilitiesService::getCompatibilityRating($my_facility, $facilities);
+                $facilities = $facilities->where('compatibility_level', '<=', $level);
+            }
         }
 
         return view('facilities.search-result', compact('facilities'));

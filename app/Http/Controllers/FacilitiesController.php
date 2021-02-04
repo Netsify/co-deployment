@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Services\FacilitiesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -59,6 +60,11 @@ class FacilitiesController extends Controller
     public function create()
     {
         $facility = new Facility();
+
+        if (Gate::denies('create', $facility)) {
+            abort(403);
+        }
+
         $types = FacilityType::query();
 
         match(true) {
@@ -120,6 +126,10 @@ class FacilitiesController extends Controller
      */
     public function show(Facility $facility)
     {
+        if (Gate::denies('view', $facility)) {
+            abort(403);
+        }
+
         $facility->load('files');
 
         return view('facilities.show', compact('facility'));
