@@ -41,9 +41,8 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            tst: 'some',
             type_id: 0,
-            selected_type: ''
+            type_name: ''
         }
     },
     components: {
@@ -52,7 +51,7 @@ const app = new Vue({
     methods: {
         getType: function (event) {
             var select = event.target;
-            this.selected_type = select.options[select.selectedIndex].text;
+            this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
         }
     }
