@@ -132,33 +132,33 @@ class FacilitiesService
         return true;
     }
 
-    public static function getCompatibilityRating(Facility $facility, $objects)
+    public static function getCompatibilityRating(Facility $facility, &$objects)
     {
         $facility->load('compatibilityParams.translations');
-        $f_params = $facility->compatibilityParams->toArray();
-        $array = [];
+        $f_params = $facility->compatibilityParams;//->toArray();
+        $param_ids = $f_params->pluck('group_id', 'id');
         $objects->load('compatibilityParams.translations');
         if ($objects instanceof Collection) {
-            foreach ($objects as $object) {
-                dump(1);
-                /*$obj_params = $object->compatibilityParams->toArray();
-//                dump($obj_params);
+            foreach ($objects as $key => $object) {
+                $obj_params = $object->compatibilityParams;
 
-                foreach ($f_params as $param) {
-                    $group = $param['group_id'];
-                    $param_id = $param['pivot']['compatibility_param_id'];
-                    $array[$group][$param_id][] = $param;
+                $array = [];
+                foreach ($param_ids as $param_id => $group) {
+                    $div = $obj_params->find($param_id)->pivot->value - $f_params->find($param_id)->pivot->value;
+                    $div = abs($div);
+                    $array[$group][] = $div;
                 }
 
-                foreach ($obj_params as $param) {
-                    $group = $param['group_id'];
-                    $param_id = $param['pivot']['compatibility_param_id'];
-                    $array[$group][$param_id][] = $param;
-                }*/
+                $sum = 0;
+                foreach ($array as $value) {
+                    $sum += array_sum($value) / count($value);
+                }
 
-//                echo "<hr>";
+                $object->compatibility_level = round($sum / count($array), 2);
+                $objects[$key] = $object;
             }
+
         }
-        dump($array);
+
     }
 }

@@ -3,6 +3,7 @@
 return [
     'attachments' => "Attachments",
     'create_facility' => "Create facility",
+    'c_level' => "Compatibility level",
     'description' => "Description",
     'facilities' => "Facilities",
     'facilities_not_found' => "Facilities not found",

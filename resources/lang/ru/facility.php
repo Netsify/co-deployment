@@ -3,6 +3,7 @@
 return [
     'attachments' => "Прикреплённые файлы",
     'create_facility' => "Создать объект",
+    'c_level' => "Уровень совместимости",
     'description' => "Описание",
     'facilities' => "Объекты",
     'facilities_not_found' => "Объекты не найдены",

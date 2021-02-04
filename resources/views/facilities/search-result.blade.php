@@ -11,8 +11,6 @@
                             <div class="card">
                                 <div class="card-header">
                                     <b>{{ $facility->title }}</b>
-                                    <a href="{{ route('facilities.show', $facility->id) }}"
-                                       class="btn btn-sm btn-info" style="float: right">{{ __('facility.open') }}</a>
                                 </div>
                                 <div class="card-body">
                                     <h6 class="card-text">{{ $facility->preview }}</h6>
@@ -20,6 +18,15 @@
                                     <p><b>{{ __('facility.location') }}: </b> {{ $facility->location }}</p>
                                     <p><b>{{ __('facility.owner') }}: </b> {{ $facility->user->full_name }}</p>
                                     <hr>
+
+                                    @can('use-advanced-search')
+                                        <p><b>{{ __('facility.c_level') }}: </b> {{ $facility->compatibility_level }}</p>
+                                    @endcan
+
+                                    <div class="d-grid gap-2">
+                                        <a href="{{ route('facilities.show', $facility->id) }}"
+                                           class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
