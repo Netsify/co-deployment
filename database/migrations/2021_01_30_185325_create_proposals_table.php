@@ -19,7 +19,7 @@ class CreateProposalsTable extends Migration
             $table->foreign('sender_id')->references('id')->on('users');
             $table->integer('receiver_id')->unsigned();
             $table->foreign('receiver_id')->references('id')->on('users');
-            $table->integer('status_id')->unsigned();
+            $table->integer('status_id')->unsigned()->default(1);
             $table->foreign('status_id')->references('id')->on('proposal_statuses');
             $table->text('description')->nullable();
             $table->softDeletes();

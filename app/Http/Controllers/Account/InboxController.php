@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Facilities\Proposal;
+use App\Models\Facilities\ProposalStatus;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,9 @@ class InboxController extends Controller
             ->where('receiver_id', Auth::user()->id)
             ->get();
 
-        return view('account.sent-proposals.index', compact('proposals'));
+        $statuses = ProposalStatus::all();
+
+        return view('account.inbox.index', compact('proposals', 'statuses'));
     }
 
     /**
@@ -74,13 +77,23 @@ class InboxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Proposal $proposal
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Proposal $proposal): RedirectResponse
     {
-        //
+        $proposal->status_id = $request->input('status');
+
+        if ($proposal->save()) {
+            session()->flash('message', __('account.ProposalSaved'));
+        } else {
+            session()->flash('message', __('account.ProposalNotSaved'));
+
+            Log::error('Не удалось обновить статус предложения', compact('proposal'));
+        }
+
+        return back();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Facilities\Proposal;
+use App\Models\Facilities\ProposalStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,11 +20,13 @@ class SentProposalController extends Controller
      */
     public function index()
     {
-        $proposals = Proposal::with('receiver', 'sender', 'facilities')
+        $proposals = Proposal::with('receiver', 'sender', 'facilities', 'status')
             ->where('sender_id', Auth::user()->id)
             ->get();
 
-        return view('account.sent-proposals.index', compact('proposals'));
+        $statuses = ProposalStatus::all();
+
+        return view('account.sent-proposals.index', compact('proposals', 'statuses'));
     }
 
     /**

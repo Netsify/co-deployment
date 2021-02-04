@@ -39,7 +39,7 @@
                                     </td>
                                     <td>{{ $proposal->description }}</td>
                                     <td>
-                                        {{ $proposal->status }}
+                                        {{ $proposal->status->name }}
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger btn-sm"

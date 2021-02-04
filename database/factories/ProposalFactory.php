@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Facilities\Proposal;
+use App\Models\Facilities\ProposalStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -27,7 +28,7 @@ class ProposalFactory extends Factory
         return [
             'sender_id' => $users->random()->id,
             'receiver_id' => $users->random()->id,
-            'accepted' => $this->faker->boolean(50) ? rand(0, 1) : null,
+            'status_id' => ProposalStatus::all()->random()->id,
             'description' => $this->faker->text,
             'deleted_at' => $this->faker->boolean(20) ? $this->faker->dateTime : null,
         ];

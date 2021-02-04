@@ -32,17 +32,24 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', \App\Http\Controllers\ProjectController::class)
         ->only('index', 'edit', 'update');
 
-    Route::get('inbox', [\App\Http\Controllers\Account\InboxController::class, 'index'])
-        ->name('account.inbox.index');
+    /**
+     * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
+     */
+    Route::prefix('account')->name('account.')->group(function () {
 
-    Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
-        ->name('account.inbox.delete');
+        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
+            ->except('destroy');
 
-    Route::get('sent-proposals', [\App\Http\Controllers\Account\SentProposalController::class, 'index'])
-        ->name('account.sent-proposals.index');
+        Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
+            ->name('inbox.delete');
 
-    Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
-        ->name('account.sent-proposals.delete');
+        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
+            ->except('destroy');
+
+        Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
+            ->name('sent-proposals.delete');
+
+    });
 
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');

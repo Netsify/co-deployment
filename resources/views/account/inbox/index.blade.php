@@ -40,16 +40,16 @@
                                     </td>
                                     <td>{{ $proposal->description }}</td>
                                     <td>
-                                        <select name="status" id="category" class="form-select @error('status') is-invalid @enderror">
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <select name="status" id="status" class="form-select
+                                            @error('status') is-invalid @enderror">
+                                            @foreach($statuses as $status)
+                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
                                             @endforeach
                                         </select>
-                                        {{ $proposal->status }}
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                formaction="{{ route('account.sent-proposals.delete', $proposal) }}">
+                                                formaction="{{ route('account.inbox.delete', $proposal) }}">
                                             {{ __('account.delete') }}
                                         </button>
                                     </td>

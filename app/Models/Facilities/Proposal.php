@@ -3,11 +3,13 @@
 namespace App\Models\Facilities;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 
@@ -17,8 +19,10 @@ use Illuminate\Support\Facades\Log;
  * @property int $id
  * @property int $sender_id                  - ИД пользователя отправителя
  * @property int $receiver_id                - ИД пользователя получателя
+ * @property int $status_id                  - ИД статуса предложения
  * @property boolean $accepted               - статус
  * @property string $description             - описание и детали
+ * @property Carbon $deleted_at_by_receiver  - удалено получателем предложения
  *
  * Class Proposal
  * @package App\Models\Facilities
@@ -79,5 +83,15 @@ class Proposal extends Model
     public function facilities() : BelongsToMany
     {
         return $this->belongsToMany(Facility::class);
+    }
+
+    /**
+     * Статусы предложения
+     *
+     * @return HasOne
+     */
+    public function status() : HasOne
+    {
+        return $this->hasOne(ProposalStatus::class, 'id');
     }
 }
