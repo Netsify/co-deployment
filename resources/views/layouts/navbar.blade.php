@@ -36,15 +36,13 @@
                         {{ __('facility.facilities') }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item"
-                               href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
-                        </li>
+                        @can('create', \App\Models\Facilities\Facility::class)
+                            <li><a class="dropdown-item"
+                                   href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
+                            </li>
+                        @endcan
                         <li><a class="dropdown-item"
                                href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 @auth
@@ -78,11 +76,13 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
                             {{ Auth::user()->full_name }}
+                            <small>({{ Auth::user()->role->name }})</small>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
-                                {{ __('dictionary.Profile') }}
+                                {{ __('account.profile') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('projects.index') }}">

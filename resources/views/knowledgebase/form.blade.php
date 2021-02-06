@@ -66,12 +66,17 @@
 
                             <div class="mb-3">
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
-                                <select name="tag[]" id="tag" class="form-select" multiple>
+                                <select name="tag[]" id="tag" class="form-select  @error('tag') is-invalid @enderror" multiple>
                                     <option value="0" disabled>{{ __('knowledgebase.SelectTags') }}</option>
                                     @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}" {{ isset($article) && $article->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->id }}" {{
+                                            (isset($article) && $article->tags->contains($tag)) || (old('tag')) && in_array($tag->id, old('tag')) ? 'selected' : ''
+                                        }}>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('tag')
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
                             </div>
 
                             <div class="mb-3">

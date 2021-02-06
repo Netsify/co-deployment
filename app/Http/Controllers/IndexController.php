@@ -14,12 +14,13 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $articles = Article::published()
+        /*$articles = Article::published()
             ->with(['category.translations', 'user'])
             ->orderByDesc('created_at')
             ->limit(10)
             ->get();
 
-        return view('index', compact('articles'));
+        return view('index', compact('articles'));*/
+        return view('attention');
     }
 }

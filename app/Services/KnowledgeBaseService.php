@@ -36,7 +36,7 @@ class KnowledgeBaseService
      * @param array|null $files
      * @return bool
      */
-    public function createArticle(array $tags = null, array $files = null): bool
+    public function createArticle(array $tags = null, ?array $files = null): bool
     {
         $article = $this->_user->articles()->save($this->_article);
 
@@ -60,13 +60,15 @@ class KnowledgeBaseService
             return false;
         }
 
-        if (!$this->attachFilesToArticle($files)) {
-            Log::error('Не удалось добавить файлы к статье', [
-                'article' => $this->_article,
-                'files'   => $files
-            ]);
+        if (!is_null($files)) {
+            if (!$this->attachFilesToArticle($files)) {
+                Log::error('Не удалось добавить файлы к статье', [
+                    'article' => $this->_article,
+                    'files' => $files
+                ]);
 
-            return false;
+                return false;
+            }
         }
 
         return true;
@@ -79,7 +81,7 @@ class KnowledgeBaseService
      * @param array|null $files
      * @return bool
      */
-    public function updateArticle(array $tags = null, array $files = null): bool
+    public function updateArticle(array $tags = null, ?array $files = null): bool
     {
         if (!$this->_article->save()) {
             return false;
@@ -94,13 +96,15 @@ class KnowledgeBaseService
             return false;
         }
 
-        if (!$this->attachFilesToArticle($files)) {
-            Log::error('Не удалось изменить файлы у статьи', [
-                'article' => $this->_article,
-                'files'   => $files
-            ]);
+        if (!is_null($files)) {
+            if (!$this->attachFilesToArticle($files)) {
+                Log::error('Не удалось изменить файлы у статьи', [
+                    'article' => $this->_article,
+                    'files' => $files
+                ]);
 
-            return false;
+                return false;
+            }
         }
 
         return true;
@@ -121,8 +125,9 @@ class KnowledgeBaseService
      * Прикрепляет файлы к статье
      *
      * @param array $files
+     * @return bool
      */
-    private function attachFilesToArticle(array $files)
+    private function attachFilesToArticle(array $files) : bool
     {
         foreach ($files as $file) {
             $storedPath = $file->store('articles', 'public');

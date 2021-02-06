@@ -26,7 +26,15 @@ class ArticleRequest extends FormRequest
         return [
             'title'    => ['required', 'string:255'],
             'content'  => ['required'],
-            'category' => ['integer', 'exists:categories,id']
+            'category' => ['integer', 'exists:categories,id'],
+            'tag'      => ['required', 'array']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'tag.required' => __('knowledgebase.no_chosen_tags')
         ];
     }
 }
