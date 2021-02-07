@@ -20,13 +20,13 @@ class InboxController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index() : View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('receiver_id', Auth::user()->id)
             ->get();
 
-        $statuses = ProposalStatus::all()->toJson();
+        $statuses = ProposalStatus::all();
 
         return view('account.inbox.index', compact('proposals', 'statuses'));
     }
