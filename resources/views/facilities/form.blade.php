@@ -16,7 +16,7 @@
                                     <a class="nav-link active" data-toggle="tab" href="#facility"
                                        role="tab">{{ __('facility.facility') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" v-if="type_id != 0">
                                     <a class="nav-link" data-toggle="tab" href="#compatibility_params"
                                        role="tab">{{ __('admin.compatibility_params') }}</a>
                                 </li>

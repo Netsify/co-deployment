@@ -81,7 +81,3 @@ Route::middleware('auth')->group(function () {
 Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 
 Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
-
-/*Route::fallback(function () {
-        return view('test');
-});*/

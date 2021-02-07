@@ -27,9 +27,14 @@ Vue.component('example-component', require('./components/CompatibilityParams'));
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+import route from './route';
+
 import CompatibilityParams from './components/CompatibilityParams';
 
 import App from './components/App';
+
+// route('articles.delete_file', 5, 1);
 
 // import CKEditor from 'public/ckeditor/ckeditor';
 /*
@@ -42,17 +47,35 @@ const app = new Vue({
     data() {
         return {
             type_id: 0,
-            type_name: ''
+            type_name: '',
+            current_locale: ''
         }
     },
     components: {
-        'app': App
+        'c-params': CompatibilityParams
     },
     methods: {
         getType: function (event) {
-            var select = event.target;
+            var select = event == undefined ? document.getElementById('type') : event.target;
             this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
+        },
+
+        getDescriptions() {
+            switch (this.current_locale) {
+                case 'EN': var prefix = '/en'; break;
+                default: var prefix = ''; break;
+            }
+
+            var uri = prefix + route('facilities.compatibility_params');
+            axios.get(uri).then(response => console.log(response.data.data))
         }
+
+    },
+    mounted() {
+        this.current_locale = document.getElementById('lang').innerText;
+        this.getType();
+
+        this.getDescriptions();
     }
 });
