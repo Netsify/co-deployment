@@ -33,6 +33,28 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
+    Route::resource('projects', \App\Http\Controllers\ProjectController::class)
+        ->only('index', 'edit', 'update');
+
+    /**
+     * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
+     */
+    Route::prefix('account')->name('account.')->group(function () {
+
+        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
+            ->except('destroy');
+
+        Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
+            ->name('inbox.delete');
+
+        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
+            ->except('destroy');
+
+        Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
+            ->name('sent-proposals.delete');
+
+    });
+
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
 
