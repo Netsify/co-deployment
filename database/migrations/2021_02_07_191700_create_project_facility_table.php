@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProposalFacilityTable extends Migration
+class CreateProjectFacilityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateProposalFacilityTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposal_facility', function (Blueprint $table) {
+        Schema::create('project_facility', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('proposal_id')->unsigned();
-            $table->foreign('proposal_id')->references('id')->on('proposals');
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->integer('facility_id')->unsigned();
             $table->foreign('facility_id')->references('id')->on('facilities');
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateProposalFacilityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposal_facility');
+        Schema::dropIfExists('project_facility');
     }
 }

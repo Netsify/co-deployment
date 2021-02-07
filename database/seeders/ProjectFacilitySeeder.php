@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Facilities\Facility;
-use App\Models\Facilities\Proposal;
+use App\Models\Project;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProposalFacilitySeeder extends Seeder
+class ProjectFacilitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,9 +17,9 @@ class ProposalFacilitySeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 10; $i++) {
-            DB::table('proposal_facility')->insert(
+            DB::table('project_facility')->insert(
                 [
-                    'proposal_id' => 1 /*Proposal::all()->random()->id*/,
+                    'project_id' => 1 /*Project::all()->random()->id*/,
                     'facility_id' => Facility::all()->random()->id,
                 ]
             );
