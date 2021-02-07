@@ -158,6 +158,8 @@ class FacilitiesService
                 $objects[$key] = $object;
             }
 
+        } elseif ($objects instanceof Facility) {
+            dd(1);
         }
 
     }

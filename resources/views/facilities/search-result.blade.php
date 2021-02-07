@@ -24,7 +24,7 @@
                                     @endcan
 
                                     <div class="d-grid gap-2">
-                                        <a href="{{ route('facilities.show', $facility->id) }}"
+                                        <a href="{{ route('facilities.show', $facility->id) }}?my_facility={{request()->input('facility')}}"
                                            class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
                                     </div>
                                 </div>
