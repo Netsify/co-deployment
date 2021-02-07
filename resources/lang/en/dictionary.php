@@ -26,7 +26,6 @@ return [
     'SwitchTo'           => "EN",
     'Organization'       => "Organization",
     'PersonalData'       => "Personal Data",
-    'Profile'            => "Profile",
     'ProfileSaved'       => "Your profile has been successfully updated!",
     'ProfileNotSaved'    => "Unfortunately, your profile was not updated due to a system error. Please, contact the administrator.",
     'Phone'              => "Phone",

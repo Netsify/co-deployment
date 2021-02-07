@@ -39,10 +39,14 @@ CKEditor.replace('content');
 
 const app = new Vue({
     el: '#app',
+    props: ['statuses'],
     data() {
         return {
             type_id: 0,
-            type_name: ''
+            type_name: '',
+
+            statusSelect: null,
+            route: null,
         }
     },
     components: {
@@ -53,6 +57,16 @@ const app = new Vue({
             var select = event.target;
             this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
+        },
+
+        updateStatus: function () {
+            fetch(this.route).then(
+                response => response.json()).then(json => {
+                this.data = json.data
+            });
         }
+    },
+    mounted() {
+        console.log(this.statuses);
     }
 });

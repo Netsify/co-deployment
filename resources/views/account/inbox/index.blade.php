@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app-vue')
 
-@section('content')
+@section('vue-content')
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -40,12 +40,8 @@
                                     </td>
                                     <td>{{ $proposal->description }}</td>
                                     <td>
-                                        <select name="status" id="status" class="form-select
-                                            @error('status') is-invalid @enderror">
-                                            @foreach($statuses as $status)
-                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <x-account.select-status :route="route('account.inbox.update', $proposal)"
+                                                                 :statuses="$statuses"></x-account.select-status>
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger btn-sm"

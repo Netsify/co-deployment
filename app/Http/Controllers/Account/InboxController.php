@@ -26,7 +26,7 @@ class InboxController extends Controller
             ->where('receiver_id', Auth::user()->id)
             ->get();
 
-        $statuses = ProposalStatus::all();
+        $statuses = ProposalStatus::all()->toJson();
 
         return view('account.inbox.index', compact('proposals', 'statuses'));
     }

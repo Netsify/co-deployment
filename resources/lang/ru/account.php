@@ -9,6 +9,7 @@ return [
     'facilities'     => "Объекты",
     'inbox'          => 'Входящие',
     'open'           => 'Открыть',
+    'profile'        => 'Профиль',
     'projects'       => 'Проекты',
     'receiver'       => 'Кому',
     'sender'         => 'Отправитель',

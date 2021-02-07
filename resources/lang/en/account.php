@@ -9,6 +9,7 @@ return [
     'facilities'     => "Facilities",
     'inbox'          => 'Inbox',
     'open'           => 'Open',
+    'profile'        => 'Profile',
     'projects'       => 'Projects',
     'receiver'       => 'To',
     'sender'         => 'Sender',
