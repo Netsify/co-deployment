@@ -21,12 +21,19 @@
                                 <p><b>{{ __('facility.owner') }}: </b>{{ $facility->user->full_name }}</p>
                             </div>
                         </div>
-
+                        @if ($facility->compatibility_level)
+                            <div class="row">
+                                <p class="card-text text-justify">
+                                    <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
+                                </p>
+                            </div>
+                        @endif
                         <hr>
                         <h5 class="card-text">{{ __('facility.attachments') }}</h5>
                         @forelse($facility->files as $file)
                             <p>
-                                <a href="{{ $file->link }}" target="_blank" class="btn btn-sm btn-link">{{ $file->name }}</a>
+                                <a href="{{ $file->link }}" target="_blank"
+                                   class="btn btn-sm btn-link">{{ $file->name }}</a>
                             </p>
                         @empty
                             <p>{{ __('facility.no_loaded_files') }}</p>

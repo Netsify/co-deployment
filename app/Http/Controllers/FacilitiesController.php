@@ -132,7 +132,9 @@ class FacilitiesController extends Controller
 
         $my_facility = request()->input('my_facility');
         $my_facility = Facility::find($my_facility);
-        FacilitiesService::getCompatibilityRating($my_facility, $facility);
+        if ($my_facility) {
+            FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
+        }
 
         $facility->load('files');
 
