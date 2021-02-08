@@ -63,6 +63,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
 
+    Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
+        [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');
+
     /**
      * Роуты для работы с админкой
      */

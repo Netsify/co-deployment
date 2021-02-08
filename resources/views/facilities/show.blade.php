@@ -21,13 +21,6 @@
                                 <p><b>{{ __('facility.owner') }}: </b>{{ $facility->user->full_name }}</p>
                             </div>
                         </div>
-                        @if ($facility->compatibility_level)
-                            <div class="row">
-                                <p class="card-text text-justify">
-                                    <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
-                                </p>
-                            </div>
-                        @endif
                         <hr>
                         <h5 class="card-text">{{ __('facility.attachments') }}</h5>
                         @forelse($facility->files as $file)
@@ -38,6 +31,21 @@
                         @empty
                             <p>{{ __('facility.no_loaded_files') }}</p>
                         @endforelse
+
+                        @if ($facility->compatibility_level)
+                            <hr>
+                            <div class="row">
+                                <p class="card-text text-justify">
+                                    <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
+                                </p>
+                            </div>
+                            <div class="row">
+                                {{--Форма отправки предложения--}}
+                                {{--@dd($facility)--}}
+                                <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
+                                {{--Форма отправки предложения--}}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -158,6 +158,7 @@ class FacilitiesService
      */
     public static function getCompatibilityRatingByParams(Collection $my_facility_c_params, Facility &$facility)
     {
+
         $param_ids = $my_facility_c_params->pluck('group_id', 'id');
         $facility_c_params = $facility->compatibilityParams;
 

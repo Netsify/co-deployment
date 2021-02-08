@@ -130,15 +130,18 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
+        $facility->load('compatibilityParams.translations');
+
         $my_facility = request()->input('my_facility');
-        $my_facility = Facility::find($my_facility);
+        $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
+
         if ($my_facility) {
             FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
         }
 
         $facility->load('files');
 
-        return view('facilities.show', compact('facility'));
+        return view('facilities.show', compact('facility', 'my_facility'));
     }
 
     /**
