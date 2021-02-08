@@ -57,8 +57,29 @@ const app = new Vue({
 
         updateStatus: function (event) {
             var status = event.target;
-            // axios
-            console.log(status.value);
-        }
-    }
+            // console.log(status.value);
+
+            const el = document.getElementById('status-data');
+            const route = JSON.parse(el.dataset.route);
+            // console.log(route);
+
+            axios.put(route,{
+                params: {
+                    status: status.value,
+                }
+            }).then(response => {
+                console.log(response.data);
+            });
+        },
+    },
+    mounted() {
+        // const el = document.getElementById('status-data');
+        // const route = JSON.parse(el.dataset.route);
+        // this.route = route;
+        // console.log(route);
+    },
 });
+
+// export default {
+//     props: ['route'],
+// }

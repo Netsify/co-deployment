@@ -40,8 +40,8 @@
                                     </td>
                                     <td class="col-4">{{ $proposal->description }}</td>
                                     <td>
-                                        <x-status-select :route="'account.inbox.update'" :proposal="$proposal"
-                                                  :statuses="$statuses"></x-status-select>
+                                        <x-status-select :route="route('account.inbox.update', $proposal)"
+                                                         :proposal="$proposal" :statuses="$statuses"></x-status-select>
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger btn-sm"
