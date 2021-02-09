@@ -1,4 +1,4 @@
-<div id="status-data" data-route="{{ json_encode($route) }}">
+<div id="status-data" data-route="{{ $route }}" data-proposal="{{ $proposal }}">
     <select name="status" @change="updateStatus"
             class="form-select @error('status') is-invalid @enderror">
         @foreach($statuses as $status)

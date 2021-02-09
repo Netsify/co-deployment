@@ -77,23 +77,28 @@ class InboxController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param $status
      * @param Proposal $proposal
-     * @return RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Proposal $proposal): RedirectResponse
+    public function update(Proposal $proposal, $id, $status)
     {
-        $proposal->status_id = $request->input('status');
+//        echo($status);
 
-        if ($proposal->save()) {
-            session()->flash('message', __('account.ProposalSaved'));
-        } else {
-            session()->flash('message', __('account.ProposalNotSaved'));
+//        $proposal->status_id = $status;
+//        $proposal->save();
 
-            Log::error('Не удалось обновить статус предложения', compact('proposal'));
-        }
+//        if ($proposal->save()) {
+//            session()->flash('message', __('account.ProposalSaved'));
+//        } else {
+//            session()->flash('message', __('account.ProposalNotSaved'));
+//
+//            Log::error('Не удалось обновить статус предложения', compact('proposal'));
+//        }
 
-        return back();
+//        var_dump($proposal->status_id);
+
+//        return response()->json(['success' => true],200);
     }
 
     /**

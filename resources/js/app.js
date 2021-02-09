@@ -50,31 +50,38 @@ const app = new Vue({
     },
     methods: {
         getType: function (event) {
-            var select = event.target;
+            let select = event.target;
             this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
         },
 
         updateStatus: function (event) {
-            var status = event.target;
+            let status = event.target;
             // console.log(status.value);
 
-            const el = document.getElementById('status-data');
-            const route = JSON.parse(el.dataset.route);
-            // console.log(route);
+            let el = document.getElementById('status-data');
+            let route = el.dataset.route;
+            let proposal = el.dataset.proposal;
+            // console.log(proposal);
 
             axios.put(route,{
                 params: {
-                    status: status.value,
-                }
+                    proposal: proposal,
+                    status: 1234,
+                },
+                // _method: 'patch',
             }).then(response => {
+                // console.log(proposal);
+                // console.log(status.value);
                 console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
             });
         },
     },
     mounted() {
-        // const el = document.getElementById('status-data');
-        // const route = JSON.parse(el.dataset.route);
+        // let el = document.getElementById('status-data');
+        // let route = JSON.parse(el.dataset.route);
         // this.route = route;
         // console.log(route);
     },

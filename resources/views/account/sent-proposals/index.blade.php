@@ -26,9 +26,11 @@
                         <tbody>
                             @foreach($proposals as $proposal)
                                 <tr>
-                                    <td></td>
                                     <td>
-                                        {{ $proposal->sender->full_name }}
+                                        <a href="{{ route() }}">Открыть</a>
+                                    </td>
+                                    <td>
+                                        {{ $proposal->receiver->full_name }}
                                     </td>
                                     <td>
                                         @foreach($proposal->facilities as $facility)

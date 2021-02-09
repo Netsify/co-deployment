@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
-    Route::resource('projects', \App\Http\Controllers\ProjectController::class)
+    Route::resource('projects', \App\Http\Controllers\Account\ProjectController::class)
         ->only('index', 'edit', 'update');
 
     /**
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
             ->name('inbox.delete');
 
-        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
+        Route::resource('sent-proposals',\App\Http\Controllers\Account\SentProposalController::class)
             ->except('destroy');
 
         Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
