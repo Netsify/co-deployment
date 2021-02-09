@@ -41,9 +41,11 @@
                                     </p>
                                 </div>
                                 <div class="row">
+                                    @if($proposal_is_not_exist)
                                     {{--Форма отправки предложения--}}
                                     <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
                                     {{--Форма отправки предложения--}}
+                                    @endif
                                 </div>
                             @endif
                         @endcan
