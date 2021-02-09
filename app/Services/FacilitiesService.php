@@ -57,7 +57,7 @@ class FacilitiesService
      */
     public function attachFiles(array $attachments)
     {
-            $this->_attachments = $attachments;
+        $this->_attachments = $attachments;
     }
 
     /**
