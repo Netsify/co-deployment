@@ -15,6 +15,8 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('proposal_id')->unsigned();
+            $table->foreign('proposal_id')->references('id')->on('proposals');
             $table->string('title');
             $table->text('description');
             $table->string('identifier')->unique();

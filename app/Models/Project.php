@@ -2,10 +2,33 @@
 
 namespace App\Models;
 
+use App\Models\Facilities\Proposal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
 {
     use HasFactory;
+
+    /**
+     * Статусы предложения
+     *
+     * @return BelongsTo
+     */
+    public function proposal() : BelongsTo
+    {
+        return $this->belongsTo(Proposal::class);
+    }
+
+    /**
+     * Статусы предложения
+     *
+     * @return HasOne
+     */
+    public function status() : HasOne
+    {
+        return $this->hasOne(ProjectStatus::class,'id','status_id');
+    }
 }

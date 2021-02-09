@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Facilities\Proposal;
 use App\Models\Project;
 use App\Models\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,6 +25,7 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
+            'proposal_id' => Proposal::all()->random()->id,
             'title' => $this->faker->text(70),
             'description' => $this->faker->text,
             'identifier' => Str::random(8),

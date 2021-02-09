@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
@@ -15,7 +17,12 @@ class ProjectController extends Controller
      */
     public function index() : View
     {
-        return view('account.projects.index');
+        $projects = Project::with('status')->whereHas('proposal', fn($q) => $q
+            ->where('proposals.sender_id', Auth::user()->id)
+            ->orWhere('proposals.receiver_id', Auth::user()->id))
+            ->get();
+
+        return view('account.projects.index', compact('projects'));
     }
 
     /**
