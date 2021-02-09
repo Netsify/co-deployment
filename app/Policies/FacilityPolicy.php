@@ -30,9 +30,9 @@ class FacilityPolicy
      * @param  \App\Models\Facilities\Facility  $facility
      * @return mixed
      */
-    public function view(User $user, Facility $facility)
+    public function view(?User $user, Facility $facility)
     {
-        return $facility->user_id === $user->id || $facility->visibility->slug !== FacilityVisibility::ONLY_FOR_ME;
+        return $facility->user_id === optional($user)->id || $facility->visibility->slug !== FacilityVisibility::ONLY_FOR_ME;
     }
 
     /**

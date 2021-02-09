@@ -32,20 +32,21 @@
                             <p>{{ __('facility.no_loaded_files') }}</p>
                         @endforelse
 
-                        @if ($facility->compatibility_level)
-                            <hr>
-                            <div class="row">
-                                <p class="card-text text-justify">
-                                    <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
-                                </p>
-                            </div>
-                            <div class="row">
-                                {{--Форма отправки предложения--}}
-                                {{--@dd($facility)--}}
-                                <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
-                                {{--Форма отправки предложения--}}
-                            </div>
-                        @endif
+                        @can('use-advanced-search')
+                            @if ($facility->compatibility_level)
+                                <hr>
+                                <div class="row">
+                                    <p class="card-text text-justify">
+                                        <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    {{--Форма отправки предложения--}}
+                                    <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
+                                    {{--Форма отправки предложения--}}
+                                </div>
+                            @endif
+                        @endcan
                     </div>
                 </div>
             </div>

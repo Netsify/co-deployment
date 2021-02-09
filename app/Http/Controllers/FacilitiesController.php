@@ -133,9 +133,9 @@ class FacilitiesController extends Controller
         $facility->load('compatibilityParams.translations');
 
         $my_facility = request()->input('my_facility');
-        $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
 
         if ($my_facility) {
+            $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
             FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
         }
 
