@@ -26,6 +26,7 @@ class ProposalController extends Controller
      * @param Facility $f_of_receiver
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function send(Facility $f_of_sender, Facility $f_of_receiver, Request $request)
     {
