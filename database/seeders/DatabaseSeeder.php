@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Facilities\ProposalStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +13,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /**
+         * Migration Seeders
+         */
 //        $this->call(RoleSeeder::class);
+//        $this->call(CategoriesSeeder::class);
+//        $this->call(CompatibilityParamGroupSeeder::class);
+//        $this->call(FacilityTypesSeeder::class);
+//        $this->call(FacilityVisibilitySeeder::class);
+//        $this->call(TagsSeeder::class);
+
+        /**
+         * Actual Seeders
+         */
         $this->call(ProposalStatusSeeder::class);
+        $this->call(ProjectStatusSeeder::class);
+
+        /*
+         * Fake Seeders
+         */
+        $this->call(UserSeeder::class);
+        $this->call(ProposalSeeder::class);
+//        $this->call(FacilitySeeder::class);
+        $this->call(FacilityProposalSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(ProjectFacilitySeeder::class);
+        $this->call(CommentSeeder::class);
+        $this->call(ProjectUserSeeder::class);
     }
 }

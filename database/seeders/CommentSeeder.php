@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Facilities\Proposal;
-use Database\Factories\ProposalFactory;
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Seeder;
 
-class ProposalSeeder extends Seeder
+class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class ProposalSeeder extends Seeder
      */
     public function run()
     {
-        ProposalFactory::new()->count(50)->create();
+        CommentFactory::new()->count(50)->create();
     }
 }

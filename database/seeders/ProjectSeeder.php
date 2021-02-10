@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Facilities\Proposal;
-use Database\Factories\ProposalFactory;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Seeder;
 
-class ProposalSeeder extends Seeder
+class ProjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class ProposalSeeder extends Seeder
      */
     public function run()
     {
-        ProposalFactory::new()->count(50)->create();
+        ProjectFactory::new()->count(50)->create();
     }
 }

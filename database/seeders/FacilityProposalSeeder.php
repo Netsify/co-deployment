@@ -7,7 +7,7 @@ use App\Models\Facilities\Proposal;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProposalFacilitySeeder extends Seeder
+class FacilityProposalSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -85,7 +85,7 @@
                                 {{ __('account.profile') }}
                             </a>
 
-                            <a class="dropdown-item" href="{{ route('projects.index') }}">
+                            <a class="dropdown-item" href="{{ route('account.projects.index') }}">
                                 {{ __('account.projects') }}
                             </a>
 

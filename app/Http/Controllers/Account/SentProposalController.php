@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class SentProposalController extends Controller
 {
@@ -18,7 +19,7 @@ class SentProposalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() : View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('sender_id', Auth::user()->id)

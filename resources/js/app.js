@@ -39,14 +39,10 @@ CKEditor.replace('content');
 
 const app = new Vue({
     el: '#app',
-    props: ['statuses'],
     data() {
         return {
             type_id: 0,
             type_name: '',
-
-            statusSelect: null,
-            route: null,
         }
     },
     components: {
@@ -54,19 +50,43 @@ const app = new Vue({
     },
     methods: {
         getType: function (event) {
-            var select = event.target;
+            let select = event.target;
             this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
         },
 
-        updateStatus: function () {
-            fetch(this.route).then(
-                response => response.json()).then(json => {
-                this.data = json.data
+        updateStatus: function (event) {
+            let status = event.target;
+            // console.log(status.value);
+
+            let el = document.getElementById('status-data');
+            let route = el.dataset.route;
+            let proposal = el.dataset.proposal;
+            // console.log(proposal);
+
+            axios.put(route,{
+                params: {
+                    proposal: proposal,
+                    status: 1234,
+                },
+                // _method: 'patch',
+            }).then(response => {
+                // console.log(proposal);
+                // console.log(status.value);
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
             });
-        }
+        },
     },
     mounted() {
-        console.log(this.statuses);
-    }
+        // let el = document.getElementById('status-data');
+        // let route = JSON.parse(el.dataset.route);
+        // this.route = route;
+        // console.log(route);
+    },
 });
+
+// export default {
+//     props: ['route'],
+// }
