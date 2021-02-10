@@ -60,7 +60,9 @@ class InboxController extends Controller
      */
     public function show($id)
     {
-        //
+        $proposal = Proposal::find($id);
+
+        return view('account.sent-proposals.show', compact('proposal'));
     }
 
     /**

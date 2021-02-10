@@ -28,10 +28,11 @@
                             @foreach($proposals as $proposal)
                                 <tr>
                                     <td>
-{{--                                        <a href="{{ route() }}">Открыть</a>--}}
+                                        <a href="{{ route('account.inbox.show', $proposal) }}"
+                                           class="btn btn-sm btn-info">{{ __('account.open') }}</a>
                                     </td>
                                     <td>
-                                        {{ $proposal->receiver->full_name }}
+                                        {{ $proposal->sender->full_name }}
                                     </td>
                                     <td>
                                         @foreach($proposal->facilities as $facility)
