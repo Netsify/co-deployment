@@ -14,6 +14,16 @@ class Project extends Model
     use HasFactory;
 
     /**
+     * Дата начала проекта
+     *
+     * @return mixed
+     */
+    public function getStartingDateAttribute(): mixed
+    {
+        return $this->created_at->format('d.m.Y');
+    }
+
+    /**
      * Статусы предложения
      *
      * @return BelongsTo

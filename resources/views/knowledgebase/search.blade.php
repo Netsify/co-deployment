@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="get">
+                        <form method="GET">
                             <div class="input-group rounded mb-3">
                                 <input type="search" name="content" class="form-control rounded"
                                        placeholder="{{ __('knowledgebase.Search') }}"

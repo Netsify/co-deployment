@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Facilities\Proposal;
 use App\Models\Project;
+use App\Models\ProjectStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,10 @@ class ProjectController extends Controller
             ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id))
             ->get();
 
-        return view('account.projects.index', compact('projects'));
+        $statuses = ProjectStatus::all();
+
+        return view('account.projects.index',
+            compact('projects', 'statuses'));
     }
 
     /**
@@ -63,10 +67,10 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @return View
      */
-    public function edit($id)
+    public function edit(Project $project) : View
     {
         //
     }
