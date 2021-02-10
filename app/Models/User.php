@@ -147,18 +147,22 @@ class User extends Authenticatable
     /**
      * Существует ли предложение связанное с этими объектами вместе
      *
-     * @param array $facility_ids
+     * @param $facility_id
+     * @param $facility_id2
      * @return bool
      */
-    public function proposalIsNotExist(array $facility_ids)
+    public function proposalIsNotExist($facility_id, $facility_id2)
     {
         return !$this->sendedProposals()->get()
             ->merge($this->receivedProposals()->get())
             ->contains(
 
-                Proposal::query()->whereHas('facilities', function (Builder $builder) use ($facility_ids) {
+                Proposal::query()->whereHas('facilities', function (Builder $builder) use ($facility_id) {
 
-                    $builder->whereIn('facilities.id', $facility_ids);
+                    $builder->where('facilities.id', $facility_id);
+                })->whereHas('facilities', function (Builder $builder) use ($facility_id2) {
+
+                    $builder->where('facilities.id', $facility_id2);
                 })->first()
             );
     }

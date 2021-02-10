@@ -132,9 +132,6 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-
-//        dump(Auth::user()->sendedProposals);
-
         $facility->load('compatibilityParams.translations');
 
         $my_facility = request()->input('my_facility');
@@ -143,7 +140,7 @@ class FacilitiesController extends Controller
             $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
             FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
 
-            $proposal_is_not_exist = Auth::user()->proposalIsNotExist([$my_facility->id, $facility->id]);
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($my_facility->id, $facility->id);
         }
 
 
