@@ -3,11 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Facilities\Facility;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Stmt\Return_;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,6 +41,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::bind('article_with_trashed', function ($id) {
             return Article::withTrashed()->find($id);
+        });
+
+        Route::bind('f_of_sender', function ($id) {
+            return Auth::user()->facilities()->find($id);
+        });
+
+        Route::bind('f_of_receiver', function ($id) {
+            return Facility::find($id);
         });
 
         $this->configureRateLimiting();

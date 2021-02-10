@@ -7,8 +7,10 @@ use App\Models\Facilities\CompatibilityParamGroup;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
+use App\Models\Facilities\Proposal;
 use App\Models\Role;
 use App\Services\FacilitiesService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -130,9 +132,21 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
+        $facility->load('compatibilityParams.translations');
+
+        $my_facility = request()->input('my_facility');
+
+        if ($my_facility) {
+            $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
+            FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
+
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($my_facility->id, $facility->id);
+        }
+
+
         $facility->load('files');
 
-        return view('facilities.show', compact('facility'));
+        return view('facilities.show', compact('facility', 'my_facility', 'proposal_is_not_exist'));
     }
 
     /**

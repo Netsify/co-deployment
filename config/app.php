@@ -187,6 +187,11 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        /*
+         * Провайдер для регистрации компонентов
+         */
+        \App\Providers\ComponentsServiceProvider::class
     ],
 
     /*

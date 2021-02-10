@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Models\Facilities\Facility;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Facilities\Proposal;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Класс пользователей
@@ -132,5 +132,38 @@ class User extends Authenticatable
     public function facilities() : HasMany
     {
         return $this->hasMany(Facility::class);
+    }
+
+    public function sendedProposals()
+    {
+        return $this->hasMany(Proposal::class, 'sender_id');
+    }
+
+    public function receivedProposals()
+    {
+        return $this->hasMany(Proposal::class, 'receiver_id');
+    }
+
+    /**
+     * Существует ли предложение связанное с этими объектами вместе
+     *
+     * @param $facility_id
+     * @param $facility_id2
+     * @return bool
+     */
+    public function proposalIsNotExist($facility_id, $facility_id2)
+    {
+        return !$this->sendedProposals()->get()
+            ->merge($this->receivedProposals()->get())
+            ->contains(
+
+                Proposal::query()->whereHas('facilities', function (Builder $builder) use ($facility_id) {
+
+                    $builder->where('facilities.id', $facility_id);
+                })->whereHas('facilities', function (Builder $builder) use ($facility_id2) {
+
+                    $builder->where('facilities.id', $facility_id2);
+                })->first()
+            );
     }
 }

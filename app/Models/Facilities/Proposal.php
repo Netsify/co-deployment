@@ -2,16 +2,16 @@
 
 namespace App\Models\Facilities;
 
+use App\Models\File;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Предложения пользователей
@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Log;
  * @property boolean $accepted               - статус
  * @property string $description             - описание и детали
  * @property Carbon $deleted_at_by_receiver  - удалено получателем предложения
+ * @property File[] $files                   - Файлы, прикреплённые к предложению о сотрудничестве
  *
  * Class Proposal
  * @package App\Models\Facilities
@@ -82,7 +83,7 @@ class Proposal extends Model
      */
     public function facilities() : BelongsToMany
     {
-        return $this->belongsToMany(Facility::class);
+        return $this->belongsToMany(Facility::class)->withTimestamps();
     }
 
     /**
@@ -93,5 +94,15 @@ class Proposal extends Model
     public function status() : HasOne
     {
         return $this->hasOne(ProposalStatus::class,'id','status_id');
+    }
+
+    /**
+     * Файлы, прикреплённые к предложению о сотрудничестве
+     *
+     * @return MorphMany
+     */
+    public function files() : MorphMany
+    {
+        return $this->morphMany(File::class, 'fileable');
     }
 }

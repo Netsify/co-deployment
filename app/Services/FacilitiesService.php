@@ -57,7 +57,7 @@ class FacilitiesService
      */
     public function attachFiles(array $attachments)
     {
-            $this->_attachments = $attachments;
+        $this->_attachments = $attachments;
     }
 
     /**
@@ -132,33 +132,47 @@ class FacilitiesService
         return true;
     }
 
-    public static function getCompatibilityRating(Facility $facility, &$objects)
+    /**
+     * Метод задаёт параметры совместимости для объектов в коллекции с которыми сравнивается выбранный объект
+     *
+     * @param Facility $facility
+     * @param Collection $objects
+     */
+    public static function getCompatibilityRating(Facility $facility, Collection &$objects)
     {
         $facility->load('compatibilityParams.translations');
-        $f_params = $facility->compatibilityParams;//->toArray();
-        $param_ids = $f_params->pluck('group_id', 'id');
+        $f_params = $facility->compatibilityParams;
         $objects->load('compatibilityParams.translations');
-        if ($objects instanceof Collection) {
             foreach ($objects as $key => $object) {
-                $obj_params = $object->compatibilityParams;
-
-                $array = [];
-                foreach ($param_ids as $param_id => $group) {
-                    $div = $obj_params->find($param_id)->pivot->value - $f_params->find($param_id)->pivot->value;
-                    $div = abs($div);
-                    $array[$group][] = $div;
-                }
-
-                $sum = 0;
-                foreach ($array as $value) {
-                    $sum += array_sum($value) / count($value);
-                }
-
-                $object->compatibility_level = round($sum / count($array), 2);
+                self::getCompatibilityRatingByParams($f_params, $object);
                 $objects[$key] = $object;
             }
 
+    }
+
+    /**
+     * Метод задаёт параметр совместимости для объекта с которым сравнивается выбранный объект пользователя
+     *
+     * @param Collection $my_facility_c_params
+     * @param Facility $facility
+     */
+    public static function getCompatibilityRatingByParams(Collection $my_facility_c_params, Facility &$facility)
+    {
+
+        $param_ids = $my_facility_c_params->pluck('group_id', 'id');
+        $facility_c_params = $facility->compatibilityParams;
+
+        $array = [];
+        foreach ($param_ids as $param_id => $group) {
+            $div = $facility_c_params->find($param_id)->pivot->value - $my_facility_c_params->find($param_id)->pivot->value;
+            $div = abs($div);
+            $array[$group][] = $div;
         }
 
+        $sum = 0;
+        foreach ($array as $value) {
+            $sum += array_sum($value) / count($value);
+        }
+        $facility->compatibility_level = round($sum / count($array), 2);
     }
 }
