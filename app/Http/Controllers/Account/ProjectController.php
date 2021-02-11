@@ -16,20 +16,43 @@ use Illuminate\View\View;
 class ProjectController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Отображение и поиск проектов
      *
+     * @param Request $request
      * @return View
      */
-    public function index() : View
+    public function index(Request $request) : View
     {
-        $projects = Project::with('status')
-            ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id))
-            ->get();
-
         $statuses = ProjectStatus::all();
 
-        return view('account.projects.index',
-            compact('projects', 'statuses'));
+        $projects = Project::query();
+
+        $projects->with('status', 'comments')
+            ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id));
+
+        if ($request->filled('content')) {
+            $projects->where(fn($q) => $q
+                ->where('title', 'LIKE', '%' . $request->input('content') . '%')
+                ->orWhere('description', 'LIKE', '%' . $request->input('content') . '%')
+            );
+        }
+
+        if ($request->filled('status')) {
+            $projects->whereHas('status',
+                fn($q) => $q->where('project_statuses.id', $request->input('status')));
+        }
+
+        if ($request->filled('date_from')) {
+            $projects->where('created_at', '>=', $request->input('date_from'));
+        }
+
+        if ($request->filled('date_to')) {
+            $projects->where('created_at', '<=', $request->input('date_to'));
+        }
+
+        $projects = $projects->oldest()->get();
+
+        return view('account.projects.index', compact('projects', 'statuses'));
     }
 
     /**
@@ -72,7 +95,11 @@ class ProjectController extends Controller
      */
     public function edit(Project $project) : View
     {
-        //
+        $project->with('users', 'status', 'facilities');
+
+        $statuses = ProjectStatus::all();
+
+        return view('account.projects.edit', compact('project', 'statuses'));
     }
 
     /**
@@ -109,47 +136,5 @@ class ProjectController extends Controller
         }
 
         return back();
-    }
-
-    /**
-     * Поиск проектов
-     *
-     * @param Request $request
-     * @return View
-     */
-    public function search(Request $request) : View
-    {
-        $categories = Category::orderByTranslation('name')->get();
-
-        $tags = Tag::orderByTranslation('name')->get();
-
-        $vars = compact('categories', 'tags');
-
-        if ($request->hasAny(['content', 'category', 'tag'])) {
-            $articles = Article::query();
-
-            if ($request->has('content')) {
-                $articles->where(fn($q) => $q
-                    ->where('title', 'LIKE', '%' . $request->input('content') . '%')
-                    ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
-                );
-            }
-
-            if ($request->has('category')) {
-                $articles->whereHas('category',
-                    fn($q) => $q->where('categories.id', $request->input('category'))
-                );
-            }
-
-            if ($request->has('tag')) {
-                $articles->whereHas('tags',
-                    fn($q) => $q->whereIn('tags.id', $request->input('tag'))
-                );
-            }
-
-            $vars['articles'] = $articles->get();
-        }
-
-        return view('knowledgebase.search', $vars);
     }
 }

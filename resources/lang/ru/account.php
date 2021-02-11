@@ -5,7 +5,9 @@
  */
 
 return [
+    'add_comment'          => 'Добавить комментарий',
     'all'                  => 'Все',
+    'comments'             => 'Комментарии',
     'dates'                => 'Даты',
     'delete'               => 'Удалить',
     'edit'                 => 'Редактировать',
@@ -18,15 +20,17 @@ return [
     'inbox'                => 'Входящие',
     'month'                => 'Месяц',
     'open'                 => 'Открыть',
+    'participants'         => 'Участники',
     'profile'              => 'Профиль',
+    'project_id'           => 'ID проекта',
     'projects'             => 'Проекты',
-    'project_id'           => 'id',
     'quick_search'         => 'Быстрый поиск',
     'receiver'             => 'Кому',
     'search'               => 'Поиск',
     'sender'               => 'Отправитель',
     'sent_proposals'       => 'Отправленные предложения',
     'subject'              => 'Тема',
+    'summary'              => 'Краткое описание',
     'starting_date'        => 'Дата начала',
     'status'               => 'Статус',
     'title'                => 'Название',

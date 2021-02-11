@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('account')->name('account.')->group(function () {
 
         Route::resource('projects', \App\Http\Controllers\Account\ProjectController::class)
-            ->only('index', 'edit', 'update');
+            ->only('index', 'edit', 'update', 'store');
 
         Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');

@@ -5,7 +5,9 @@
  */
 
 return [
+    'add_comment'          => 'Add Comment',
     'all'                  => 'All',
+    'comments'             => 'Comments',
     'dates'                => 'Dates',
     'delete'               => 'Delete',
     'edit'                 => 'Edit',
@@ -18,15 +20,17 @@ return [
     'inbox'                => 'Inbox',
     'month'                => 'Month',
     'open'                 => 'Open',
+    'participants'         => 'Participants',
     'profile'              => 'Profile',
+    'project_id'           => 'Project ID',
     'projects'             => 'Projects',
-    'project_id'           => 'id',
     'quick_search'         => 'Quick Search',
     'receiver'             => 'Receiver',
     'search'               => 'Search',
     'sender'               => 'Sender',
     'sent_proposals'       => 'Sent Proposals',
     'subject'              => 'Short description',
+    'summary'              => 'Summary',
     'starting_date'        => 'Starting date',
     'status'               => 'Status',
     'title'                => 'Title',
