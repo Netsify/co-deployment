@@ -10,21 +10,24 @@
             </div>
         @endif
 
-            <div class="card-body">
-                <table class="table">
-                    <tbody>
-                        @foreach($project->comments as $comment)
-                            <tr>
-                                <td>
-                                    <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}
-                                </td>
-                                <td>{{ $comment->content }}</td>
-                                <td>{{ $comment->date }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <div class="card-body">
+            @forelse($project->comments as $comment)
+                <div class="row">
+                    <div class="col-1">
+                        <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}
+                    </div>
+                    <div class="col-10">
+                        {{ $comment->content }}
+                    </div>
+                    <div class="col">
+                        {{ $comment->date }}
+                    </div>
+                </div>
+                <hr>
+            @empty
+                <h6>{{ __('account.no_comments') }}</h6>
+            @endforelse
+        </div>
     </div>
 </div>
 
@@ -36,7 +39,7 @@
             <div class="mb-3">
                 <textarea name="content" id="content" cols="30" rows="10"
                           class="@error('content') is-invalid @enderror">
-                    {{ old('content') ?? (isset($comment) ? $comment->content : '') }}
+                    {{ old('content') ?? $comment->content }}
                 </textarea>
 
                 @error('content')
@@ -44,7 +47,19 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">{{ __('account.add_comment') }}</button>
+            <div class="mb-3">
+                <input type="file" name="file[]" class="form-control @error('file') is-invalid @enderror" multiple>
+
+                @error('file')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">{{ __('account.add_comment') }}</button>
+            </div>
         </form>
     </div>
 </div>

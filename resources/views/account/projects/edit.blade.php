@@ -25,9 +25,7 @@
                                value="{{ old('title') ?? $project->title }}">
 
                         @error('title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <x-invalid-feedback :message="$message"/>
                         @enderror
                     </div>
 
@@ -58,9 +56,7 @@
                         </select>
 
                         @error('status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <x-invalid-feedback :message="$message"/>
                         @enderror
                     </div>
 
@@ -71,9 +67,7 @@
                                value="{{ old('summary') ?? $project->description }}">
 
                         @error('summary')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <x-invalid-feedback :message="$message"/>
                         @enderror
                     </div>
 
@@ -96,7 +90,7 @@
                         </table>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-5">
                         <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
                     </div>
                 </form>

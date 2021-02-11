@@ -19,6 +19,7 @@ return [
     'from'                 => 'From',
     'inbox'                => 'Inbox',
     'month'                => 'Month',
+    'no_comments'          => 'There are no comments yet. Be the first to leave a comment.',
     'open'                 => 'Open',
     'participants'         => 'Participants',
     'profile'              => 'Profile',

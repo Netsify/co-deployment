@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Проекты предложений
@@ -88,5 +89,15 @@ class Project extends Model
     public function comments() : HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Файлы к проекту
+     *
+     * @return MorphMany
+     */
+    public function files() : MorphMany
+    {
+        return $this->MorphMany(File::class, 'fileable');
     }
 }
