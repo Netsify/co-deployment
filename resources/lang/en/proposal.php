@@ -12,6 +12,7 @@ return [
     'contains_no_attachments' => "The proposal doesn't contain any attachments",
 
     'errors' => [
+        'decline' => "There is an error by declining the partnership's proposal. Please try later",
         'store' => "There are some problems by creating partnership's proposal. Please try later",
     ],
 

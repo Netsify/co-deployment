@@ -6,6 +6,7 @@
             <div class="card-header">
                 {{ __('proposal.incoming_proposal') }}
                 <div class="btn-group" style="float: right">
+                    @proposalUnderConsideration($proposal)
                     <form action="" method="post">
                         @csrf
                         <div class="btn-group me-2" role="group" aria-label="First group">
@@ -13,12 +14,15 @@
                         </div>
                     </form>
 
-                    <form action="" method="post">
+                    <form action="{{ route('account.proposal.decline', $proposal) }}" method="post">
                         @csrf
                         <div class="btn-group me-2" role="group" aria-label="First group">
                             <button type="submit" name="publicate" class="btn btn-danger btn-sm">{{ __('proposal.decline') }}</button>
                         </div>
                     </form>
+                    @else
+                    <b>{{ __('account.status') }}:&nbsp; </b>{{ $proposal->status->name }}
+                    @endproposalUnderConsideration
                 </div>
             </div>
             <div class="card-body">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
+use App\Models\Facilities\ProposalStatus;
 use App\Services\ProposalService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -61,5 +62,19 @@ class ProposalController extends Controller
         return Validator::make($data, [
             'description' => ['required', 'max:1000']
         ]);
+    }
+
+    public function decline(Proposal $proposal)
+    {
+        $proposal->status_id = ProposalStatus::DECLINED;
+
+        if (!$proposal->save()) {
+            Log::error("Произошла ошибка при попытке отклонить предложение.", $proposal->toArray());
+            Session::flash('error', __('proposal.errors.decline'));
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('account.inbox.index');
     }
 }

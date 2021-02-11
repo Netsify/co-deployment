@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('projects', \App\Http\Controllers\Account\ProjectController::class)
             ->only('index', 'edit', 'update');
 
+        Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
+            ->name('proposal.decline');
+
         Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');
 

@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Article;
-use App\View\Components\DeleteButtton;
-use App\View\Components\InvalidFeedback;
+use App\Models\Facilities\Proposal;
+use App\Models\Facilities\ProposalStatus;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -69,8 +69,8 @@ class AppServiceProvider extends ServiceProvider
             return $article->files->isNotEmpty();
         });
 
-        Blade::component(DeleteButtton::class, 'delete-button');
-
-        Blade::component(InvalidFeedback::class, 'invalid-feedback');
+        Blade::if('proposalUnderConsideration', function (Proposal $proposal) {
+            return $proposal->status_id === ProposalStatus::UNDER_CONSIDERATION;
+        });
     }
 }
