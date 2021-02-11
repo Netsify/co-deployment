@@ -5,7 +5,9 @@
  */
 
 return [
+    'accept' => "Принять",
     'attachments'   => "Прикреплённые файлы",
+    'decline' => "Отклонить",
     'details'       => "Детали",
     'contains_no_attachments' => "Предложение не содержит вложений",
 

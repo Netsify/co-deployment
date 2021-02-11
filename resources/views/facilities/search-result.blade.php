@@ -8,27 +8,14 @@
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     @forelse($facilities as $facility)
                         <div class="col">
-                            <div class="card">
-                                <div class="card-header">
-                                    <b>{{ $facility->title }}</b>
+                            {{-- Отображаем превью объекта из компонента --}}
+                            <x-facility-preview :facility="$facility" show-compatibility-level="true">
+                                <div class="d-grid gap-2">
+                                    <a href="{{ route('facilities.show', $facility->id) }}@can('use-advanced-search')?my_facility={{request()->input('facility')}}@endcan"
+                                       class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
                                 </div>
-                                <div class="card-body">
-                                    <h6 class="card-text">{{ $facility->preview }}</h6>
-                                    <p><b>{{ __('facility.type') }}: </b> {{ $facility->type->name }}</p>
-                                    <p><b>{{ __('facility.location') }}: </b> {{ $facility->location }}</p>
-                                    <p><b>{{ __('facility.owner') }}: </b> {{ $facility->user->full_name }}</p>
-                                    <hr>
-
-                                    @can('use-advanced-search')
-                                        <p><b>{{ __('facility.c_level') }}: </b> {{ $facility->compatibility_level }}</p>
-                                    @endcan
-
-                                    <div class="d-grid gap-2">
-                                        <a href="{{ route('facilities.show', $facility->id) }}@can('use-advanced-search')?my_facility={{request()->input('facility')}}@endcan"
-                                           class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
-                                    </div>
-                                </div>
-                            </div>
+                            </x-facility-preview>
+                            {{-- Отображаем превью объекта из компонента --}}
                         </div>
                     @empty
                         <div class="alert alert-warning" role="alert">

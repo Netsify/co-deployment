@@ -5,7 +5,9 @@
  */
 
 return [
+    'accept' => "Accept",
     'attachments' => "Attachments",
+    'decline' => "Decline",
     'details' => "Details",
     'contains_no_attachments' => "The proposal doesn't contain any attachments",
 
