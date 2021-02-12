@@ -39,7 +39,7 @@
             <div class="mb-3">
                 <textarea name="content" id="content" cols="30" rows="10"
                           class="@error('content') is-invalid @enderror">
-                    {{ old('content') ?? $comment->content }}
+                    {{ old('content') ?? '' }}
                 </textarea>
 
                 @error('content')
@@ -51,9 +51,7 @@
                 <input type="file" name="file[]" class="form-control @error('file') is-invalid @enderror" multiple>
 
                 @error('file')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                    <x-invalid-feedback :message="$message"/>
                 @enderror
             </div>
 

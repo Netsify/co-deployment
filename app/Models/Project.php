@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -46,7 +45,7 @@ class Project extends Model
      *
      * @return BelongsTo
      */
-    public function proposal() : BelongsTo
+    public function proposal(): BelongsTo
     {
         return $this->belongsTo(Proposal::class);
     }
@@ -56,7 +55,7 @@ class Project extends Model
      *
      * @return HasOne
      */
-    public function status() : HasOne
+    public function status(): HasOne
     {
         return $this->hasOne(ProjectStatus::class,'id','status_id');
     }
@@ -66,7 +65,7 @@ class Project extends Model
      *
      * @return BelongsToMany
      */
-    public function users() : BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
@@ -76,7 +75,7 @@ class Project extends Model
      *
      * @return BelongsToMany
      */
-    public function facilities() : BelongsToMany
+    public function facilities(): BelongsToMany
     {
         return $this->belongsToMany(Facility::class)->withTimestamps();
     }
@@ -84,11 +83,11 @@ class Project extends Model
     /**
      * Комментарии проекта
      *
-     * @return HasMany
+     * @return MorphMany
      */
-    public function comments() : HasMany
+    public function comments(): MorphMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     /**
@@ -96,8 +95,8 @@ class Project extends Model
      *
      * @return MorphMany
      */
-    public function files() : MorphMany
+    public function files(): MorphMany
     {
-        return $this->MorphMany(File::class, 'fileable');
+        return $this->morphMany(File::class, 'fileable');
     }
 }

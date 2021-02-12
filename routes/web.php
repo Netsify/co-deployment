@@ -30,18 +30,20 @@ Route::middleware('auth')->group(function () {
     Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
         ->except('index', 'show');
 
-    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
+    Route::resource('profile',\App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
+
+    Route::resource('comments',\App\Http\Controllers\CommentController::class);
 
     /**
      * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
      */
     Route::prefix('account')->name('account.')->group(function () {
 
-        Route::resource('projects', \App\Http\Controllers\Account\ProjectController::class)
+        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class)
             ->only('index', 'edit', 'update', 'store');
 
-        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
+        Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');
 
         Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])

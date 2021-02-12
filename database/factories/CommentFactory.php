@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\User;
@@ -23,10 +24,20 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
+        $commentableArray = [
+            Article::class,
+            Project::class,
+        ];
+
+        $commentableType = $this->faker->randomElement($commentableArray);
+
+        $commentable = new $commentableType;
+
         return [
             'user_id' => User::all()->random()->id,
-            'project_id' => Project::all()->random()->id,
             'content' => $this->faker->text,
+            'commentable_type' => $commentableType,
+            'commentable_id' => $commentable->all()->random()->id,
             'deleted_at' => $this->faker->boolean(20) ? $this->faker->dateTime : null,
         ];
     }

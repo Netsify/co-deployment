@@ -14,7 +14,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('profile.update', $project) }}" method="post">
+                <form action="{{ route('account.projects.update', $project) }}" method="post">
                     @csrf
                     @method('PUT')
 

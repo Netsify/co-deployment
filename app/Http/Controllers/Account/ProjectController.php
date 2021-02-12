@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
 use App\Models\Facilities\Proposal;
 use App\Models\Project;
 use App\Models\ProjectStatus;
@@ -66,14 +68,19 @@ class ProjectController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Сохранение комментария к проекту
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CommentRequest $request
+     * @param Project $project
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request): RedirectResponse
     {
-        //
+//        $comment = $project->comments()->create($request->validated());
+
+//        $project->comments()->sync($comment, false);
+
+        return back();
     }
 
     /**
