@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\ProjectRequest;
 use App\Models\Comment;
 use App\Models\Facilities\Proposal;
 use App\Models\Project;
@@ -71,16 +72,11 @@ class ProjectController extends Controller
      * Сохранение комментария к проекту
      *
      * @param CommentRequest $request
-     * @param Project $project
      * @return RedirectResponse
      */
     public function store(CommentRequest $request): RedirectResponse
     {
-//        $comment = $project->comments()->create($request->validated());
-
-//        $project->comments()->sync($comment, false);
-
-        return back();
+        //
     }
 
     /**
@@ -112,13 +108,25 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ProjectRequest $request
+     * @param Project $project
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, Project $project): RedirectResponse
     {
-        //
+        dd($request->all());
+
+        $project->fill($request->validated());
+
+        if ($project->save()) {
+            Session::flash('message', __('account.project_updated'));
+        } else {
+            Session::flash('message', __('account.errors.project_not_updated'));
+
+            Log::error('Не удалось обновить проект', compact($project));
+        }
+
+        return back();
     }
 
     /**
@@ -127,19 +135,39 @@ class ProjectController extends Controller
      * @param Project $project
      * @return RedirectResponse
      */
-    public function destroy(Project $project): RedirectResponse
-    {
-        try {
-            $project->delete();
-        } catch (\Exception $e) {
-            Session::flash('error', __('account.errors.deleteProject'));
+//    public function destroy(Project $project): RedirectResponse
+//    {
+//        try {
+//            $project->delete();
+//        } catch (\Exception $e) {
+//            Session::flash('error', __('account.errors.deleteProject'));
+//
+//            Log::error("Не удалось удалить проект", [
+//                'message'  => $e->getMessage(),
+//                'code'     => $e->getCode(),
+//                'trace'    => $e->getTrace(),
+//                'proposal' => $project->toArray()
+//            ]);
+//        }
+//
+//        return back();
+//    }
 
-            Log::error("Не удалось удалить проект", [
-                'message'  => $e->getMessage(),
-                'code'     => $e->getCode(),
-                'trace'    => $e->getTrace(),
-                'proposal' => $project->toArray()
-            ]);
+    /**
+     * @param CommentRequest $request
+     * @param Project $project
+     * @return RedirectResponse
+     */
+    public function addComment(CommentRequest $request, Project $project): RedirectResponse
+    {
+        $params = $request->validated() + ['user_id' => Auth::user()->id];
+
+        if ($project->comments()->create($params)) {
+            Session::flash('message', __('comment.comment_stored'));
+        } else {
+            Session::flash('message', __('comment.errors.comment_not_stored'));
+
+            Log::error('Не удалось создать комментарий', $params);
         }
 
         return back();

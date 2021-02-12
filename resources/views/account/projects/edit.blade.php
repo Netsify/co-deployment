@@ -46,27 +46,28 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="status" class="col-form-label">{{ __('account.status') }}</label>
-                        <select name="status" class="form-select @error('status') is-invalid @enderror">
+                        <label for="status_id" class="col-form-label">{{ __('account.status') }}</label>
+                        <select name="status_id" class="form-select @error('status_id') is-invalid @enderror">
                             @foreach($statuses as $status)
-                                <option value="{{ $status->id }}" {{ $project->status->id === $status->id ? 'selected' : '' }}>
+                                <option value="{{ $status->id }}"
+                                    {{ $project->status->id === $status->id ? 'selected' : '' }}>
                                     {{ $status->name }}
                                 </option>
                             @endforeach
                         </select>
 
-                        @error('status')
+                        @error('status_id')
                             <x-invalid-feedback :message="$message"/>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="summary" class="col-form-label">{{ __('account.summary') }}</label>
-                        <input type="text" name="summary"
-                               class="form-control @error('summary') is-invalid @enderror"
-                               value="{{ old('summary') ?? $project->description }}">
+                        <label for="description" class="col-form-label">{{ __('account.summary') }}</label>
+                        <input type="text" name="description"
+                               class="form-control @error('description') is-invalid @enderror"
+                               value="{{ old('description') ?? $project->description }}">
 
-                        @error('summary')
+                        @error('description')
                             <x-invalid-feedback :message="$message"/>
                         @enderror
                     </div>

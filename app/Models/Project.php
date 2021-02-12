@@ -31,6 +31,17 @@ class Project extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'status_id',
+        'description',
+    ];
+
+    /**
      * Дата начала проекта
      *
      * @return mixed

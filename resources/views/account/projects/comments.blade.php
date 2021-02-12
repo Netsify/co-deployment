@@ -16,10 +16,10 @@
                     <div class="col-1">
                         <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}
                     </div>
-                    <div class="col-10">
-                        {{ $comment->content }}
+                    <div class="col-9">
+                        {!! $comment->content !!}
                     </div>
-                    <div class="col">
+                    <div class="col" style="text-align:right">
                         {{ $comment->date }}
                     </div>
                 </div>
@@ -33,7 +33,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('account.projects.store', $project) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('account.projects.add_comment', $project) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">

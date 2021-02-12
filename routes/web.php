@@ -33,8 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile',\App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
-    Route::resource('comments',\App\Http\Controllers\CommentController::class);
-
     /**
      * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
      */
@@ -42,6 +40,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class)
             ->only('index', 'edit', 'update', 'store');
+
+        Route::post('projects/{project}/add_comment',
+            [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])->name('projects.add_comment');
 
         Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');

@@ -47,7 +47,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param ProfileRequest $request
      * @param User $profile
      * @return RedirectResponse
      */
@@ -79,6 +79,7 @@ class ProfileController extends Controller
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
             session()->flash('message', __('dictionary.ProfileNotSaved'));
+
             Log::error('Не удалось обновить профиль', compact('profile'));
         }
 
