@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Comment;
-use App\Models\Facilities\Proposal;
+use App\Models\File;
 use App\Models\Project;
 use App\Models\ProjectStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -59,44 +60,12 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Сохранение комментария к проекту
-     *
-     * @param CommentRequest $request
-     * @return RedirectResponse
-     */
-    public function store(CommentRequest $request): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Project $project
      * @return View
      */
-    public function edit(Project $project) : View
+    public function edit(Project $project): View
     {
         $project->with('users', 'status', 'facilities');
 
@@ -114,8 +83,6 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project): RedirectResponse
     {
-        dd($request->all());
-
         $project->fill($request->validated());
 
         if ($project->save()) {
@@ -154,6 +121,8 @@ class ProjectController extends Controller
 //    }
 
     /**
+     * Добавляет файлы к комментарию проекта
+     *
      * @param CommentRequest $request
      * @param Project $project
      * @return RedirectResponse
@@ -162,12 +131,81 @@ class ProjectController extends Controller
     {
         $params = $request->validated() + ['user_id' => Auth::user()->id];
 
-        if ($project->comments()->create($params)) {
+        $comment = $project->comments()->create($params);
+
+        if ($comment) {
             Session::flash('message', __('comment.comment_stored'));
+
+            $files = $request->file('files');
+
+            if (!is_null($files)) {
+                if (!$this->attachFilesToComment($comment, $files)) {
+
+                    Log::error('Не удалось прикрепить файлы к комментарию проекта', [
+                        'comment' => $comment,
+                        'files' => $files
+                    ]);
+                }
+            }
         } else {
             Session::flash('message', __('comment.errors.comment_not_stored'));
 
             Log::error('Не удалось создать комментарий', $params);
+        }
+
+        return back();
+    }
+
+    /**
+     * Прикрепляет файлы к комментарию проекта
+     *
+     * @param Comment $comment
+     * @param array $files
+     * @return bool
+     */
+    private function attachFilesToComment(Comment $comment, array $files): bool
+    {
+        foreach ($files as $file) {
+            $storedPath = $file->store('comments', 'public');
+
+            $comment->files()->create([
+                'path' => $storedPath,
+                'name' => $file->getClientOriginalName(),
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Удалить файл у комментария проекта
+     *
+     * @param Comment $comment
+     * @param File $file
+     * @return RedirectResponse
+     */
+    public function deleteFileFromComment(Project $project, Comment $comment, File $file): RedirectResponse
+    {
+        //доработать при включении не работает File::class => ArticlePolicy::class
+//        if (Gate::denies('deleteFileFromComment', [$file, $comment])) {
+//            abort(403);
+//        }
+
+        try {
+            if (!$file->delete()) {
+                Session::flash('error', __('account.errors.delete_file'));
+
+                Log::error("Не удалось удалить файл у комментария проекта", compact('file'));
+            }
+        } catch (\Exception $e) {
+            Session::flash('error', __('account.errors.delete_file'));
+
+            Log::error("Не удалось удалить файл у комментария проекта", [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'file'    => $file
+            ]);
         }
 
         return back();

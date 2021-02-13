@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\Facilities\Facility;
 use App\Models\File;
+use App\Models\Project;
 use App\Models\Role;
 use App\Policies\FacilityPolicy;
 use App\Policies\KnowledgeBase\ArticlePolicy;
+use App\Policies\ProjectPolicy;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -22,7 +24,10 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Article::class => ArticlePolicy::class,
         File::class => ArticlePolicy::class,
-        Facility::class =>FacilityPolicy::class
+        Facility::class => FacilityPolicy::class,
+
+        //доработать при включении не работает File::class => ArticlePolicy::class
+//        File::class => ProjectPolicy::class,
     ];
 
     /**

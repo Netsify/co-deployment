@@ -12,8 +12,9 @@ return [
     'delete'               => 'Delete',
     'edit'                 => 'Edit',
     'errors'               => [
-        'deleteProposal'   => 'Could not delete proposal. Please contact the administrator.',
-        'deleteProject'    => 'Could not delete project. Please contact the administrator.',
+        'deleteProposal'      => 'Could not delete proposal. Please contact the administrator.',
+        'deleteProject'       => 'Could not delete project. Please contact the administrator.',
+        'project_not_updated' => 'Project has not been updated. Please contact the administrator.'
     ],
     'facilities'           => 'Facilities',
     'from'                 => 'From',
@@ -24,6 +25,7 @@ return [
     'participants'         => 'Participants',
     'profile'              => 'Profile',
     'project_id'           => 'Project ID',
+    'project_updated'      => 'Project has been successfully updated!',
     'projects'             => 'Projects',
     'quick_search'         => 'Quick Search',
     'receiver'             => 'Receiver',

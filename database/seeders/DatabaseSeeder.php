@@ -26,18 +26,18 @@ class DatabaseSeeder extends Seeder
         /**
          * Actual Seeders
          */
-//        $this->call(ProposalStatusSeeder::class);
-//        $this->call(ProjectStatusSeeder::class);
+        $this->call(ProposalStatusSeeder::class);
+        $this->call(ProjectStatusSeeder::class);
 
         /*
          * Fake Seeders
          */
-//        $this->call(UserSeeder::class);
-//        $this->call(ProposalSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(ProposalSeeder::class);
 //        $this->call(FacilitySeeder::class);
-//        $this->call(FacilityProposalSeeder::class);
-//        $this->call(ProjectSeeder::class);
-//        $this->call(FacilityProjectSeeder::class);
+        $this->call(FacilityProposalSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(FacilityProjectSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(ProjectUserSeeder::class);
     }

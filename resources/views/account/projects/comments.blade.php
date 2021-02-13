@@ -23,6 +23,27 @@
                         {{ $comment->date }}
                     </div>
                 </div>
+
+                @commentFilesNotDeleted($comment)
+                    <div class="my-4">
+                        <label class="form-label">{{ __('knowledgebase.Files') }}</label>
+
+                        <form method="POST">
+                            @method('DELETE')
+                            @csrf
+                            @foreach($comment->files as $file)
+                                <div class="mb-1">
+                                    <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            formaction="{{ route('account.projects.delete_file',
+                                                                    [$project, $comment, $file]) }}">
+                                        Удалить файл
+                                    </button>
+                                </div>
+                            @endforeach
+                        </form>
+                    </div>
+                @endcommentFilesNotDeleted
                 <hr>
             @empty
                 <h6>{{ __('account.no_comments') }}</h6>
@@ -48,7 +69,7 @@
             </div>
 
             <div class="mb-3">
-                <input type="file" name="file[]" class="form-control @error('file') is-invalid @enderror" multiple>
+                <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror" multiple>
 
                 @error('file')
                     <x-invalid-feedback :message="$message"/>

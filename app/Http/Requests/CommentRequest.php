@@ -25,7 +25,7 @@ class CommentRequest extends FormRequest
     {
         return [
             'content'  => ['required', 'string'],
-            'file'     => ['sometimes'],
+            'files'    => ['sometimes'],
         ];
     }
 }

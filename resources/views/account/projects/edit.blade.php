@@ -8,6 +8,7 @@
             </div>
 
             <div class="card-body">
+
                 @if (session()->has('message'))
                     <div class="alert alert-info d-flex align-items-center justify-content-center mb-2">
                         {{ session('message') }}
@@ -25,7 +26,9 @@
                                value="{{ old('title') ?? $project->title }}">
 
                         @error('title')
-                            <x-invalid-feedback :message="$message"/>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -57,7 +60,9 @@
                         </select>
 
                         @error('status_id')
-                            <x-invalid-feedback :message="$message"/>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -68,7 +73,9 @@
                                value="{{ old('description') ?? $project->description }}">
 
                         @error('description')
-                            <x-invalid-feedback :message="$message"/>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div>
 
@@ -91,7 +98,7 @@
                         </table>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="d-grid gap-2 mb-5">
                         <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
                     </div>
                 </form>

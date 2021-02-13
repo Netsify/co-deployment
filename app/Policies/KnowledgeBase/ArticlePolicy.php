@@ -32,7 +32,6 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article)
     {
-//        dd(1);
         return true;
     }
 

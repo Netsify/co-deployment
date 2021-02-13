@@ -39,10 +39,15 @@ Route::middleware('auth')->group(function () {
     Route::prefix('account')->name('account.')->group(function () {
 
         Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class)
-            ->only('index', 'edit', 'update', 'store');
+            ->only('index', 'edit', 'update');
 
         Route::post('projects/{project}/add_comment',
-            [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])->name('projects.add_comment');
+            [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])
+            ->name('projects.add_comment');
+
+        Route::delete('/projects/{project}/comment/{comment}/file/{file}/delete',
+            [\App\Http\Controllers\Account\ProjectController::class, 'deleteFileFromComment'])
+            ->name('projects.delete_file');
 
         Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');

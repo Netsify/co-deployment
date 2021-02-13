@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Comment;
 use App\View\Components\DeleteButtton;
 use App\View\Components\InvalidFeedback;
 use Illuminate\Routing\UrlGenerator;
@@ -67,6 +68,13 @@ class AppServiceProvider extends ServiceProvider
          */
         Blade::if('articleFilesNotDeleted', function (Article $article) {
             return $article->files->isNotEmpty();
+        });
+
+        /**
+         * Директива есть ли у комментария неудаленные файлы
+         */
+        Blade::if('commentFilesNotDeleted', function (Comment $comment) {
+            return $comment->files->isNotEmpty();
         });
 
         Blade::component(DeleteButtton::class, 'delete-button');
