@@ -7,19 +7,10 @@
                 {{ __('proposal.incoming_proposal') }}
                 <div class="btn-group" style="float: right">
                     @proposalUnderConsideration($proposal)
-                    <form action="" method="post">
-                        @csrf
-                        <div class="btn-group me-2" role="group" aria-label="First group">
-                            <button type="submit" name="publicate" class="btn btn-success btn-sm">{{ __('proposal.accept') }}</button>
-                        </div>
-                    </form>
-
-                    <form action="{{ route('account.proposal.decline', $proposal) }}" method="post">
-                        @csrf
-                        <div class="btn-group me-2" role="group" aria-label="First group">
-                            <button type="submit" name="publicate" class="btn btn-danger btn-sm">{{ __('proposal.decline') }}</button>
-                        </div>
-                    </form>
+                    <x-proposal-action-button :proposal="$proposal" route="account.proposal.accept" class="success"
+                                              caption="proposal.accept" />
+                    <x-proposal-action-button :proposal="$proposal" route="account.proposal.decline" class="danger"
+                                              caption="proposal.decline" />
                     @else
                     <b>{{ __('account.status') }}:&nbsp; </b>{{ $proposal->status->name }}
                     @endproposalUnderConsideration

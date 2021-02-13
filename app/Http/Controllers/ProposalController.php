@@ -64,6 +64,12 @@ class ProposalController extends Controller
         ]);
     }
 
+    /**
+     * Отклонить запрос
+     *
+     * @param Proposal $proposal
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function decline(Proposal $proposal)
     {
         $proposal->status_id = ProposalStatus::DECLINED;
@@ -76,5 +82,10 @@ class ProposalController extends Controller
         }
 
         return redirect()->route('account.inbox.index');
+    }
+
+    public function accept(Proposal $proposal)
+    {
+        dd($proposal);
     }
 }
