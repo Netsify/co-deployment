@@ -25,6 +25,13 @@ class ProposalStatus extends Model implements TranslatableContract
     use HasFactory, Translatable;
 
     /**
+     * Статусы
+     */
+    const UNDER_CONSIDERATION = 1;
+    const ACCEPTED = 2;
+    const DECLINED = 3;
+
+    /**
      * Внешний ключ из таблицы с переводами
      *
      * @var string

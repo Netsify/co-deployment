@@ -5,6 +5,16 @@
         <div class="card">
             <div class="card-header">
                 {{ __('proposal.incoming_proposal') }}
+                <div class="btn-group" style="float: right">
+                    @proposalUnderConsideration($proposal)
+                    <x-proposal-action-button :proposal="$proposal" route="account.proposal.accept" class="success"
+                                              caption="proposal.accept" />
+                    <x-proposal-action-button :proposal="$proposal" route="account.proposal.decline" class="danger"
+                                              caption="proposal.decline" />
+                    @else
+                    <b>{{ __('account.status') }}:&nbsp; </b>{{ $proposal->status->name }}
+                    @endproposalUnderConsideration
+                </div>
             </div>
             <div class="card-body">
                 <h5 class="card-title"><b>{{ __('account.sender') }}: </b>{{ $proposal->sender->full_name }}</h5>
@@ -18,19 +28,22 @@
                         {{ __('proposal.contains_no_attachments') }}
                     @endforelse
                 </p>
-                <p class="card-text"><b>{{ __('facility.facilities') }}: </b> ({{ __('facility.c_level') }} = {{ $c_level }})</p>
-                    <div class="row">
-                        @foreach($facilities as $facility)
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><b>{{ __('facility.facility') }}: </b>{{ $facility->title }}</h5>
-                                        <p class="card-text"><b>{{ __('facility.type') }}: </b>{{ $facility->type->name }}</p>
-                                    </div>
+                <p class="card-text"><b>{{ __('facility.facilities') }}: </b> ({{ __('facility.c_level') }}
+                    = {{ $c_level }})</p>
+                <div class="row">
+                    @foreach($facilities as $facility)
+                        <div class="col">
+                            {{-- Отображаем превью объекта из компонента --}}
+                            <x-facility-preview :facility="$facility">
+                                <div class="d-grid gap-2">
+                                    <a href="{{ route('facilities.show', $facility->id) }}"
+                                       class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            </x-facility-preview>
+                            {{-- Отображаем превью объекта из компонента --}}
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

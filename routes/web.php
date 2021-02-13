@@ -50,6 +50,14 @@ Route::middleware('auth')->group(function () {
             ->name('projects.delete_file');
 
         Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class)
+          
+        Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
+            ->name('proposal.decline');
+
+        Route::post('/inbox/proposal/{proposal}/accept', [\App\Http\Controllers\ProposalController::class, 'accept'])
+            ->name('proposal.accept');
+
+        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');
 
         Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
