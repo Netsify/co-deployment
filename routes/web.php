@@ -49,8 +49,8 @@ Route::middleware('auth')->group(function () {
             [\App\Http\Controllers\Account\ProjectController::class, 'deleteFileFromComment'])
             ->name('projects.delete_file');
 
-        Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class)
-          
+        Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class);
+
         Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
             ->name('proposal.decline');
 

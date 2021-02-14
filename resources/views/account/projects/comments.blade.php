@@ -34,11 +34,14 @@
                             @foreach($comment->files as $file)
                                 <div class="mb-1">
                                     <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                            formaction="{{ route('account.projects.delete_file',
-                                                                    [$project, $comment, $file]) }}">
-                                        Удалить файл
-                                    </button>
+
+                                    @can('delete', $comment)
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                formaction="{{ route('account.projects.delete_file',
+                                                                        [$project, $comment, $file]) }}">
+                                            Удалить файл
+                                        </button>
+                                    @endcan
                                 </div>
                             @endforeach
                         </form>

@@ -20,6 +20,14 @@ use Illuminate\View\View;
 class ProjectController extends Controller
 {
     /**
+     * ProjectController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Project::class, 'project');
+    }
+
+    /**
      * Отображение и поиск проектов
      *
      * @param Request $request
@@ -180,16 +188,16 @@ class ProjectController extends Controller
     /**
      * Удалить файл у комментария проекта
      *
+     * @param Project $project
      * @param Comment $comment
      * @param File $file
      * @return RedirectResponse
      */
     public function deleteFileFromComment(Project $project, Comment $comment, File $file): RedirectResponse
     {
-        //доработать при включении не работает File::class => ArticlePolicy::class
-//        if (Gate::denies('deleteFileFromComment', [$file, $comment])) {
-//            abort(403);
-//        }
+        if (Gate::denies('delete-file-from-comment', [$project, $file, $comment])) {
+            abort(403);
+        }
 
         try {
             if (!$file->delete()) {
