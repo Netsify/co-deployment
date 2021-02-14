@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Project extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title'];
 
     /**
      * Дата начала проекта
@@ -50,6 +53,16 @@ class Project extends Model
      */
     public function users() : BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'project_user');
+    }
+
+    /**
+     * Объекты проекта
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function facilities() : BelongsToMany
+    {
+        return $this->belongsToMany(Facility::class, 'project_facility');
     }
 }

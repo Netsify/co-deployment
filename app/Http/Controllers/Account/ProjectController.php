@@ -61,7 +61,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -70,9 +70,9 @@ class ProjectController extends Controller
      * @param Project $project
      * @return View
      */
-    public function edit(Project $project) : View
+    public function edit(Project $project) //: View
     {
-        //
+        dd($project);
     }
 
     /**
