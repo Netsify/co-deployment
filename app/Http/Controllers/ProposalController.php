@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
+use App\Models\Project;
 use App\Services\ProposalService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 /**
  * Контроллер для работы с предложениями
@@ -86,6 +90,59 @@ class ProposalController extends Controller
 
     public function accept(Proposal $proposal)
     {
-        dd($proposal);
+        $proposal->load('facilities');
+        $title = $proposal->facilities->pluck('title')->implode(' - ');
+        $users = new Collection([
+            $proposal->receiver,
+            $proposal->sender
+        ]);
+
+        $facilities = $proposal->facilities;
+
+        $project = new Project(['title' => $title]);
+        $project->identifier = Str::random(50);
+
+        try {
+            DB::transaction(function () use ($project, $users, $facilities, $proposal) {
+
+                if (!$project->save()) {
+                    Log::error('Ошибка создания проекта', [
+                        'project' => $project->toArray()
+                    ]);
+
+                    Session::flash('error', __('proposal.errors.accept'));
+
+                    return redirect()->back();
+                }
+
+                $project->facilities()->attach($facilities);
+                $project->users()->attach($users);
+
+                $proposal->status_id = ProposalStatus::ACCEPTED;
+                $proposal->save();
+
+                if (!$proposal->save()) {
+                    Log::error('Ошибка изменения статуса предложения', [
+                        'proposal'      => $proposal->toArray()
+                    ]);
+
+                    Session::flash('error', __('proposal.errors.accept'));
+
+                    return redirect()->back();
+                }
+
+            });
+        } catch (\Exception $e) {
+            Log::error('Произошла ошибка при попытке принять предложение о сотрудничестве', [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace()
+            ]);
+            Session::flash('error', __('proposal.errors.accept'));
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('account.projects.edit', $project);
     }
 }
