@@ -28,7 +28,6 @@ class AuthServiceProvider extends ServiceProvider
         File::class => ArticlePolicy::class,
         Facility::class => FacilityPolicy::class,
         Project::class => ProjectPolicy::class,
-        Comment::class => CommentPolicy::class,
     ];
 
     /**
@@ -43,20 +42,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('use-advanced-search', function (?User $user) {
             $role = optional($user)->role;
             return in_array(optional($role)->slug, [Role::ROLE_ICT_OWNER, Role::ROLE_ROADS_OWNER]);
-        });
-
-        /**
-         * Содержит ли проект комментарий
-         */
-        Gate::define('comment-from-project', function (?User $user, Project $project, Comment $comment) {
-            return $project->comments->contains($comment);
-        });
-
-        /**
-         * Содержит ли комментарий файл
-         */
-        Gate::define('file-from-comment', function (?User $user, File $file, Comment $comment) {
-            return $comment->files->contains($file);
         });
     }
 }

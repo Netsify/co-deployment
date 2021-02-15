@@ -137,6 +137,10 @@ class ProjectController extends Controller
      */
     public function addComment(CommentRequest $request, Project $project): RedirectResponse
     {
+        if (Auth::user()->cannot('createComment', $project)) {
+            abort(403);
+        }
+
         $params = $request->validated() + ['user_id' => Auth::user()->id];
 
         $comment = $project->comments()->create($params);
@@ -195,9 +199,18 @@ class ProjectController extends Controller
      */
     public function deleteFileFromComment(Project $project, Comment $comment, File $file): RedirectResponse
     {
-        if (Gate::denies('delete-file-from-comment', [$project, $file, $comment])) {
+//        if (Auth::user()->cannot('deleteCommentFile', [Auth::user(), $project, $comment, $file])) {
+//            abort(403);
+//        }
+
+        if (Auth::user()->cannot('commentHasFile', [$comment, $file])) {
             abort(403);
         }
+
+        //работает
+//        if (Auth::user()->cannot('projectHasComment', [$project, $comment])) {
+//            abort(403);
+//        }
 
         try {
             if (!$file->delete()) {
