@@ -35,13 +35,13 @@
                                 <div class="mb-1">
                                     <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
 
-{{--                                    @can('deleteFileFromComment', [\Illuminate\Support\Facades\Auth::user(), $project, $comment, $file])--}}
+                                    @can('userProjectCommentHasFile', [$project, $comment, $file])
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 formaction="{{ route('account.projects.delete_file',
                                                                         [$project, $comment, $file]) }}">
                                             Удалить файл
                                         </button>
-{{--                                    @endcan--}}
+                                    @endcan
                                 </div>
                             @endforeach
                         </form>

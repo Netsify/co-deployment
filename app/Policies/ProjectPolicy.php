@@ -101,7 +101,7 @@ class ProjectPolicy
      * @param Project $project
      * @return bool
      */
-    public function createComment(User $user, Project $project): bool
+    public function userHasProject(User $user, Project $project): bool
     {
         return $project->users->contains($user);
     }
@@ -123,33 +123,33 @@ class ProjectPolicy
      * Содержит ли комментарий файл
      *
      * @param User $user
+     * @param Project $project
      * @param Comment $comment
      * @param File $file
      * @return bool
      */
     public function commentHasFile(User $user, Project $project, Comment $comment, File $file): bool
     {
-//        return $comment->files->contains($file);
-        return true;
+        return $comment->files->contains($file);
     }
 
     /**
-     * Может ли пользователь удалить файл из комментария у проекта
+     * Принадлежит ли файл комментария пользователю проекта
      *
-     * @param $user
-     * @param $project
-     * @param $comment
-     * @param $file
+     * @param User $user
+     * @param Project $project
+     * @param Comment $comment
+     * @param File $file
      * @return bool
      */
-    public function deleteCommentFile(User $user, Project $project, Comment $comment, File $file): bool
+    public function userProjectCommentHasFile(User $user, Project $project, Comment $comment, File $file): bool
     {
-        if ($this->createComment($user, $project)
-            && $this->projectHasComment($user, $project, $comment)
-            && $this->commentHasFile($user, $file, $comment)
-        )
-        {
+        if ($project->users->contains($user)
+            && $project->comments->contains($comment)
+            && $comment->files->contains($file)) {
             return true;
         }
+
+        return false;
     }
 }
