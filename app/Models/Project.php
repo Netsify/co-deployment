@@ -30,8 +30,6 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title'];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -80,17 +78,7 @@ class Project extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'project_user');
-    }
-
-    /**
-     * Объекты проекта
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function facilities() : BelongsToMany
-    {
-        return $this->belongsToMany(Facility::class, 'project_facility');
+        return $this->belongsToMany(User::class);
     }
 
     /**
