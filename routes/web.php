@@ -123,6 +123,10 @@ Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->on
 
 Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
 
+Route::get('/vars', function () {
+   dump(\App\Models\Variables\Group::find(1)->facilityTypes->pluck('slug'));
+});
+
 /*Route::fallback(function () {
         return view('test');
 });*/
