@@ -64,11 +64,11 @@ class Project extends Model
     /**
      * Статусы предложения
      *
-     * @return HasOne
+     * @return BelongsTo
      */
-    public function status(): HasOne
+    public function status(): BelongsTo
     {
-        return $this->hasOne(ProjectStatus::class,'id','status_id');
+        return $this->belongsTo(ProjectStatus::class);
     }
 
     /**
@@ -78,7 +78,7 @@ class Project extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     /**
