@@ -7,7 +7,7 @@ use App\Models\Project;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProjectFacilitySeeder extends Seeder
+class FacilityProjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +17,10 @@ class ProjectFacilitySeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 10; $i++) {
-            DB::table('project_facility')->insert(
+            DB::table('facility_project')->insert(
                 [
-                    'project_id' => 1 /*Project::all()->random()->id*/,
                     'facility_id' => Facility::all()->random()->id,
+                    'project_id' => 1 /*Project::all()->random()->id*/,
                 ]
             );
         }

@@ -97,7 +97,7 @@ class User extends Authenticatable
     /**
      * Статьи пользователя
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function articles() : HasMany
     {
@@ -107,7 +107,7 @@ class User extends Authenticatable
     /**
      * Роль пользователя
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function role() : BelongsTo
     {

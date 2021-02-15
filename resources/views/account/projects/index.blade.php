@@ -29,13 +29,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="month" class="form-label">{{ __('account.from') }}</label>
-                            <input type="date" class="form-control" name="start_date">
+                            <label for="date_from" class="form-label">{{ __('account.from') }}</label>
+                            <input type="date" class="form-control" name="date_from">
                         </div>
 
                         <div class="mb-3">
-                            <label for="month" class="form-label">{{ __('account.to') }}</label>
-                            <input type="date" class="form-control" name="end_date">
+                            <label for="date_to" class="form-label">{{ __('account.to') }}</label>
+                            <input type="date" class="form-control" name="date_to">
                         </div>
 
                         <div class="d-grid gap-2">
@@ -47,7 +47,8 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">{{ __('account.project_id') }}</th>
+{{--                        <th scope="col">{{ __('account.id') }}</th>--}}
+                        <th scope="col">#</th>
                         <th scope="col">{{ __('account.title') }}</th>
                         <th scope="col">{{ __('account.status') }}</th>
                         <th scope="col">{{ __('account.subject') }}</th>
@@ -59,13 +60,14 @@
                     <tbody>
                     @foreach($projects as $project)
                         <tr>
-                            <td>{{ $project->identifier }}</td>
+{{--                            <td>{{ $project->identifier }}</td>--}}
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $project->title }}</td>
                             <td>{{ $project->status->name }}</td>
                             <td>{{ $project->description }}</td>
                             <td>{{ $project->starting_date }}</td>
                             <td>
-                                <a type="submit" href="{{ route('account.inbox.edit', $project) }}" class="btn btn-warning btn-sm">
+                                <a type="submit" href="{{ route('account.projects.edit', $project) }}" class="btn btn-warning btn-sm">
                                     {{ __('account.edit') }}
                                 </a>
                             </td>
