@@ -37,9 +37,7 @@ class ProjectController extends Controller
     {
         $statuses = ProjectStatus::all();
 
-        $projects = Project::query();
-
-        $projects->with('status', 'comments')
+        $projects = Project::with('status', 'comments')
             ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id));
 
         if ($request->filled('content')) {
@@ -206,12 +204,8 @@ class ProjectController extends Controller
         try {
             if (!$file->delete()) {
                 Session::flash('error', __('account.errors.delete_file'));
-
-                Log::error("Не удалось удалить файл у комментария проекта", compact('file'));
             }
         } catch (\Exception $e) {
-            Session::flash('error', __('account.errors.delete_file'));
-
             Log::error("Не удалось удалить файл у комментария проекта", [
                 'message' => $e->getMessage(),
                 'code'    => $e->getCode(),
