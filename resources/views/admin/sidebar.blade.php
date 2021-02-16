@@ -9,5 +9,8 @@
         <li class="list-group-item text-center">
             <a href="{{ route('admin.facilities.compatibility_params.index') }}" class="btn btn-link">{{ __('admin.compatibility_params') }}</a>
         </li>
+        <li class="list-group-item text-center">
+            <a href="{{ route('admin.facilities.variables.index') }}" class="btn btn-link">{{ __('admin.economic_efficient_vars') }}</a>
+        </li>
     </ul>
 </div>

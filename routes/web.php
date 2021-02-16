@@ -115,6 +115,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
 
             Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
+
+            Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class);
         });
     });
 });
