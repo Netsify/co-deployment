@@ -20,12 +20,14 @@ class CreateVariablesTable extends Migration
             $table->integer('max_val');
             $table->integer('default_val');
             $table->string('type')->index();
+            $table->integer('group_id')->unsigned();
             $table->integer('category_of_variable_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('category_of_variable_id', 'category_id')
                 ->references('id')
                 ->on('categories_of_variables');
+            $table->foreign('group_id')->references('id')->on('groups_of_variables');
 
         });
     }

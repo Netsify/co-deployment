@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Variables\Category;
+use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,9 @@ class VariablesController extends Controller
      */
     public function index()
     {
-        phpinfo();
+        $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
+
+        return view('admin.variables.index', compact('groups'));
     }
 
     /**
@@ -25,7 +29,12 @@ class VariablesController extends Controller
      */
     public function create()
     {
-        //
+        $variable = new Variable();
+        $categories = Category::all();
+        $var_types = Variable::VAR_TYPES;
+        $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
+
+        return view('admin.variables.form', compact('variable', 'categories', 'var_types', 'groups'));
     }
 
     /**
