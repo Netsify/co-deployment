@@ -45,7 +45,27 @@ class VariablesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $variable = new Variable([
+            'slug' => trim(strip_tags($request->input('name'))),
+            'min_val' => floatval($request->input('min_val')),
+            'max_val' => floatval($request->input('max_val')),
+            'default_val' => floatval($request->input('default_val')),
+            'type' => strtoupper(trim(strip_tags($request->input('type')))),
+            'ru' => [
+                'description' => trim(strip_tags($request->input('description.ru'))),
+                'unit' => trim(strip_tags($request->input('unit.ru')))
+            ],
+            'en' => [
+                'description' => trim(strip_tags($request->input('description.en'))),
+                'unit' => trim(strip_tags($request->input('unit.en')))
+            ],
+        ]);
+        $variable->category_of_variable_id = $request->input('category');
+        $variable->group_id = $request->input('group');
+
+        $variable->save();
+
+        return redirect()->route('admin.facilities.variables.index');
     }
 
     /**

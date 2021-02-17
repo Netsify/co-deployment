@@ -20,8 +20,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="category" class="form-label">Группа</label>
-                                <select name="category" id="category" class="form-control form-control-sm">
+                                <label for="group" class="form-label">Группа</label>
+                                <select name="group" id="group" class="form-control form-control-sm">
                                     <option value="0">Выберите группу</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->id }}">{{ $group->getTitle() }}</option>
@@ -73,17 +73,17 @@
                             <div class="row mb-3">
                                 <div class="col col-sm-4">
                                     <label for="min_val" class="form-label">Минимальное значение</label>
-                                    <input type="number" name="min_val" id="min_val"
+                                    <input type="number" name="min_val" id="min_val" step="0.01"
                                            class="form-control form-control-sm" value="{{ old('min_val') }}">
                                 </div>
                                 <div class="col col-sm-4">
                                     <label for="max_val" class="form-label">Максимальное значение</label>
-                                    <input type="number" name="max_val" id="max_val"
+                                    <input type="number" name="max_val" id="max_val" step="0.01"
                                            class="form-control form-control-sm" value="{{ old('max_val') }}">
                                 </div>
                                 <div class="col col-sm-4">
                                     <label for="default_val" class="form-label">Значение по умолчанию</label>
-                                    <input type="number" name="default_val" id="default_val"
+                                    <input type="number" name="default_val" id="default_val" step="0.01"
                                            class="form-control form-control-sm" value="{{ old('default_val') }}">
                                 </div>
                             </div>

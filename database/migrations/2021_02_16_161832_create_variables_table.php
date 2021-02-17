@@ -16,9 +16,9 @@ class CreateVariablesTable extends Migration
         Schema::create('variables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique();
-            $table->integer('min_val');
-            $table->integer('max_val');
-            $table->integer('default_val');
+            $table->float('min_val', 11, 2);
+            $table->float('max_val', 11, 2);
+            $table->float('default_val', 11, 2);
             $table->string('type')->index();
             $table->integer('group_id')->unsigned();
             $table->integer('category_of_variable_id')->unsigned();
