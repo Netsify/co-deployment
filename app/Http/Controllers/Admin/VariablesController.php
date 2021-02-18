@@ -36,8 +36,10 @@ class VariablesController extends Controller
         $categories = Category::all();
         $var_types = Variable::VAR_TYPES;
         $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
+        $route = route('admin.facilities.variables.store');
 
-        return view('admin.variables.form', compact('variable', 'categories', 'var_types', 'groups'));
+        return view('admin.variables.form',
+            compact('variable', 'categories', 'var_types', 'groups', 'route'));
     }
 
     /**
@@ -85,7 +87,13 @@ class VariablesController extends Controller
      */
     public function show(Variable $variable)
     {
-        //
+        $categories = Category::all();
+        $var_types = Variable::VAR_TYPES;
+        $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
+        $route = route('admin.facilities.variables.update', $variable);
+
+        return view('admin.variables.form',
+            compact('variable', 'categories', 'var_types', 'groups', 'route'));
     }
 
     /**

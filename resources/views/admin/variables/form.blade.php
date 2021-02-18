@@ -8,17 +8,19 @@
                     <div class="card-header">
                         Новая переменная
                     </div>
-
                     <div class="card-body">
-                        <form action="{{ route('admin.facilities.variables.store') }}" method="post">
+                        <form action="{{ $route }}" method="post">
                             @csrf
+                            @if($variable->exists)
+                                @method('PUT')
+                            @endif
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Имя переменной</label>
                                 <input type="text"
                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
                                        id="name" name="name"
-                                       value="{{ old('name') ?? $variable->name }}">
+                                       value="{{ old('name') ?? $variable->slug }}">
                                 @error('name')
                                 <x-invalid-feedback :message="$message"/>
                                 @enderror
@@ -71,7 +73,7 @@
                                             ({{ $locale }})</label>
                                         <textarea name="description[{{ $locale }}]" id="description_{{ $locale }}"
                                                   rows="3"
-                                                  class="form-control form-control-sm @error('description.'.$locale) is-invalid @enderror">{{ old("description.$locale") ?? $variable->{"description_$locale"} }}</textarea>
+                                                  class="form-control form-control-sm @error('description.'.$locale) is-invalid @enderror">{{ old("description.$locale") ?? optional($variable->translate($locale))->description }}</textarea>
                                         @error('description.'.$locale)
                                         <x-invalid-feedback :message="$message"/>
                                         @enderror
@@ -85,7 +87,7 @@
                                         <label for="unit_{{ $locale }}" class="form-label">Единица измерения
                                             ({{ $locale }})</label>
                                         <input type="text" name="unit[{{ $locale }}]" id="unit_{{ $locale }}"
-                                               class="form-control form-control-sm @error('unit.'.$locale) is-invalid @enderror" value="{{ old("unit.$locale") ?? $variable->{"unit_$locale"} }}">
+                                               class="form-control form-control-sm @error('unit.'.$locale) is-invalid @enderror" value="{{ old("unit.$locale") ?? optional($variable->translate($locale))->unit }}">
                                         @error('unit.'.$locale)
                                         <x-invalid-feedback :message="$message"/>
                                         @enderror
