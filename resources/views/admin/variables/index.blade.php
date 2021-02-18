@@ -14,11 +14,30 @@
                     <div class="card-body">
                         @foreach($groups as $group)
                             <p><b>{{ $group->facilityTypes->pluck('name')->implode(' - ') }}</b></p>
-                            @forelse($group->variables as $variable)
-                               {{ $variable->description }}
-                            @empty
-                                Переменные не найдены
-                            @endforelse
+                            <table class="table table-sm">
+                                <thead>
+                                <tr>
+                                    <th>Имя переменной</th>
+                                    <th>Описание</th>
+                                    <th>Значение по умолчанию</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($group->variables as $variable)
+                                    <tr>
+                                        <td>{{ $variable->slug }}</td>
+                                        <td>{{ $variable->description }}</td>
+                                        <td>{{ $variable->default_value }} {{ $variable->unit }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.facilities.variables.show', $variable) }}"
+                                               class="btn btn-sm btn-info">Редактировать</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
                             <hr>
                         @endforeach
                     </div>

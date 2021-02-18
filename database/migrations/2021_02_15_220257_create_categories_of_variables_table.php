@@ -21,7 +21,7 @@ class CreateCategoriesOfVariablesTable extends Migration
             $table->timestamps();
         });
 
-        (new \Database\Seeders\CategoriesOfVacilitiesSeeder())->run();
+        (new \Database\Seeders\CategoriesOfVariablesSeeder())->run();
     }
 
     /**

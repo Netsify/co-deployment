@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Variables\Category;
 use Illuminate\Database\Seeder;
 
-class CategoriesOfVacilitiesSeeder extends Seeder
+class CategoriesOfVariablesSeeder extends Seeder
 {
     protected $categories = [
         ['slug' => "design", 'name_ru' => "Проектирование", 'name_en' => "Design"],

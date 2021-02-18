@@ -8,6 +8,8 @@ use App\Models\Variables\Category;
 use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class VariablesController extends Controller
 {
@@ -64,7 +66,13 @@ class VariablesController extends Controller
         $variable->category_of_variable_id = $request->input('category');
         $variable->group_id = $request->input('group');
 
-        $variable->save();
+        if (!$variable->save()) {
+            Log::error('Ошибка добавления переменной', $request->toArray());
+
+            Session::flash('error', "Не удалось создать переменную. Пожалуйста попробуйте позже");
+
+            return redirect()->back();
+        }
 
         return redirect()->route('admin.facilities.variables.index');
     }
