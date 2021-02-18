@@ -15,37 +15,51 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Имя переменной</label>
-                                <input type="text" class="form-control form-control-sm" id="name" name="name"
+                                <input type="text"
+                                       class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                       id="name" name="name"
                                        value="{{ old('name') }}">
+                                @error('name')
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="group" class="form-label">Группа</label>
-                                <select name="group" id="group" class="form-control form-control-sm">
+                                <select name="group" id="group" class="form-control form-control-sm @error('group') is-invalid @enderror">
                                     <option value="0">Выберите группу</option>
                                     @foreach($groups as $group)
                                         <option value="{{ $group->id }}">{{ $group->getTitle() }}</option>
                                     @endforeach
                                 </select>
+                                @error('group')
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="category" class="form-label">Категория</label>
-                                <select name="category" id="category" class="form-control form-control-sm">
+                                <select name="category" id="category" class="form-control form-control-sm @error('category') is-invalid @enderror">
                                     <option value="0">Выберите категорию</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('category')
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="type" class="form-label">Тип переменной</label><br>
                                 @foreach($var_types as $var_type)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="type" id="{{ $var_type }}"
+                                        <input class="form-check-input @error('type') is-invalid @enderror" type="radio" name="type" id="{{ $var_type }}"
                                                value="{{ $var_type }}">
                                         <label class="form-check-label" for="{{ $var_type }}">{{ $var_type }}</label>
+                                        @error('type')
+                                        <x-invalid-feedback :message="$message"/>
+                                        @enderror
                                     </div>
                                 @endforeach
                             </div>
@@ -53,9 +67,14 @@
                             <div class="row">
                                 @foreach(config('app.locales') as $locale)
                                     <div class="col-sm-6 mb-3">
-                                        <label for="description_{{ $locale }}" class="form-label">Описание ({{ $locale }})</label>
-                                        <textarea name="description[{{ $locale }}]" id="description_{{ $locale }}" rows="3"
-                                                  class="form-control form-control-sm">{{ old("description.$locale") }}</textarea>
+                                        <label for="description_{{ $locale }}" class="form-label">Описание
+                                            ({{ $locale }})</label>
+                                        <textarea name="description[{{ $locale }}]" id="description_{{ $locale }}"
+                                                  rows="3"
+                                                  class="form-control form-control-sm @error('description.'.$locale) is-invalid @enderror">{{ old("description.$locale") }}</textarea>
+                                        @error('description.'.$locale)
+                                        <x-invalid-feedback :message="$message"/>
+                                        @enderror
                                     </div>
                                 @endforeach
                             </div>
@@ -63,9 +82,13 @@
                             <div class="row">
                                 @foreach(config('app.locales') as $locale)
                                     <div class="col-sm-6 mb-3">
-                                        <label for="unit_{{ $locale }}" class="form-label">Единица измерения ({{ $locale }})</label>
+                                        <label for="unit_{{ $locale }}" class="form-label">Единица измерения
+                                            ({{ $locale }})</label>
                                         <input type="text" name="unit[{{ $locale }}]" id="unit_{{ $locale }}"
-                                                  class="form-control form-control-sm" value="{{ old("unit.$locale") }}">
+                                               class="form-control form-control-sm @error('unit.'.$locale) is-invalid @enderror" value="{{ old("unit.$locale") }}">
+                                        @error('unit.'.$locale)
+                                        <x-invalid-feedback :message="$message"/>
+                                        @enderror
                                     </div>
                                 @endforeach
                             </div>
@@ -74,17 +97,26 @@
                                 <div class="col col-sm-4">
                                     <label for="min_val" class="form-label">Минимальное значение</label>
                                     <input type="number" name="min_val" id="min_val" step="0.01"
-                                           class="form-control form-control-sm" value="{{ old('min_val') }}">
+                                           class="form-control form-control-sm @error('min_val') is-invalid @enderror" value="{{ old('min_val') }}">
+                                    @error('min_val')
+                                    <x-invalid-feedback :message="$message"/>
+                                    @enderror
                                 </div>
                                 <div class="col col-sm-4">
                                     <label for="max_val" class="form-label">Максимальное значение</label>
                                     <input type="number" name="max_val" id="max_val" step="0.01"
-                                           class="form-control form-control-sm" value="{{ old('max_val') }}">
+                                           class="form-control form-control-sm @error('max_val') is-invalid @enderror" value="{{ old('max_val') }}">
+                                    @error('max_val')
+                                    <x-invalid-feedback :message="$message"/>
+                                    @enderror
                                 </div>
                                 <div class="col col-sm-4">
                                     <label for="default_val" class="form-label">Значение по умолчанию</label>
                                     <input type="number" name="default_val" id="default_val" step="0.01"
-                                           class="form-control form-control-sm" value="{{ old('default_val') }}">
+                                           class="form-control form-control-sm @error('default_val') is-invalid @enderror" value="{{ old('default_val') }}">
+                                    @error('default_val')
+                                    <x-invalid-feedback :message="$message"/>
+                                    @enderror
                                 </div>
                             </div>
 

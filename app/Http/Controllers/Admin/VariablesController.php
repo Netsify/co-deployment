@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VariableRequest;
 use App\Models\Variables\Category;
 use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
@@ -40,24 +41,24 @@ class VariablesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  VariableRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VariableRequest $request)
     {
         $variable = new Variable([
-            'slug' => trim(strip_tags($request->input('name'))),
+            'slug' => trim($request->input('name')),
             'min_val' => floatval($request->input('min_val')),
             'max_val' => floatval($request->input('max_val')),
             'default_val' => floatval($request->input('default_val')),
-            'type' => strtoupper(trim(strip_tags($request->input('type')))),
+            'type' => strtoupper(trim($request->input('type'))),
             'ru' => [
-                'description' => trim(strip_tags($request->input('description.ru'))),
-                'unit' => trim(strip_tags($request->input('unit.ru')))
+                'description' => trim($request->input('description.ru')),
+                'unit' => trim($request->input('unit.ru'))
             ],
             'en' => [
-                'description' => trim(strip_tags($request->input('description.en'))),
-                'unit' => trim(strip_tags($request->input('unit.en')))
+                'description' => trim($request->input('description.en')),
+                'unit' => trim($request->input('unit.en'))
             ],
         ]);
         $variable->category_of_variable_id = $request->input('category');

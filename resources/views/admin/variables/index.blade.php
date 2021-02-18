@@ -15,7 +15,7 @@
                         @foreach($groups as $group)
                             <p><b>{{ $group->facilityTypes->pluck('name')->implode(' - ') }}</b></p>
                             @forelse($group->variables as $variable)
-                               111
+                               {{ $variable->description }}
                             @empty
                                 Переменные не найдены
                             @endforelse
