@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Модель групп переменных
  * @property int $id
- * @property string $slug - Уникальный идентификатор
- * @property Carbon $created_at - Дата создания
- * @property Carbon $updated_at - Дата редактирования
+ * @property string $slug                  - Уникальный идентификатор
+ * @property Carbon $created_at            - Дата создания
+ * @property Carbon $updated_at            - Дата редактирования
  * @property FacilityType[] $facilityTypes - Типы объектов
- * @property Variable[] $variables - Переменные
+ * @property Variable[] $variables         - Переменные
  *
  * Class Group
  * @package App\Models\Variables
@@ -50,6 +50,12 @@ class Group extends Model
         return $this->hasMany(Variable::class);
     }
 
+    /**
+     * Заголовок группы (конкатенируется по параметру
+     * )
+     * @param string $implode
+     * @return mixed
+     */
     public function getTitle($implode = ' - ')
     {
         return $this->facilityTypes->pluck('name')->implode($implode);

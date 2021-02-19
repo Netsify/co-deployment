@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Класс групп параметров совместимости объектов
  *
  * @property int $id;
- * @property string $slug - уникальный идентификатор
- * @property string $name - Название (в нужной локале)
- * @property Carbon $created_at  - Дата создания
- * @property Carbon $updated_at  - Дата изменения
+ * @property string $slug                 - уникальный идентификатор
+ * @property string $name                 - Название (в нужной локале)
+ * @property Carbon $created_at           - Дата создания
+ * @property Carbon $updated_at           - Дата изменения
  * @property CompatibilityParam[] $params - Параметры
  *
  * Class CompatibilityParamGroup
