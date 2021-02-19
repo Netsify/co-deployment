@@ -16,20 +16,20 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * Объекты инфраструктуры
  *
  * @property int $id
- * @property int $user_id                   - ИД пользователя
- * @property int $type_id                   - ИД типа объекта
- * @property int $visibility_id             - ИД видимости объекта
- * @property string $title                  - Название
- * @property string $location               - Местоположение
- * @property string $description            - Описание
- * @property-read string $identificator     - Уникальный идентификатор объекта
- * @property-read string $locale            - В какой локали создавался объект
- * @property Carbon $created_at             - Дата создания
- * @property Carbon $updated_at             - Дата редактирования
- * @property User $user                     - Пользователь
- * @property FacilityType $type             - Тип
- * @property FacilityVisibility $visibility - Кому виден объект
- * @property File[] $files                  - Файлы приклеплённые к объекту
+ * @property int $user_id                              - ИД пользователя
+ * @property int $type_id                              - ИД типа объекта
+ * @property int $visibility_id                        - ИД видимости объекта
+ * @property string $title                             - Название
+ * @property string $location                          - Местоположение
+ * @property string $description                       - Описание
+ * @property-read string $identificator                - Уникальный идентификатор объекта
+ * @property-read string $locale                       - В какой локали создавался объект
+ * @property Carbon $created_at                        - Дата создания
+ * @property Carbon $updated_at                        - Дата редактирования
+ * @property User $user                                - Пользователь
+ * @property FacilityType $type                        - Тип
+ * @property FacilityVisibility $visibility            - Кому виден объект
+ * @property File[] $files                             - Файлы приклеплённые к объекту
  * @property CompatibilityParam[] $compatibilityParams - Параметры своместимости
  *
  * Class Facility

@@ -114,7 +114,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('facilities')->name('facilities.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
 
+            /**
+             * Роуты для работы с параметрами соместимости объектов
+             */
             Route::resource('compatibility_params', \App\Http\Controllers\Admin\CompatibilityParamsController::class);
+
+            /**
+             * Роуты для работы с переменными для экономической эффективности объектов (кроме show)
+             */
+            Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class)->except('show');
         });
     });
 });
@@ -122,7 +130,3 @@ Route::middleware('auth')->group(function () {
 Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
 
 Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
-
-/*Route::fallback(function () {
-        return view('test');
-});*/

@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Модель параметров совместимости объектов
  * @property int $id;
- * @property string $slug - Уникальный идентификатор
- * @property int $group_id - ИД группы параметров
- * @property int $min_val - Минимальное значение
- * @property int $max_val - Максимальное значение
- * @property int $default_val - Значение по умолчанию
- * @property Carbon $created_at  - Дата создания
- * @property Carbon $updated_at  - Дата изменения
+ * @property string $slug                   - Уникальный идентификатор
+ * @property int $group_id                  - ИД группы параметров
+ * @property int $min_val                   - Минимальное значение
+ * @property int $max_val                   - Максимальное значение
+ * @property int $default_val               - Значение по умолчанию
+ * @property Carbon $created_at             - Дата создания
+ * @property Carbon $updated_at             - Дата изменения
  * @property CompatibilityParamGroup $group - Группа, в которую входит параметр
  *
  * Class CompatibilityParam
