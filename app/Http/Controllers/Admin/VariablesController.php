@@ -87,13 +87,7 @@ class VariablesController extends Controller
      */
     public function show(Variable $variable)
     {
-        $categories = Category::all();
-        $var_types = Variable::VAR_TYPES;
-        $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
-        $route = route('admin.facilities.variables.update', $variable);
 
-        return view('admin.variables.form',
-            compact('variable', 'categories', 'var_types', 'groups', 'route'));
     }
 
     /**
@@ -104,19 +98,63 @@ class VariablesController extends Controller
      */
     public function edit(Variable $variable)
     {
-        //
+        $categories = Category::all();
+        $var_types = Variable::VAR_TYPES;
+        $groups = Group::query()->with('variables.translations', 'facilityTypes.translations')->get();
+        $route = route('admin.facilities.variables.update', $variable);
+
+        return view('admin.variables.form',
+            compact('variable', 'categories', 'var_types', 'groups', 'route'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  VariableRequest  $request
      * @param  \App\Models\Variables\Variable  $variable
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Variable $variable)
+    public function update(VariableRequest $request, Variable $variable)
     {
-        //
+        try {
+            $variable->slug = trim($request->input('name'));
+            $variable->min_val = floatval($request->input('min_val'));
+            $variable->max_val = floatval($request->input('max_val'));
+            $variable->default_val = floatval($request->input('default_val'));
+            $variable->type = strtoupper(trim($request->input('type')));
+            $variable->category_of_variable_id = $request->input('category');
+            $variable->group_id = $request->input('group');
+
+            foreach (config('app.locales') as $locale) {
+                $variable->translate($locale)->description = trim($request->input("description.$locale"));
+                $variable->translate($locale)->unit = trim($request->input("unit.$locale"));
+            }
+
+            if (!$variable->save()) {
+                Log::error('Произошла ошибка при редактировании переменной', [
+                    'variable' => $variable->toArray(),
+                    'request' => $request->except(['_token', '_method'])
+                ]);
+
+                Session::flash('error', "При редактировании переменной возникли проблемы. Пожалуйста попробуйте позже");
+
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            Log::error('Произошла ошибка при редактировании переменной', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'traace' => $e->getTrace(),
+                'variable' => $variable->toArray(),
+                'request' => $request->except(['_token', '_method'])
+            ]);
+
+            Session::flash('error', "При редактировании переменной возникли проблемы. Пожалуйста попробуйте позже");
+
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.facilities.variables.index');
     }
 
     /**
@@ -127,6 +165,23 @@ class VariablesController extends Controller
      */
     public function destroy(Variable $variable)
     {
-        //
+        try {
+            if (!$variable->delete()) {
+                Log::error('Не удалось удалить переменную', $variable->toArray());
+
+                Session::flash('error', "Произошла ошибка при попытке удалить переменную. Пожалуйста попробуйте позже");
+            }
+        } catch (\Exception $e) {
+            Log::error('Не удалось удалить переменную', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace(),
+                'variable' => $variable->toArray()
+            ]);
+
+            Session::flash('error', "Произошла ошибка при попытке удалить переменную. Пожалуйста попробуйте позже");
+        } finally {
+            return redirect()->back();
+        }
     }
 }

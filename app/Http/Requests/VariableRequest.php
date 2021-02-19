@@ -25,8 +25,8 @@ class VariableRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'max:255', 'unique:variables,slug'],
+        $rules = [
+            'name' => ['required', 'max:255'],
             'group' => ['required', 'exists:groups_of_variables,id'],
             'category' => ['required', 'exists:categories_of_variables,id'],
             'type' => ['required', Rule::in(Variable::VAR_TYPES)],
@@ -36,5 +36,11 @@ class VariableRequest extends FormRequest
             'max_val' => ['required', 'numeric', 'min:0', 'gte:min_val'],
             'default_val' => ['required', 'numeric', 'min:0', 'gte:min_val', 'lte:max_val']
         ];
+
+        if ($this->route()->named('admin.facilities.variables.store')) {
+            $rules['name'][] =  'unique:variables,slug';
+        }
+
+        return $rules;
     }
 }

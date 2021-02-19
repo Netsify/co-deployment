@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Класс переменных для экономической эффективности
@@ -26,7 +27,7 @@ use Astrotomic\Translatable\Translatable;
  */
 class Variable extends Model implements TranslatableContract
 {
-    use HasFactory, Translatable;
+    use HasFactory, Translatable, SoftDeletes;
 
     const VARIABLE_TYPE_INTEGER = 'INT';
     const VARIABLE_TYPE_FLOAT = 'FLOAT';

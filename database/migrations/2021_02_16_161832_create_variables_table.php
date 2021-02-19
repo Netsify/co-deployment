@@ -23,6 +23,7 @@ class CreateVariablesTable extends Migration
             $table->integer('group_id')->unsigned();
             $table->integer('category_of_variable_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('category_of_variable_id', 'category_id')
                 ->references('id')
