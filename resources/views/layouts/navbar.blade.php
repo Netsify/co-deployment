@@ -30,21 +30,22 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ __('facility.facilities') }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @can('create', \App\Models\Facilities\Facility::class)
-                            <li><a class="dropdown-item"
-                                   href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
-                            </li>
-                        @endcan
-                        <li><a class="dropdown-item"
-                               href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a></li>
-                    </ul>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a>
                 </li>
+
+
+                @can('create', \App\Models\Facilities\Facility::class)
+                    <li>
+                        <a class="dropdown-item"
+                           href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}
+                        </a>
+                    </li>
+                @endcan
+
+
                 @auth
                     @admin
                     <li class="nav-item">
@@ -83,6 +84,10 @@
 
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 {{ __('account.profile') }}
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
+                                {{ __('facility.facilities') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.projects.index') }}">

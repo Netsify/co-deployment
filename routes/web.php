@@ -22,6 +22,7 @@ Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchControll
     ->name('facilities.search');
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
@@ -34,9 +35,15 @@ Route::middleware('auth')->group(function () {
         ->only('index', 'edit', 'update');
 
     /**
-     * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
+     * Роуты для работы с вкладками личного кабинета (профиль, объекты, проекты, входящие, отправленные предложения)
      */
     Route::prefix('account')->name('account.')->group(function () {
+
+        Route::get('facilities', [\App\Http\Controllers\FacilitiesController::class, 'accountIndex'])
+            ->name('facilities.index');
+
+//        Route::get('facilities/{facility}', [\App\Http\Controllers\FacilitiesController::class, 'edit'])
+//            ->name('facilities.edit');
 
         Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class)
             ->only('index', 'edit', 'update');

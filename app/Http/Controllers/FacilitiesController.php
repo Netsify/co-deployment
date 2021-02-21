@@ -7,15 +7,14 @@ use App\Models\Facilities\CompatibilityParamGroup;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
-use App\Models\Facilities\Proposal;
 use App\Models\Role;
 use App\Services\FacilitiesService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 /**
  * Контроллер для работы с объектами
@@ -169,7 +168,7 @@ class FacilitiesController extends Controller
      * @param  \App\Models\Facilities\Facility  $facility
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Facility $facility)
+    public function update(FacilityRequest $request, Facility $facility)
     {
         //
     }
@@ -183,5 +182,20 @@ class FacilitiesController extends Controller
     public function destroy(Facility $facility)
     {
         //
+    }
+
+    /**
+     * Отображение и поиск объектов в личном кабинете
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function accountIndex(Request $request): View
+    {
+        $facilities = Facility::with('type', 'visibility')
+            ->whereHas('user', fn($q) => $q->where('users.id', Auth::user()->id))
+            ->get();
+
+        return view('account.facilities.index', compact('facilities'));
     }
 }
