@@ -36,16 +36,6 @@
                        href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a>
                 </li>
 
-
-                @can('create', \App\Models\Facilities\Facility::class)
-                    <li>
-                        <a class="dropdown-item"
-                           href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}
-                        </a>
-                    </li>
-                @endcan
-
-
                 @auth
                     @admin
                     <li class="nav-item">

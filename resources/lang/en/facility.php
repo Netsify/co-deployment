@@ -5,6 +5,10 @@ return [
     'create_facility' => "Create facility",
     'c_level' => "Compatibility level",
     'description' => "Description",
+    'errors'                   => [
+        'delete_facility'      => 'Could not delete facility. Please contact the administrator.',
+        'facility_not_updated' => 'Facility has not been updated. Please contact the administrator.'
+    ],
     'facilities' => "Facilities",
     'facilities_not_found' => "Facilities not found",
     'facility' => "Facility",

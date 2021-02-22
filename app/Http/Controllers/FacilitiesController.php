@@ -9,9 +9,11 @@ use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
 use App\Models\Role;
 use App\Services\FacilitiesService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -122,7 +124,7 @@ class FacilitiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Facilities\Facility  $facility
+     * @param Facility $facility
      * @return \Illuminate\Http\Response
      */
     public function show(Facility $facility)
@@ -153,19 +155,25 @@ class FacilitiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Facilities\Facility  $facility
-     * @return \Illuminate\Http\Response
+     * @param Facility $facility
+     * @return View
      */
-    public function edit(Facility $facility)
+    public function edit(Facility $facility): View
     {
-        //
+        $facility->with('type', 'visibility');
+
+        $visibilities = FacilityVisibility::all();
+
+        $types = FacilityType::all();
+
+        return view('account.facilities.edit', compact('facility', 'visibilities', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Facilities\Facility  $facility
+     * @param Facility $facility
      * @return \Illuminate\Http\Response
      */
     public function update(FacilityRequest $request, Facility $facility)
@@ -176,13 +184,26 @@ class FacilitiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Facilities\Facility  $facility
-     * @return \Illuminate\Http\Response
+     * @param Facility $facility
+     * @return RedirectResponse
      */
-    public function destroy(Facility $facility)
-    {
-        //
-    }
+//    public function destroy(Facility $facility): RedirectResponse
+//    {
+//        try {
+//            $facility->delete();
+//        } catch (\Exception $e) {
+//            Session::flash('error', __('facility.errors.delete_facility'));
+//
+//            Log::error("Не удалось удалить объект", [
+//                'message'  => $e->getMessage(),
+//                'code'     => $e->getCode(),
+//                'trace'    => $e->getTrace(),
+//                'facility' => $facility->toArray()
+//            ]);
+//        }
+//
+//        return back();
+//    }
 
     /**
      * Отображение и поиск объектов в личном кабинете
