@@ -7,6 +7,7 @@ use App\Models\Facilities\CompatibilityParamGroup;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
+use App\Models\File;
 use App\Models\Role;
 use App\Services\FacilitiesService;
 use Illuminate\Http\RedirectResponse;
@@ -82,7 +83,7 @@ class FacilitiesController extends Controller
             ->orderByTranslation('param_group_id')
             ->get();
 
-        $route = route('facilities.store');
+        $route = route('account.facilities.store');
 
         return view('facilities.form',
             compact('facility', 'types', 'visibilities', 'route', 'compatibility_params'));
@@ -166,7 +167,12 @@ class FacilitiesController extends Controller
 
         $types = FacilityType::all();
 
-        return view('account.facilities.edit', compact('facility', 'visibilities', 'types'));
+        $compatibility_params = CompatibilityParamGroup::with('params.translations')
+            ->orderByTranslation('param_group_id')
+            ->get();
+
+        return view('account.facilities.edit',
+            compact('facility', 'visibilities', 'types' ,'compatibility_params'));
     }
 
     /**
@@ -178,7 +184,15 @@ class FacilitiesController extends Controller
      */
     public function update(FacilityRequest $request, Facility $facility)
     {
-        //
+        if ($facility->save()) {
+            Session::flash('message', __('account.facility_updated'));
+        } else {
+            Session::flash('message', __('account.errors.facility_not_updated'));
+
+            Log::error('Не удалось обновить объект', compact($facility));
+        }
+
+        return back();
     }
 
     /**
@@ -218,5 +232,34 @@ class FacilitiesController extends Controller
             ->get();
 
         return view('account.facilities.index', compact('facilities'));
+    }
+
+    /**
+     * Удалить файл у комментария проекта
+     *
+     * @param Facility $facility
+     * @param File $file
+     * @return RedirectResponse
+     */
+    public function deleteFile(Facility $facility, File $file): RedirectResponse
+    {
+        if (Auth::user()->cannot('userFacilityHasFile', [$facility, $file])) {
+            abort(403);
+        }
+
+        try {
+            $file->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', __('facility.errors.delete_file'));
+
+            Log::error("Не удалось удалить файл у объекта", [
+                'message' => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'file'    => $file
+            ]);
+        }
+
+        return back();
     }
 }

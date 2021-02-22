@@ -52,6 +52,9 @@ Route::middleware('auth')->group(function () {
         Route::get('facilities', [\App\Http\Controllers\FacilitiesController::class, 'accountIndex'])
             ->name('facilities.index');
 
+        Route::delete('/facilities/{facility}/file/{file}/delete',
+            [\App\Http\Controllers\FacilitiesController::class, 'deleteFile'])->name('facilities.delete_file');
+
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
             ->except('index', 'show');
 
