@@ -1,14 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="variables">
+        @{{ msg }}
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         Переменные для экономической эффективности
-                        <a href="{{ route('admin.facilities.variables.create') }}" class="btn btn-sm btn-success"
-                           style="float: right">Добавить переменную</a>
+                        <div class="btn-toolbar" role="toolbar" style="float: right">
+                                <div class="btn-group me-2" role="group">
+                                    <a href="{{ route('admin.facilities.variables.create') }}"
+                                       class="btn btn-sm btn-success"
+                                       style="float: right">Добавить переменную</a>
+                                </div>
+                                <div class="btn-group me-2" role="group">
+                                    <button id="load-xls-file" class="btn btn-sm btn-warning">Добавить из файла</button>
+                                </div>
+
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -53,4 +63,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/variables.js') }}"></script>
 @endsection
