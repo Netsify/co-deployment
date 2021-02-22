@@ -6,7 +6,7 @@ const app = new Vue({
     el: '#variables',
     data() {
         return {
-            msg: "Vue JS в деле"
+            modalVisibility: false
         }
     },
     methods: {
