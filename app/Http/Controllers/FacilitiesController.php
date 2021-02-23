@@ -28,6 +28,20 @@ use Illuminate\View\View;
 class FacilitiesController extends Controller
 {
     /**
+     * @var FacilitiesService
+     */
+    private $facilityService;
+
+    /**
+     * FacilitiesController constructor.
+     * @param FacilitiesService $facilityService
+     */
+    public function __construct(FacilitiesService $facilityService)
+    {
+        $this->facilityService = $facilityService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -161,7 +175,7 @@ class FacilitiesController extends Controller
      */
     public function edit(Facility $facility): View
     {
-        $facility->with('type', 'visibility');
+        $facility->load('type', 'visibility', 'compatibilityParams');
 
         $visibilities = FacilityVisibility::all();
 
@@ -178,12 +192,35 @@ class FacilitiesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param FacilityRequest $request
      * @param Facility $facility
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(FacilityRequest $request, Facility $facility)
+    public function update(FacilityRequest $request, Facility $facility): RedirectResponse
     {
+        $facility->fill($request->validated());
+
+        $facility->type_id = $request->input('type');
+
+        $facility->visibility_id = $request->input('visibility');
+
+        if ($request->has('c_param')) {
+            $this->facilityService->attachCompatibilityParams($request->input('c_param'));
+
+            if (!$this->facilityService->setCompatibilityParams($facility)) {
+                Log::error("Ошибка при сохранении параметров совместимости", [
+                    'facility' => $facility->toArray(),
+                    'c_params' => $request->input('c_param'),
+                ]);
+            }
+        }
+
+        if ($request->has('attachments')) {
+            $this->facilityService->attachFiles($request->file('attachments'));
+
+            $this->facilityService->storeFiles($facility);
+        }
+
         if ($facility->save()) {
             Session::flash('message', __('account.facility_updated'));
         } else {

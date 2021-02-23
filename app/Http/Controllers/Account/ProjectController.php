@@ -37,9 +37,7 @@ class ProjectController extends Controller
     {
         $statuses = ProjectStatus::all();
 
-        $projects = Project::query();
-
-        $projects->with('status', 'comments')
+        $projects = Project::with('status', 'comments')
             ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id));
 
         if ($request->filled('content')) {

@@ -12,7 +12,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="card">
+                    <div class="card mb-3">
                         <div class="card-header">{{ __('facility.new_facility') }}
                             <span v-if="type_id != 0">
                                 <b>{{ __('facility.type') }}</b> @{{ type_name }}
@@ -40,7 +40,7 @@
                         </div>
                     </div>
 
-                    <div class="d-grid gap-2 mb-5">
+                    <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
                     </div>
                 </form>
