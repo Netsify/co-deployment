@@ -24,7 +24,7 @@
 
                     <div class="card-body">
                         @foreach($groups as $group)
-                            <h5>{{ $group->facilityTypes->pluck('name')->implode(' - ') }}</h5>
+                            <h5>{{ $group->getTitle() }}</h5>
                             <table class="table table-sm table-bordered">
                                 <thead>
                                 <tr>
@@ -78,6 +78,15 @@
                             ></button>
                         </div>
                         <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="group" class="form-label">Группа</label>
+                                <select name="group" id="group" class="form-control">
+                                    <option value="0">Выберите группу</option>
+                                    @foreach($groups as $group)
+                                        <option value="{{ $group->id }}">{{ $group->getTitle() }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Выберите файл</label>
                                 <input class="form-control" type="file" id="formFile" name="file"

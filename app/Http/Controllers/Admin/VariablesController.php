@@ -7,9 +7,11 @@ use App\Http\Requests\VariableRequest;
 use App\Models\Variables\Category;
 use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class VariablesController extends Controller
 {
@@ -45,7 +47,7 @@ class VariablesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  VariableRequest  $request
+     * @param  VariableRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(VariableRequest $request)
@@ -82,7 +84,7 @@ class VariablesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Variables\Variable  $variable
+     * @param  \App\Models\Variables\Variable $variable
      * @return \Illuminate\Http\Response
      */
     public function show(Variable $variable)
@@ -93,7 +95,7 @@ class VariablesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Variables\Variable  $variable
+     * @param  \App\Models\Variables\Variable $variable
      * @return \Illuminate\Http\Response
      */
     public function edit(Variable $variable)
@@ -110,8 +112,8 @@ class VariablesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  VariableRequest  $request
-     * @param  \App\Models\Variables\Variable  $variable
+     * @param  VariableRequest $request
+     * @param  \App\Models\Variables\Variable $variable
      * @return \Illuminate\Http\Response
      */
     public function update(VariableRequest $request, Variable $variable)
@@ -160,7 +162,7 @@ class VariablesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Variables\Variable  $variable
+     * @param  \App\Models\Variables\Variable $variable
      * @return \Illuminate\Http\Response
      */
     public function destroy(Variable $variable)
@@ -187,7 +189,48 @@ class VariablesController extends Controller
 
     public function excelStore(Request $request)
     {
+        $group = $request->input('group');
+        $group = Group::query()->find($group);
 
-        dd($request->file());
+        $tmpname = $request->file('file')->getPathname();
+        $spreadsheet = IOFactory::load($tmpname);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $categories = Category::all();
+        $last_row = $worksheet->getHighestRow();
+
+        $variables = new Collection();
+        for ($i = 2; $i <= $last_row; $i++) {
+            $name = $worksheet->getCell("A$i")->getValue();
+            if (!$name) {
+                continue;
+            }
+
+            $description_ru = $worksheet->getCell("B$i")->getValue();
+            $description_en = $worksheet->getCell("C$i")->getValue();
+            $unit_ru = $worksheet->getCell("D$i")->getValue();
+            $unit_en = $worksheet->getCell("E$i")->getValue();
+            $default_value = $worksheet->getCell("F$i")->getValue();
+            $type = $worksheet->getCell("G$i")->getValue();
+            $category = $worksheet->getCell("H$i")->getValue();
+
+            $category = $categories->where('slug', strtolower($category))->first();
+
+            $variable = new Variable([
+                'ru' => ['description' => $description_ru, 'unit' => $unit_ru],
+                'en' => ['description' => $description_en, 'unit' => $unit_en],
+            ]);
+            $variable->slug = trim($name);
+            $variable->category_of_variable_id = $category->id;
+            $variable->min_val = 0;
+            $variable->max_val = 100000000;
+            $variable->default_val = floatval($default_value);
+            $variable->type = strtoupper($type);
+
+            $variables->put($i, $variable);
+        }
+
+        $group->variables()->saveMany($variables);
+
+        return redirect()->back();
     }
 }
