@@ -184,4 +184,10 @@ class VariablesController extends Controller
             return redirect()->back();
         }
     }
+
+    public function excelStore(Request $request)
+    {
+
+        dd($request->file());
+    }
 }

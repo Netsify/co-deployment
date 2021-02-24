@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
         ->name('articles.search');
 
-    Route::resource('profile',\App\Http\Controllers\ProfileController::class)
+    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
     Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
@@ -58,8 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
             ->except('index', 'show');
 
-        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class)
-            ->only('index', 'edit', 'update');
+        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class);
 
         Route::post('projects/{project}/add_comment',
             [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])
@@ -69,7 +68,7 @@ Route::middleware('auth')->group(function () {
             [\App\Http\Controllers\Account\ProjectController::class, 'deleteFileFromComment'])
             ->name('projects.delete_file');
 
-        Route::resource('inbox',\App\Http\Controllers\Account\InboxController::class);
+        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class);
 
         Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
             ->name('proposal.decline');
@@ -83,7 +82,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
             ->name('inbox.delete');
 
-        Route::resource('sent-proposals',\App\Http\Controllers\Account\SentProposalController::class)
+        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
             ->except('destroy');
 
         Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
@@ -132,6 +131,8 @@ Route::middleware('auth')->group(function () {
              * Роуты для работы с переменными для экономической эффективности объектов (кроме show)
              */
             Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class)->except('show');
+            Route::post('/variables/store_from_excel', [\App\Http\Controllers\Admin\VariablesController::class, 'excelStore'])
+                ->name('variables.excel_store');
         });
     });
 });
