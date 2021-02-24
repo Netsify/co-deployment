@@ -4,12 +4,6 @@
     </div>
 
     <div class="card-body">
-        @if (session()->has('message'))
-            <div class="alert alert-info d-flex align-items-center justify-content-center mb-2">
-                {{ session('message') }}
-            </div>
-        @endif
-
         <div class="card-body">
             @forelse($project->comments as $comment)
                 <div class="row">
