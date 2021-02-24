@@ -123,8 +123,6 @@ Route::middleware('auth')->group(function () {
              * Роуты для работы с переменными для экономической эффективности объектов (кроме show)
              */
             Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class)->except('show');
-            Route::post('/variables/store_from_excel', [\App\Http\Controllers\Admin\VariablesController::class, 'excelStore'])
-                ->name('variables.excel_store');
         });
     });
 });
