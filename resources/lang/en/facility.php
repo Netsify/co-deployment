@@ -16,6 +16,7 @@ return [
     'facility_id' => "Identifier",
     'facility_id_description' => "Facility's unique identifier (created automatically)",
     'facility_name_or_id' => "Facility's name or id",
+    'facility_updated' => "Object has been successfully updated!",
     'find' => "Find",
     'location' => "Location",
     'min_c_level' => "Minimal compatibility level",

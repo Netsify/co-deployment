@@ -12,9 +12,9 @@
 </div>
 
 <div class="mb-3 row">
-    <label for="facility" class="col-sm-2 col-form-label">{{ __('facility.facility_id') }}</label>
+    <label for="identificator" class="col-sm-2 col-form-label">{{ __('facility.facility_id') }}</label>
     <div class="col-sm-10">
-        <div name="facility">
+        <div name="identificator">
             {{ $facility->identificator }}
         </div>
     </div>
@@ -23,8 +23,7 @@
 <div class="mb-3 row">
     <label for="visibility" class="col-sm-2 col-form-label">{{ __('facility.visibility') }}</label>
     <div class="col-sm-10">
-        <select class="form-select @error('visibility') is-invalid @enderror" id="visibility"
-                name="visibility">
+        <select class="form-select @error('visibility') is-invalid @enderror" id="visibility" name="visibility">
             <option hidden>{{ __('facility.select_visibility') }}</option>
             @foreach($visibilities as $visibility)
                 <option value="{{ $visibility->id }}"
@@ -43,8 +42,7 @@
 <div class="mb-3 row">
     <label for="type" class="col-sm-2 col-form-label">{{ __('facility.type') }}</label>
     <div class="col-sm-10">
-        <select class="form-select @error('type') is-invalid @enderror"
-                id="type" name="type" @change="getType">
+        <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" @change="getType">
             <option hidden>{{ __('facility.select_type') }}</option>
             @foreach($types as $type)
                 <option value="{{ $type->id }}"
@@ -90,26 +88,3 @@
         <input class="form-control" type="file" id="attachments" name="attachments[]" multiple>
     </div>
 </div>
-
-@facilityFilesNotDeleted($facility)
-<div class="my-4">
-    <label class="form-label">{{ __('knowledgebase.Files') }}</label>
-
-    <form method="POST">
-        @method('DELETE')
-        @csrf
-        @foreach($facility->files as $file)
-            <div class="mb-1">
-                <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
-
-                @can('userFacilityHasFile', [$facility, $file])
-                    <button type="submit" class="btn btn-danger btn-sm"
-                            formaction="{{ route('account.facilities.delete_file', [$facility, $file]) }}">
-                        Удалить файл
-                    </button>
-                @endcan
-            </div>
-        @endforeach
-    </form>
-</div>
-@endfacilityFilesNotDeleted

@@ -132,15 +132,25 @@ class FacilitiesService
         return true;
     }
 
-    public function setCompatibilityParams(Facility $facility)
+    /**
+     * Устанавливаем или обновляем параметры совместимости
+     *
+     * @param Facility $facility
+     * @return bool
+     */
+    public function setCompatibilityParams(Facility $facility): bool
     {
+        $cParams = [];
+
         foreach ($this->_c_params as $id => $value) {
-            if ($facility->compatibilityParams()->sync([$id => ['value' => $value]], false)) {
-                return false;
-            }
+            $cParams[$id] = ['value' => $value];
         }
 
-        return true;
+        if ($facility->compatibilityParams()->sync($cParams,false)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

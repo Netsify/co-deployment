@@ -175,18 +175,11 @@ class FacilitiesController extends Controller
      */
     public function edit(Facility $facility): View
     {
-        $facility->load('type', 'visibility', 'compatibilityParams');
-
         $visibilities = FacilityVisibility::all();
 
         $types = FacilityType::all();
 
-        $compatibility_params = CompatibilityParamGroup::with('params.translations')
-            ->orderByTranslation('param_group_id')
-            ->get();
-
-        return view('account.facilities.edit',
-            compact('facility', 'visibilities', 'types' ,'compatibility_params'));
+        return view('account.facilities.edit', compact('facility', 'visibilities', 'types'));
     }
 
     /**
@@ -222,9 +215,9 @@ class FacilitiesController extends Controller
         }
 
         if ($facility->save()) {
-            Session::flash('message', __('account.facility_updated'));
+            Session::flash('message', __('facility.facility_updated'));
         } else {
-            Session::flash('message', __('account.errors.facility_not_updated'));
+            Session::flash('message', __('facility.errors.facility_not_updated'));
 
             Log::error('Не удалось обновить объект', compact($facility));
         }

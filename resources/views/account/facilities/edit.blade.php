@@ -7,6 +7,12 @@
                 {{ __('account.edit') }}
             </div>
 
+            @if (session()->has('message'))
+                <div class="alert alert-info d-flex align-items-center justify-content-center my-2">
+                    {{ session('message') }}
+                </div>
+            @endif
+
             <div class="card-body">
                 <form action="{{ route('account.facilities.update', $facility) }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -44,6 +50,29 @@
                         <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
                     </div>
                 </form>
+
+                @facilityFilesNotDeleted($facility)
+                <div class="my-4">
+                    <label class="form-label">{{ __('knowledgebase.Files') }}</label>
+
+                    <form method="POST">
+                        @method('DELETE')
+                        @csrf
+                        @foreach($facility->files as $file)
+                            <div class="mb-1">
+                                <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+
+                                @can('userFacilityHasFile', [$facility, $file])
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            formaction="{{ route('account.facilities.delete_file', [$facility, $file]) }}">
+                                        Удалить файл
+                                    </button>
+                                @endcan
+                            </div>
+                        @endforeach
+                    </form>
+                </div>
+                @endfacilityFilesNotDeleted
 
             </div>
         </div>
