@@ -79,10 +79,6 @@ class AppServiceProvider extends ServiceProvider
             return $comment->files->isNotEmpty();
         });
 
-        Blade::component(DeleteButtton::class, 'delete-button');
-
-        Blade::component(InvalidFeedback::class, 'invalid-feedback');
-
         Blade::if('proposalUnderConsideration', function (Proposal $proposal) {
             return $proposal->status_id === ProposalStatus::UNDER_CONSIDERATION;
         });
