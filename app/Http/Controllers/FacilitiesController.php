@@ -231,23 +231,23 @@ class FacilitiesController extends Controller
      * @param Facility $facility
      * @return RedirectResponse
      */
-//    public function destroy(Facility $facility): RedirectResponse
-//    {
-//        try {
-//            $facility->delete();
-//        } catch (\Exception $e) {
-//            Session::flash('error', __('facility.errors.delete_facility'));
-//
-//            Log::error("Не удалось удалить объект", [
-//                'message'  => $e->getMessage(),
-//                'code'     => $e->getCode(),
-//                'trace'    => $e->getTrace(),
-//                'facility' => $facility->toArray()
-//            ]);
-//        }
-//
-//        return back();
-//    }
+    public function destroy(Facility $facility): RedirectResponse
+    {
+        try {
+            $facility->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', __('facility.errors.delete_facility'));
+
+            Log::error("Не удалось удалить объект", [
+                'message'  => $e->getMessage(),
+                'code'     => $e->getCode(),
+                'trace'    => $e->getTrace(),
+                'facility' => $facility->toArray()
+            ]);
+        }
+
+        return back();
+    }
 
     /**
      * Отображение и поиск объектов в личном кабинете

@@ -26,7 +26,7 @@
                                 <th scope="col">{{ __('facility.type') }}</th>
                                 <th scope="col">{{ __('account.subject') }}</th>
                                 <th scope="col"></th>
-{{--                                <th scope="col"></th>--}}
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -45,10 +45,10 @@
                                     </a>
                                 </td>
                                 <td>
-{{--                                    <button type="submit" class="btn btn-danger btn-sm"--}}
-{{--                                            formaction="{{ route('account.facilities.destroy', $facility) }}">--}}
-{{--                                        {{ __('account.delete') }}--}}
-{{--                                    </button>--}}
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            formaction="{{ route('account.facilities.destroy', $facility) }}">
+                                        {{ __('account.delete') }}
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
