@@ -1,13 +1,16 @@
-@extends('layouts.app-vue')
+@extends('layouts.app')
 
-@section('vue-content')
-    <div class="container">
+@section('content')
+    <div class="container" id="div-facilities">
         <div class="row">
             <div class="col">
                 <form action="{{ $route }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="card">
-                        <div class="card-header">{{ __('facility.new_facility') }}
+                    @if($facility->exists)
+                        @method('PUT')
+                    @endif
+                        <div class="card">
+                        <div class="card-header">{{ __('facility.' . ($facility->exists ? 'edit' : 'new') . '_facility') }}
                             <span v-if="type_id != 0">
                                 <b>{{ __('facility.type') }}</b> @{{ type_name }}
                             </span>
@@ -16,7 +19,7 @@
                                     <a class="nav-link active" data-toggle="tab" href="#facility"
                                        role="tab">{{ __('facility.facility') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" v-if="type_id != 0">
                                     <a class="nav-link" data-toggle="tab" href="#compatibility_params"
                                        role="tab">{{ __('admin.compatibility_params') }}</a>
                                 </li>
@@ -25,10 +28,10 @@
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="facility" role="tabpanel">
-                                    @include('facilities.form_components.facility')
+                                    @include('account.facilities.form_components.facility')
                                 </div>
-                                <div class="tab-pane fade" id="compatibility_params" role="tabpanel">
-                                    @include('facilities.form_components.c_params')
+                                <div class="tab-pane fade" id="compatibility_params" role="tabpanel" v-if="type_id != 0">
+                                    @include('account.facilities.form_components.c_params')
                                 </div>
                             </div>
                         </div>
@@ -41,5 +44,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/facilities.js') }}" defer></script>
 @endsection

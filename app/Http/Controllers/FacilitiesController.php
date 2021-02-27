@@ -83,7 +83,7 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-        $types = FacilityType::query();
+/*        $types = FacilityType::query();
 
         match(true) {
             Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', 'ict'),
@@ -91,7 +91,11 @@ class FacilitiesController extends Controller
             default => $types->where('slug', '!=', 'ict'),
         };
 
-        $types = $types->orderByTranslation('name')->get();
+        $types = $types->orderByTranslation('name')->get();*/
+
+        $types = FacilityType::orderByTranslation('name')->get();
+        dd($types->where('slug', 'ict')->get());
+
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
         $compatibility_params = CompatibilityParamGroup::with('params.translations')
             ->orderByTranslation('param_group_id')
@@ -99,7 +103,7 @@ class FacilitiesController extends Controller
 
         $route = route('account.facilities.store');
 
-        return view('facilities.form',
+        return view('account.facilities.form',
             compact('facility', 'types', 'visibilities', 'route', 'compatibility_params'));
     }
 
@@ -175,11 +179,16 @@ class FacilitiesController extends Controller
      */
     public function edit(Facility $facility): View
     {
-        $visibilities = FacilityVisibility::all();
+        $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
 
         $types = FacilityType::all();
+        $compatibility_params = CompatibilityParamGroup::with('params.translations')
+            ->orderByTranslation('param_group_id')
+            ->get();
+        $route = route('account.facilities.update', $facility);
 
-        return view('account.facilities.edit', compact('facility', 'visibilities', 'types'));
+        return view('account.facilities.form',
+            compact('facility', 'route', 'visibilities', 'types', 'compatibility_params'));
     }
 
     /**

@@ -5,6 +5,7 @@ return [
     'create_facility' => "Create facility",
     'c_level' => "Compatibility level",
     'description' => "Description",
+    'edit_facility' => "Edit facility",
     'errors'                   => [
         'delete_facility'      => 'Could not delete facility. Please contact the administrator.',
         'delete_file'          => 'Could not delete file. Please contact the administrator.',
@@ -21,7 +22,7 @@ return [
     'location' => "Location",
     'min_c_level' => "Minimal compatibility level",
     'my_facilities' => "My facilities",
-    'new_facility' => "New location",
+    'new_facility' => "New facility",
     'no_loaded_files' => "This facility has no loaded files",
     'no_results_found' => "No results were found for your search",
     'open' => "Open",

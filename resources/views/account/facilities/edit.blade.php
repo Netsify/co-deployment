@@ -1,6 +1,6 @@
 @extends('layouts.app-vue')
 
-@section('content')
+@section('vue-content')
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -37,10 +37,10 @@
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="facility" role="tabpanel">
-                                    @include('account.facilities.form_components.facility')
+                                    @include('account.facilities.form_components_old.facility')
                                 </div>
                                 <div class="tab-pane fade" id="compatibility_params" role="tabpanel">
-                                    @include('account.facilities.form_components.c_params')
+                                    @include('account.facilities.form_components_old.c_params')
                                 </div>
                             </div>
                         </div>
