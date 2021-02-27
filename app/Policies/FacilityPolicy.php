@@ -115,9 +115,9 @@ class FacilityPolicy
      * @param File $file
      * @return bool
      */
-    public function facilityHasFile(User $user, Facility $facility, File $file): bool
+    public function deleteFileFromFacility(User $user, Facility $facility, File $file): bool
     {
-        return $facility->files->contains($file);
+        return $user->facilitiesFiles->contains($file);
     }
 
     /**

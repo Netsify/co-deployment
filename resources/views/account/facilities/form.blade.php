@@ -37,6 +37,28 @@
                         </div>
                     </div>
                     <br>
+                    @facilityFilesNotDeleted($facility)
+                    <div class="my-4">
+                        <label class="form-label">{{ __('knowledgebase.Files') }}</label>
+
+                        <form method="POST">
+                            @method('DELETE')
+                            @csrf
+                            @foreach($facility->files as $file)
+                                <div class="mb-1">
+                                    <a href="{{ $file->link }}" target="_blank">{{ $file->name }}</a>
+
+                                    @can('deleteFileFromFacility', [$facility, $file])
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                formaction="{{ route('account.facilities.delete_file', [$facility, $file]) }}">
+                                            Удалить файл
+                                        </button>
+                                    @endcan
+                                </div>
+                            @endforeach
+                        </form>
+                    </div>
+                    @endfacilityFilesNotDeleted
                     <button type="submit" class="btn btn-primary">{{ __('facility.create_facility') }}</button>
                 </form>
             </div>

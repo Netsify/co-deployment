@@ -83,18 +83,12 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-/*        $types = FacilityType::query();
-
-        match(true) {
-            Auth::user()->role->slug == Role::ROLE_ICT_OWNER => $types->where('slug', 'ict'),
-            Auth::user()->role->slug == Role::ROLE_ADMIN => $types,
-            default => $types->where('slug', '!=', 'ict'),
-        };
-
-        $types = $types->orderByTranslation('name')->get();*/
-
         $types = FacilityType::orderByTranslation('name')->get();
-        dd($types->where('slug', 'ict')->get());
+        if (Auth::user()->role->slug == Role::ROLE_ICT_OWNER) {
+            $types = $types->where('slug', 'ict');
+        } else {
+            $types = $types->where('slug', '!=', 'ict');
+        }
 
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
         $compatibility_params = CompatibilityParamGroup::with('params.translations')
@@ -181,7 +175,13 @@ class FacilitiesController extends Controller
     {
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
 
-        $types = FacilityType::all();
+        $types = FacilityType::orderByTranslation('name')->get();
+        if (Auth::user()->role->slug == Role::ROLE_ICT_OWNER) {
+            $types = $types->where('slug', 'ict');
+        } else {
+            $types = $types->where('slug', '!=', 'ict');
+        }
+
         $compatibility_params = CompatibilityParamGroup::with('params.translations')
             ->orderByTranslation('param_group_id')
             ->get();
@@ -274,17 +274,18 @@ class FacilitiesController extends Controller
     }
 
     /**
-     * Удалить файл у комментария проекта
+     * Удалить файл у объекта
      *
      * @param Facility $facility
      * @param File $file
      * @return RedirectResponse
      */
-    public function deleteFile(Facility $facility, File $file): RedirectResponse
+    public function deleteFile(Facility $facility, File $file)//: RedirectResponse
     {
-        if (Auth::user()->cannot('userFacilityHasFile', [$facility, $file])) {
+        if (Auth::user()->cannot('deleteFileFromFacility', [$facility, $file])) {
             abort(403);
         }
+
 
         try {
             $file->delete();
