@@ -28,6 +28,7 @@ return [
     'open' => "Open",
     'owner' => "Owner",
     'result_search' => "The result of search",
+    'save' => "Save",
     'search' => "Search",
     'select_facility' => "Select facility",
     'select_type' => "Select facility's type",

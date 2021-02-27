@@ -22,5 +22,7 @@ Route::get('test', function () {
     return response()->json(['key' => "value"]);
 })->middleware('auth:sanctum');
 
-Route::get('/ref-book/facility_type/{facility_type}/description',
-    [\App\Http\Controllers\API\ReferenceBookController::class, 'getFacilityTypeDescription']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/ref-book/facility_type/{facility_type}/descriptions',
+        [\App\Http\Controllers\API\ReferenceBookController::class, 'getDescriptions']);
+});

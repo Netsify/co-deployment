@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * Объекты инфраструктуры
@@ -89,6 +90,17 @@ class Facility extends Model
     public function compatibilityParams() : BelongsToMany
     {
         return $this->belongsToMany(CompatibilityParam::class)->withPivot('value')->withTimestamps();
+    }
+
+    /**
+     * Отдельно один параметр совместимости (Pivot)
+     *
+     * @param $id
+     * @return Pivot|null
+     */
+    public function compatibilityParam($id)
+    {
+        return optional($this->compatibilityParams->find($id))->pivot;
     }
 
     /**
