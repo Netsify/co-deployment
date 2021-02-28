@@ -24,16 +24,12 @@
                         </li>
                         <li><a class="dropdown-item"
                                href="{{ route('articles.index') }}">{{ __('knowledgebase.AllArticles') }}</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link"
-                       href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a>
+                       href="{{ route('facilities.index') }}">{{ __('facility.facility_search') }}</a>
                 </li>
 
                 @auth

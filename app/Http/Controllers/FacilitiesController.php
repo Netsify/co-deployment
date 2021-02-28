@@ -126,7 +126,7 @@ class FacilitiesController extends Controller
         }
 
         if ($facilityService->store()) {
-            return redirect()->route('facilities.index');
+            return redirect()->route('account.facilities.index');
         }
 
         Session::flash('error', __('facility.errors.store'));
@@ -223,15 +223,14 @@ class FacilitiesController extends Controller
             $this->facilityService->storeFiles($facility);
         }
 
-        if ($facility->save()) {
-            Session::flash('message', __('facility.facility_updated'));
-        } else {
-            Session::flash('message', __('facility.errors.facility_not_updated'));
-
+        if (!$facility->save()) {
+            Session::flash('error', __('facility.errors.facility_not_updated'));
             Log::error('Не удалось обновить объект', compact($facility));
+
+            return redirect()->back();
         }
 
-        return back();
+        return redirect()->route('account.facilities.index');
     }
 
     /**

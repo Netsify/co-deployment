@@ -17,6 +17,7 @@ return [
     'facility_id' => "Идентификатор",
     'facility_id_description' => "Уникальный идентификатор объекта (создаётся автоматически)",
     'facility_name_or_id' => "Название или id объекта",
+    'facility_search' => "Поиск объектов",
     'facility_updated' => "Объект был успешно обновлен!",
     'find' => "Найти",
     'location' => "Расположение",
