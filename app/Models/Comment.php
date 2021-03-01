@@ -21,6 +21,7 @@ class Comment extends Model
         'content',
     ];
 
+    protected $with = ['user'];
     /**
      * Дата создания комментария
      *

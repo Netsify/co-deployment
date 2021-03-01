@@ -73,11 +73,12 @@ class ProjectController extends Controller
      */
     public function edit(Project $project): View
     {
-        $project->with('users', 'status', 'facilities');
+        $project->with('users', 'status', 'facilities', 'comments');
 
-        $statuses = ProjectStatus::all();
+        $statuses = ProjectStatus::orderByTranslation('name')->get();
+        $comments = $project->comments->load('files');
 
-        return view('account.projects.edit', compact('project', 'statuses'));
+        return view('account.projects.edit', compact('project', 'statuses', 'comments'));
     }
 
     /**

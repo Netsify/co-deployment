@@ -61,8 +61,13 @@ class InboxController extends Controller
      */
     public function show($id)
     {
-        $proposal = Proposal::find($id);
-        $facilities = $proposal->facilities->load('type.translations', 'compatibilityParams.translations');
+        $proposal = Proposal::query()->find($id);
+        $facilities = $proposal->facilities()->withTrashed()->get()->load('type.translations', 'compatibilityParams.translations');
+
+        if ($facilities[0]->isDeleted() || $facilities[1]->isDeleted()) {
+            return view('account.sent-proposals.show-d');
+        }
+
         FacilitiesService::getCompatibilityRatingByParams($facilities[0]->compatibilityParams, $facilities[1]);
         $c_level = $facilities[1]->compatibility_level;
 

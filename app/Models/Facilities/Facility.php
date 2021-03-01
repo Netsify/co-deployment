@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read string $locale                       - В какой локали создавался объект
  * @property Carbon $created_at                        - Дата создания
  * @property Carbon $updated_at                        - Дата редактирования
+ * @property Carbon $deleted_at                        - Дата удаления
  * @property User $user                                - Пользователь
  * @property FacilityType $type                        - Тип
  * @property FacilityVisibility $visibility            - Кому виден объект
@@ -138,5 +139,15 @@ class Facility extends Model
     public static function findByIdentificator(string $identificator) : self
     {
         return self::query()->where('identificator', $identificator)->firstOrFail();
+    }
+
+    /**
+     * Удалён ли объект
+     *
+     * @return bool
+     */
+    public function isDeleted() : bool
+    {
+        return !is_null($this->deleted_at);
     }
 }
