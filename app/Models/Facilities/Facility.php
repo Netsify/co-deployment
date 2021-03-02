@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Объекты инфраструктуры
@@ -26,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property-read string $locale                       - В какой локали создавался объект
  * @property Carbon $created_at                        - Дата создания
  * @property Carbon $updated_at                        - Дата редактирования
+ * @property Carbon $deleted_at                        - Дата удаления
  * @property User $user                                - Пользователь
  * @property FacilityType $type                        - Тип
  * @property FacilityVisibility $visibility            - Кому виден объект
@@ -37,7 +40,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 class Facility extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['title', 'location', 'description'];
 
@@ -92,6 +95,17 @@ class Facility extends Model
     }
 
     /**
+     * Отдельно один параметр совместимости (Pivot)
+     *
+     * @param $id
+     * @return Pivot|null
+     */
+    public function compatibilityParam($id)
+    {
+        return optional($this->compatibilityParams->find($id))->pivot;
+    }
+
+    /**
      * @param string $identificator
      */
     public function setIdentificator($identificator)
@@ -125,5 +139,15 @@ class Facility extends Model
     public static function findByIdentificator(string $identificator) : self
     {
         return self::query()->where('identificator', $identificator)->firstOrFail();
+    }
+
+    /**
+     * Удалён ли объект
+     *
+     * @return bool
+     */
+    public function isDeleted() : bool
+    {
+        return !is_null($this->deleted_at);
     }
 }

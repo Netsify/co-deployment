@@ -21,25 +21,42 @@ Auth::routes();
 Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
     ->name('facilities.search');
 
+Route::resource('facilities',\App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
+
 Route::middleware('auth')->group(function () {
+
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
         ->except(['index', 'show']);
 
-    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
-        ->except('index', 'show');
+    Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
+        ->name('articles.delete_file');
+
+    Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
+        ->name('articles.search');
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
+    Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
+        [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');
+
     /**
-     * Роуты для работы с вкладками личного кабинета (профиль, проекты, входящие, отправленные предложения)
+     * Роуты для работы с вкладками личного кабинета (профиль, объекты, проекты, входящие, отправленные предложения)
      */
     Route::prefix('account')->name('account.')->group(function () {
 
-        Route::resource('projects', \App\Http\Controllers\Account\ProjectController::class)
-            ->only('index', 'edit', 'update');
+        Route::get('facilities', [\App\Http\Controllers\FacilitiesController::class, 'accountIndex'])
+            ->name('facilities.index');
+
+        Route::delete('/facilities/{facility}/file/{file}/delete',
+            [\App\Http\Controllers\FacilitiesController::class, 'deleteFile'])->name('facilities.delete_file');
+
+        Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
+            ->except('index', 'show');
+
+        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class);
 
         Route::post('projects/{project}/add_comment',
             [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])
@@ -70,17 +87,6 @@ Route::middleware('auth')->group(function () {
             ->name('sent-proposals.delete');
 
     });
-
-    Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
-        ->name('articles.delete_file');
-
-    Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
-        ->name('articles.search');
-
-    Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class);
-
-    Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
-        [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');
 
     /**
      * Роуты для работы с админкой
@@ -127,6 +133,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::resource('articles', \App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
-
-Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
+Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);

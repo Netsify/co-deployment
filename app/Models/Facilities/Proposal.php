@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description             - описание и детали
  * @property Carbon $deleted_at_by_receiver  - удалено получателем предложения
  * @property File[] $files                   - Файлы, прикреплённые к предложению о сотрудничестве
+ * @property Facility[] $facilities          - Объекты
  *
  * Class Proposal
  * @package App\Models\Facilities

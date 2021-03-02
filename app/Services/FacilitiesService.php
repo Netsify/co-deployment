@@ -19,15 +19,15 @@ class FacilitiesService
 {
     /**
      * Объект
-     * 
-     * @var Facility 
+     *
+     * @var Facility
      */
     private $_facility;
 
     /**
      * Приклеплённые файлы
-     * 
-     * @var array 
+     *
+     * @var array
      */
     private $_attachments = [];
 
@@ -36,15 +36,16 @@ class FacilitiesService
      *
      * @var array
      */
-    private $_c_params =[];
+    private $_c_params = [];
 
     /**
      * Конструктор
-     * 
+     *
      * FacilitiesService constructor.
      * @param Facility $facility
+     * @param array|null $c_params
      */
-    public function __construct(Facility $facility, array $c_params)
+    public function __construct(Facility $facility, array $c_params = null)
     {
         $this->_facility = $facility;
         $this->_c_params = $c_params;
@@ -52,7 +53,7 @@ class FacilitiesService
 
     /**
      * Приклепляем файлы
-     * 
+     *
      * @param array $attachments
      */
     public function attachFiles(array $attachments)
@@ -61,11 +62,21 @@ class FacilitiesService
     }
 
     /**
+     * Прикрепляем параметры совместимости
+     *
+     * @param array $compatibilityParams
+     */
+    public function attachCompatibilityParams(array $compatibilityParams)
+    {
+        $this->_c_params = $compatibilityParams;
+    }
+
+    /**
      * Создание объекта
-     * 
+     *
      * @return bool
      */
-    public function store() : bool 
+    public function store() : bool
     {
         $facility = Auth::user()->facilities()->save($this->_facility);
 
@@ -80,7 +91,7 @@ class FacilitiesService
             if (!empty($this->_attachments)) {
                 return $this->storeFiles($facility);
             }
-            
+
             return true;
         }
 
@@ -93,11 +104,11 @@ class FacilitiesService
 
     /**
      * Сохранение приклеплённых файлов
-     * 
+     *
      * @param Facility $facility
      * @return bool
      */
-    protected function storeFiles(Facility $facility) : bool 
+    public function storeFiles(Facility $facility) : bool
     {
         $files = [];
 
@@ -121,15 +132,25 @@ class FacilitiesService
         return true;
     }
 
-    protected function setCompatibilityParams(Facility $facility)
+    /**
+     * Устанавливаем или обновляем параметры совместимости
+     *
+     * @param Facility $facility
+     * @return bool
+     */
+    public function setCompatibilityParams(Facility $facility): bool
     {
+        $cParams = [];
+
         foreach ($this->_c_params as $id => $value) {
-            if ($facility->compatibilityParams()->attach($id, ['value' => $value])) {
-                return false;
-            }
+            $cParams[$id] = ['value' => $value];
         }
 
-        return true;
+        if ($facility->compatibilityParams()->sync($cParams,false)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

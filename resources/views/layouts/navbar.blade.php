@@ -24,27 +24,14 @@
                         </li>
                         <li><a class="dropdown-item"
                                href="{{ route('articles.index') }}">{{ __('knowledgebase.AllArticles') }}</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ __('facility.facilities') }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @can('create', \App\Models\Facilities\Facility::class)
-                            <li><a class="dropdown-item"
-                                   href="{{ route('facilities.create') }}">{{ __('facility.create_facility') }}</a>
-                            </li>
-                        @endcan
-                        <li><a class="dropdown-item"
-                               href="{{ route('facilities.index') }}">{{ __('facility.facilities') }}</a></li>
-                    </ul>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{ route('facilities.index') }}">{{ __('facility.facility_search') }}</a>
                 </li>
+
                 @auth
                     @admin
                     <li class="nav-item">
@@ -85,6 +72,10 @@
                                 {{ __('account.profile') }}
                             </a>
 
+                            <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
+                                {{ __('facility.facilities') }}
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('account.projects.index') }}">
                                 {{ __('account.projects') }}
                             </a>
@@ -110,7 +101,7 @@
                     </li>
                 @endguest
                 <li class="nav-item">
-                    <a href="{{ currentRoute() }}" class="nav-link">
+                    <a href="{{ currentRoute() }}" class="nav-link" id="language">
                         {{ __('dictionary.SwitchTo') }} <img src="{{ getFlag() }}" class="img" width="20px" alt="flag">
                     </a>
                 </li>

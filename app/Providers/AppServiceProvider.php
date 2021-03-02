@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\Facilities\Facility;
 use App\View\Components\DeleteButtton;
 use App\View\Components\InvalidFeedback;
 use App\Models\Facilities\Proposal;
@@ -77,6 +78,13 @@ class AppServiceProvider extends ServiceProvider
          */
         Blade::if('commentFilesNotDeleted', function (Comment $comment) {
             return $comment->files->isNotEmpty();
+        });
+
+        /**
+         * Директива есть ли у объекта неудаленные файлы
+         */
+        Blade::if('facilityFilesNotDeleted', function (Facility $facility) {
+            return $facility->files->isNotEmpty();
         });
 
         Blade::if('proposalUnderConsideration', function (Proposal $proposal) {

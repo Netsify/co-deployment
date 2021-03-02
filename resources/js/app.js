@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,16 +20,16 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('example-component', require('./components/CompatibilityParams'));
+// Vue.component('example-component', require('./components/CompatibilityParams'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import CompatibilityParams from './components/CompatibilityParams';
+// import CompatibilityParams from './components/CompatibilityParams';
 
-import App from './components/App';
+// import App from './components/App';
 
 // import CKEditor from 'public/ckeditor/ckeditor';
 /*
@@ -37,23 +37,23 @@ import '/public/ckeditor/ckeditor';
 CKEditor.replace('content');
 */
 
-const app = new Vue({
+/*const app = new Vue({
     el: '#app',
     data() {
         return {
-            type_id: 0,
-            type_name: '',
+            // type_id: 0,
+            // type_name: '',
         }
     },
     components: {
         'app': App
     },
     methods: {
-        getType: function (event) {
+        /!*getType: function (event) {
             let select = event.target;
             this.type_name = select.options[select.selectedIndex].text;
             this.type_id = select.value;
-        },
+        },*!/
 
         updateStatus: function (event) {
             let status = event.target;
@@ -89,4 +89,4 @@ const app = new Vue({
 
 // export default {
 //     props: ['route'],
-// }
+// }*/

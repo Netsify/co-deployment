@@ -5,7 +5,7 @@
 
     <div class="card-body">
         <div class="card-body">
-            @forelse($project->comments as $comment)
+            @forelse($comments as $comment)
                 <div class="row">
                     <div class="col-1">
                         <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}

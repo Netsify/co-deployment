@@ -12,6 +12,7 @@ return [
     'delete'               => 'Delete',
     'edit'                 => 'Edit',
     'errors'               => [
+        'delete_file'         => 'Could not delete file. Please contact the administrator.',
         'deleteProposal'      => 'Could not delete proposal. Please contact the administrator.',
         'deleteProject'       => 'Could not delete project. Please contact the administrator.',
         'project_not_updated' => 'Project has not been updated. Please contact the administrator.'

@@ -16,3 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps();
 
 mix.js('resources/js/variables.js', 'public/js');
+
+mix.js('resources/js/facilities.js', 'public/js');

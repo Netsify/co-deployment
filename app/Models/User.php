@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -26,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
  * @property Article[] $articles        - Статьи пользователя
  * @property Role $role                 - Роль пользователя
  * @property Facility[] $facilities     - Объекты пользователя
- *
+ * @property File[] $facilitiesFiles    - Файлы всех объектов пользователя
  * Class User
  * @package App\Models
  */
@@ -165,5 +166,15 @@ class User extends Authenticatable
                     $builder->where('facilities.id', $facility_id2);
                 })->first()
             );
+    }
+
+    /**
+     * Файлы всех объектов пользователя
+     *
+     * @return HasManyThrough
+     */
+    public function facilitiesFiles() : HasManyThrough
+    {
+        return $this->hasManyThrough(File::class, Facility::class, 'user_id', 'fileable_id', '');
     }
 }

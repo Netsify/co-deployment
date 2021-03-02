@@ -17,6 +17,7 @@ return [
         'store' => "There are some problems by creating partnership's proposal. Please try later",
     ],
 
+    'if_facility_deleted' => "The propsal not available because one of the objects has been deleted",
     'incoming_proposal' => 'Incoming proposal',
     'send_proposal' => "Send proposal",
     'wrong_value' => 'Wrong value. Please contact the administrator.',
