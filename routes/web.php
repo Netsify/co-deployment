@@ -21,8 +21,6 @@ Auth::routes();
 Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
     ->name('facilities.search');
 
-Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
-
 Route::resource('facilities',\App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
@@ -134,3 +132,5 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);

@@ -35,7 +35,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request) : View
     {
-        $statuses = ProjectStatus::all();
+        $statuses = ProjectStatus::orderByTranslation('status_id')->get();
 
         $projects = Project::with('status', 'comments')
             ->whereHas('users', fn($q) => $q->where('users.id', Auth::user()->id));
