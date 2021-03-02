@@ -33,9 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
 
-    Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
-        ->name('articles.search');
-
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
@@ -132,5 +129,8 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
+    ->name('articles.search');
 
 Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
