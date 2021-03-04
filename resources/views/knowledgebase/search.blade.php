@@ -23,7 +23,10 @@
                                 <select name="category" id="category" class="form-select ">
                                     <option value="" hidden>{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}"
+                                            {{ $category->id == request()->input('category') ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -32,8 +35,13 @@
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="" disabled>{{ __('knowledgebase.SelectTags') }}</option>
-                                    @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @foreach (request()->input('tag') as $tagged)
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}"
+                                                    {{ $tag->id == $tagged ? 'selected' : '' }}>
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
                                     @endforeach
                                 </select>
                             </div>
