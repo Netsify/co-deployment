@@ -10,6 +10,7 @@ return [
     'comments'             => 'Comments',
     'dates'                => 'Dates',
     'delete'               => 'Delete',
+    'economic_variables' => 'Economic variables',
     'edit'                 => 'Edit',
     'errors'               => [
         'delete_file'         => 'Could not delete file. Please contact the administrator.',

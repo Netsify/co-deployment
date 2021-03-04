@@ -25,4 +25,6 @@ Route::get('test', function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/ref-book/facility_type/{facility_type}/descriptions',
         [\App\Http\Controllers\API\ReferenceBookController::class, 'getDescriptions']);
+
+    Route::get('/variables/list', [\App\Http\Controllers\API\VariablesController::class, 'getByGroup']);
 });

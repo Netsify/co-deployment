@@ -63,7 +63,6 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
                             {{ Auth::user()->full_name }}
-                            <small>({{ Auth::user()->role->name }})</small>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -86,6 +85,10 @@
 
                             <a class="dropdown-item" href="{{ route('account.sent-proposals.index') }}">
                                 {{ __('account.sent_proposals') }}
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('account.variables.index') }}">
+                                {{ __('account.economic_variables') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"

@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
             ->name('sent-proposals.delete');
 
+        Route::get('/variables', [\App\Http\Controllers\Account\VariablesController::class, 'index'])->name('variables.index');
+        Route::get('/variables/{variable}', [\App\Http\Controllers\Account\VariablesController::class, 'update'])->name('variables.update');
     });
 
     /**
