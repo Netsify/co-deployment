@@ -1,8 +1,7 @@
 // require('./bootstrap');
 
 window.Vue = require('vue');
-import axios from 'axios';
-
+import Api from './api';
 import CParamDescription from './components/facilities/CParamDescription';
 
 const app = new Vue({
@@ -29,12 +28,7 @@ const app = new Vue({
             }
         },
         getDescriptions: function () {
-            let lang = document.getElementById('language').innerText.trim().toLowerCase();
-            switch (lang) {
-                case 'ru': lang = ''; break;
-                case 'en': lang = '/en'; break;
-            }
-            axios.get(lang +'/api/ref-book/facility_type/' + this.type_id + '/descriptions')
+            Api.get('/ref-book/facility_type/' + this.type_id + '/descriptions')
                 .then(response => {
                     // console.log(response.data.descriptions);
                     this.descriptions = response.data.descriptions;

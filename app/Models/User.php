@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
+use App\Models\Variables\Variable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +30,8 @@ use Illuminate\Support\Facades\Storage;
  * @property Role $role                 - Роль пользователя
  * @property Facility[] $facilities     - Объекты пользователя
  * @property File[] $facilitiesFiles    - Файлы всех объектов пользователя
+ * @property Variable[] $variables      - Переменные которые вбил пользователь
+ *
  * Class User
  * @package App\Models
  */
@@ -176,5 +180,15 @@ class User extends Authenticatable
     public function facilitiesFiles() : HasManyThrough
     {
         return $this->hasManyThrough(File::class, Facility::class, 'user_id', 'fileable_id', '');
+    }
+
+    /**
+     * Переменные которые вбил пользователь
+     *
+     * @return BelongsToMany
+     */
+    public function variables() : BelongsToMany
+    {
+        return $this->belongsToMany(Variable::class)->withPivot('value');
     }
 }

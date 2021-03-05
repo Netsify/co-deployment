@@ -1,18 +1,27 @@
 window.Vue = require('vue');
 
-import axios from 'axios';
+import Api from './api';
 
 const app = new Vue({
     el: '#variables',
     data() {
         return {
-            id: 'test'
+            load: false,
+            variables: []
         }
     },
     methods: {
         getVars(event) {
+            this.load = true;
             let id = event.target.value;
-            console.log(id);
+            Api.get('/variables/list', {
+                params: {
+                    group: id
+                }
+            }).then(response => {
+                this.variables = response.data.variables;
+                this.load = false;
+            }).catch(error => console.error(error));
         }
     },
 });

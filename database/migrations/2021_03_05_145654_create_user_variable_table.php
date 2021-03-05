@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserVariablesTable extends Migration
+class CreateUserVariableTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateUserVariablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_variables', function (Blueprint $table) {
+        Schema::create('user_variable', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('variable_id')->unsigned();
+            $table->float('value', 11, 2);
             $table->timestamps();
+
+            $table->unique(['user_id', 'variable_id']);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('variable_id')->references('id')->on('variables')->onDelete('cascade');
@@ -31,6 +34,6 @@ class CreateUserVariablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_variables');
+        Schema::dropIfExists('user_variable');
     }
 }
