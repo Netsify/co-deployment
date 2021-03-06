@@ -21,9 +21,12 @@
                             <div class="mb-3">
                                 <label for="category" class="form-label">{{ __('knowledgebase.Category') }}</label>
                                 <select name="category" id="category" class="form-select ">
-                                    <option value="" hidden>{{ __('knowledgebase.SelectCategory') }}</option>
+                                    <option value="">{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}"
+                                            {{ $category->id == request()->input('category') ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -31,10 +34,16 @@
                             <div class="mb-3">
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
                                 <select name="tag[]" id="tag" class="form-select" multiple>
-                                    <option value="" disabled>{{ __('knowledgebase.SelectTags') }}</option>
-                                    @foreach($tags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                    @endforeach
+                                    <option value="">{{ __('knowledgebase.SelectTags') }}</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}"
+                                                    @if (request()->input('tag'))
+                                                    {{ in_array($tag->id, request()->input('tag')) ? 'selected' : '' }}
+                                                    @endif
+                                                    >
+                                                {{ $tag->name }}
+                                            </option>
+                                        @endforeach
                                 </select>
                             </div>
 
