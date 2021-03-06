@@ -9,12 +9,12 @@ use App\Models\File;
 use App\Models\Tag;
 use App\Services\KnowledgeBaseService;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 /**
  * Контроллер для работы со статьями в базе знаний
@@ -32,12 +32,14 @@ class ArticlesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return View
      */
-    public function index()
+    public function index(Category $category): View
     {
         $articles = Article::published()
-            ->with(['category.translations', 'tags.translations', 'user'])
+            ->with(['tags.translations', 'user', 'category.translations'])
+            ->whereHas('category', fn($q) => $q->where('id', $category->id))
             ->orderByDesc('created_at')
             ->get();
 

@@ -7,6 +7,7 @@ return [
     'AddNew'                     => "Add new",
     'AllArticles'                => "All articles",
     'articles_not_found'         => "The articles are not found",
+    'ArticleCategories'          => "Article categories",
     'ArticlesCount'              => "Number of articles",
     'Category'                   => "Category",
     'CategoryAdded'              => "Category has been successfully added!",

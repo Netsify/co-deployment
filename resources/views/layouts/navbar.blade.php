@@ -15,15 +15,40 @@
                        data-bs-toggle="dropdown" aria-expanded="false">
                         {{ __('knowledgebase.KB') }}
                     </a>
+
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item"
-                               href="{{ route('articles.search') }}">{{ __('knowledgebase.Search') }}</a>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('articles.search') }}">{{ __('knowledgebase.Search') }}
+                            </a>
                         </li>
-                        <li><a class="dropdown-item"
-                               href="{{ route('articles.create') }}">{{ __('knowledgebase.CreateArticle') }}</a>
+
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item"
-                               href="{{ route('articles.index') }}">{{ __('knowledgebase.AllArticles') }}</a></li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('articles.create') }}">{{ __('knowledgebase.CreateArticle') }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">
+                                {{ __('knowledgebase.ArticleCategories') }}
+                            </a>
+                        </li>
+                        @foreach($categories as $category)
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{{ route('articles.index', $category->id) }}">{{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
 
