@@ -222,20 +222,20 @@ class ArticlesController extends Controller
         if ($request->hasAny(['content', 'category', 'tag'])) {
             $articles = Article::query();
 
-            if ($request->has('content')) {
+            if ($request->filled('content')) {
                 $articles->where(fn($q) => $q
                     ->where('title', 'LIKE', '%' . $request->input('content') . '%')
                     ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
                 );
             }
 
-            if ($request->has('category')) {
+            if ($request->filled('category')) {
                 $articles->whereHas('category',
                     fn($q) => $q->where('categories.id', $request->input('category'))
                 );
             }
 
-            if ($request->has('tag')) {
+            if ($request->filled('tag')) {
                 $articles->whereHas('tags',
                     fn($q) => $q->whereIn('tags.id', $request->input('tag'))
                 );
