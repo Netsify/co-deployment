@@ -5,7 +5,7 @@
 
 return [
     'AddNew'                     => "Добавить новую",
-    'AllArticles'                => "Все статьи",
+    'AllArticles'                => "Все статьи по категории: ",
     'articles_not_found'         => "Статьи не найдены",
     'ArticleCategories'          => "Категории статей",
     'ArticlesCount'              => "Количество статей",

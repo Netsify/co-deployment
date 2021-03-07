@@ -38,12 +38,12 @@ class ArticlesController extends Controller
     public function index(Category $category): View
     {
         $articles = Article::published()
-            ->with(['tags.translations', 'user', 'category.translations'])
+            ->with(['tags.translations', 'user'])
             ->whereHas('category', fn($q) => $q->where('id', $category->id))
             ->orderByDesc('created_at')
             ->get();
 
-        return view('knowledgebase.index', compact('articles'));
+        return view('knowledgebase.index', compact('articles', 'category'));
     }
 
     /**

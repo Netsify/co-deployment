@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::all();
+        $categories = Category::orderByTranslation('name')->get();
 
         View::composer('layouts.app', function($view) use ($categories) {
             $view->with(compact('categories'));
