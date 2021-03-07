@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <h1>{{ __('knowledgebase.AllArticles') }}</h1>
+                <h1>{{ __('knowledgebase.AllArticles') . $category->name }}</h1>
                 @forelse($articles as $article)
                     <div class="card">
                         <div class="card-header">
