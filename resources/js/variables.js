@@ -22,6 +22,13 @@ const app = new Vue({
                 this.variables = response.data.variables;
                 this.load = false;
             }).catch(error => console.error(error));
+        },
+        saveVars() {
+            Api.post('/variables/store_for_user', {
+                data: {
+                    variables: this.variables
+                }
+            }).then(response => console.log(response.data));
         }
     },
 });

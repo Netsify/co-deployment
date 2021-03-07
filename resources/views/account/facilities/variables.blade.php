@@ -16,7 +16,8 @@
                                        autocomplete="off"
                                        @click="getVars"
                                 >
-                                <label class="btn btn-outline-danger" for="{{ $group->id }}">{{ $group->getTitle() }}</label>
+                                <label class="btn btn-outline-danger"
+                                       for="{{ $group->id }}">{{ $group->getTitle() }}</label>
                             @endforeach
                         </div>
                     </div>
@@ -24,24 +25,29 @@
                         <div v-if="load" class="alert alert-info" role="alert">
                             {{ __('variable.loading') }}
                         </div>
-                        <table v-else-if="variables.length > 0" class="table table-sm table-striped">
-                            <thead>
-                            <tr>
-                                <td>{{ __('variable.variable') }}</td>
-                                <td>{{ __('variable.unit') }}</td>
-                                <td>{{ __('variable.value') }}</td>
-                                <td></td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="variable in variables">
-                                    <td width="50%">@{{ variable.description }}</td>
-                                    <td width="25%">@{{ variable.unit }}</td>
-                                    <td width="25%">@{{ variable.value }}</td>
-                                    <td width="25%">@{{ variable.id }}</td>
+                        <form v-else-if="variables.length > 0" method="post">
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                <tr>
+                                    <td>{{ __('variable.variable') }}</td>
+                                    <td>{{ __('variable.unit') }}</td>
+                                    <td>{{ __('variable.value') }}</td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <tr v-for="variable in variables">
+                                    <td width="70%">@{{ variable.description }}</td>
+                                    <td width="20%">@{{ variable.unit }}</td>
+                                    <td width="10%">
+                                        <input type="text" :name="`value[${variable.id}]`"
+                                               class="form-control form-control-sm" v-model="variable.value">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-sm btn-primary"
+                                    @click.prevent="saveVars">{{ __('dictionary.Save') }}</button>
+                        </form>
                     </div>
                 </div>
             </div>

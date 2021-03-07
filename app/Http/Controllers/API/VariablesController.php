@@ -40,4 +40,12 @@ class VariablesController extends Controller
             'variables' => $array
         ]);
     }
+
+    public function storeForUser(Request $request)
+    {
+        return response()->json([
+            'status' => 'ok',
+            'variables' => $request->all()
+        ]);
+    }
 }

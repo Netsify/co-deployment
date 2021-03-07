@@ -27,4 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
         [\App\Http\Controllers\API\ReferenceBookController::class, 'getDescriptions']);
 
     Route::get('/variables/list', [\App\Http\Controllers\API\VariablesController::class, 'getByGroup']);
+    Route::post('/variables/store_for_user', [\App\Http\Controllers\API\VariablesController::class, 'storeForUser']);
 });
