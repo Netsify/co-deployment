@@ -14,11 +14,9 @@ class CreateUserVariableTable extends Migration
     public function up()
     {
         Schema::create('user_variable', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('variable_id')->unsigned();
             $table->float('value', 11, 2);
-            $table->timestamps();
 
             $table->unique(['user_id', 'variable_id']);
 
