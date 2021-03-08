@@ -141,4 +141,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
     ->name('articles.search');
 
-Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only(['index', 'show']);
+Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only('index', 'show');
+
+Route::get('articles/category/{category}', [\App\Http\Controllers\ArticlesController::class, 'index'])
+    ->name('articles.index');
