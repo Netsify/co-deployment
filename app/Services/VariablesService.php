@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\User;
 use App\Models\Variables\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -18,10 +19,12 @@ class VariablesService
     private $variables;
     private $user_variables;
 
-    public function __construct(Group $group)
+    public function __construct(Group $group, ?User $user = null)
     {
         $this->variables = $group->variables()->orderByTranslation('description')->get();
-        $this->user_variables = Auth::user()->variables()->where('group_id', $group->id)->orderByTranslation('description')->get();
+        $user_variables = $user ? $user->variables() : Auth::user()->variables();
+
+        $this->user_variables = $user_variables->where('group_id', $group->id)->orderByTranslation('description')->get();
     }
 
     public function get()
