@@ -2,11 +2,13 @@
 
 namespace App\Models\Facilities;
 
+use App\Models\Variables\Group;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Класс типов объектов
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $slug        - Уникальный строковый идентификатор
  * @property Carbon $created_at  - Дата создания
  * @property Carbon $updated_at  - Дата редактирования
+ * @property Group $variablesGroups - Группы переменных
  *
  * Class Category
  * @package App\Models\Facilities
@@ -36,4 +39,15 @@ class FacilityType extends Model implements TranslatableContract
      * @var array
      */
     public $translatedAttributes = ['name'];
+
+    /**
+     * Группы переменных этого типа
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function variablesGroups() : BelongsToMany
+    {
+        return $this->belongsToMany(Group::class,
+            'facility_type_group_variable', 'facility_type_id', 'group_variable_id');
+    }
 }
