@@ -51,7 +51,8 @@ class VariablesService
     public function storeForUser(array $user_variables)
     {
         $variables = $this->variables->pluck('default_val', 'id')->toArray();
-        $user_variables = array_diff($user_variables, $variables);
+
+        $user_variables = array_diff_assoc($user_variables, $variables);
         $variables = $this->variables->whereIn('id', array_keys($user_variables));
 
         $attach = [];
