@@ -19,7 +19,7 @@
                                 <th scope="col">{{ __('dictionary.Email') }}</th>
                                 <th scope="col">{{ __('dictionary.Role') }}</th>
                                 <th scope="col">{{ __('dictionary.Verified') }}</th>
-                                <th scope="col"></th>
+{{--                                <th scope="col"></th>--}}
                             </tr>
                         </thead>
 
@@ -41,19 +41,23 @@
                                 <td>
                                     <select class="form-select @error('verified') is-invalid @enderror"
                                             id="verified" name="verified">
-                                        <option value="0" {{ (old('verified') ?? $user->verified) === 0 ? 'selected' : '' }}>Нет</option>
-                                        <option value="1" {{ (old('verified') ?? $user->verified) === 1 ? 'selected' : '' }}>Да</option>
+                                        <option value="0" {{ $user->verified === 0 ? 'selected' : '' }}>
+                                            {{ __('dictionary.No') }}
+                                        </option>
+                                        <option value="1" {{ $user->verified === 1 ? 'selected' : '' }}>
+                                            {{ __('dictionary.Yes') }}
+                                        </option>
                                     </select>
                                     @error('verified')
                                         <x-invalid-feedback :message="$message"/>
                                     @enderror
                                 </td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                            formaction="{{ route('admin.users.destroy', $user) }}">
-                                        {{ __('account.delete') }}
-                                    </button>
-                                </td>
+{{--                                <td>--}}
+{{--                                    <button type="submit" class="btn btn-danger btn-sm"--}}
+{{--                                            formaction="{{ route('admin.users.destroy', $user) }}">--}}
+{{--                                        {{ __('account.delete') }}--}}
+{{--                                    </button>--}}
+{{--                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

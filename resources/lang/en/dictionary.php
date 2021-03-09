@@ -22,6 +22,7 @@ return [
     'Lang'               => "",
     'LastName'           => "Last Name",
     'Logout'             => "Logout",
+    'No'                 => "No",
     'Password'           => "Password",
     'Registration'       => "Registration",
     'Register'           => "Sign Up",
@@ -40,4 +41,5 @@ return [
     'Summary'            => "Summary",
     'UpdatePassword'     => "Optional to fill. Here you can change your password.",
     'Verified'           => "Verified",
+    'Yes'                => "Yes",
 ];
