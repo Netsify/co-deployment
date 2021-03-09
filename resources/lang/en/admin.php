@@ -6,5 +6,6 @@ return [
     'economic_efficient_vars' => "Economic efficient (Variables)",
     'facilities' => "Infrastructure's facilities",
     'knowledge_base' => "Knowledge base",
-    'welcome_to_admin_panel' => "Welcome to admin panel"
+    'welcome_to_admin_panel' => "Welcome to admin panel",
+    'users' => "Users",
 ];

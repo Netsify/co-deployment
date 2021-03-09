@@ -11,6 +11,7 @@ return [
     'EditProfile'        => "Edit Personal Data",
     'Email'              => "Email",
     'FirstName'          => "First Name",
+    'FullName'           => "Full Name",
     'ForgotYourPassword' => "Forgot your password?",
     'KB'                 => "Knowlage base",
     'Lang'               => "",
@@ -32,5 +33,6 @@ return [
     'Photo'              => "Photo",
     'Save'               => "Save",
     'Summary'            => "Summary",
-    'UpdatePassword'     => "Optional to fill. Here you can change your password."
+    'UpdatePassword'     => "Optional to fill. Here you can change your password.",
+    'Verified'           => "Verified",
 ];

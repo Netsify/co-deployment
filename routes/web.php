@@ -99,6 +99,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
 
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
         /**
          * Роуты для работы со статьями базы знаний в админке
          */
