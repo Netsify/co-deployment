@@ -10,6 +10,11 @@ return [
     'ConfirmPassword'    => "Repeat Password",
     'EditProfile'        => "Edit Personal Data",
     'Email'              => "Email",
+
+    'errors'             => [
+        'delete_user'    => "Could not delete user. Please, contact the administrator."
+    ],
+
     'FirstName'          => "First Name",
     'FullName'           => "Full Name",
     'ForgotYourPassword' => "Forgot your password?",

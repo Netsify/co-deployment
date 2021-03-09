@@ -10,6 +10,11 @@ return [
     'ConfirmPassword'    => "Подтверждение пароля",
     'EditProfile'        => "Редактировать личные данные",
     'Email'              => "Email",
+
+    'errors'             => [
+        'delete_user'    => "Не удалось удалить пользователя. Пожалуйста, обратитесь к администратору."
+    ],
+
     'FirstName'          => "Имя",
     'FullName'           => "ФИО",
     'ForgotYourPassword' => "Забыли пароль?",
