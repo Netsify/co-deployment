@@ -161,7 +161,7 @@ class FacilitiesController extends Controller
         if ($my_facility) {
             $my_facility = Facility::find($my_facility);
             $facilities->put('my', $my_facility);
-//            $facilities->load('type.translations');
+            $facilities->load('compatibilityParams', 'user');
 //            dump($facilities['my']->type->name);
 //            dump($facilities['founded']->type->name);
 
