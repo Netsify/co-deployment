@@ -149,18 +149,19 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-        $facility->load('compatibilityParams.translations', 'files');
+        $facilities = new Collection();
+        $facilities->put('founded', $facility);
+
+//        $facility->load('compatibilityParams.translations', 'files');
         $my_facility = request()->input('my_facility');
+        $facilities->put('my', $my_facility);
 
         $proposal_is_not_exist = false;
 
         if ($my_facility) {
             $my_facility = Facility::find($my_facility);
-            $facilities = new Collection([
-                'my' => $my_facility,
-                'founded' => $facility
-            ]);
-            $facilities->load('type.translations');
+            $facilities->put('my', $my_facility);
+//            $facilities->load('type.translations');
 //            dump($facilities['my']->type->name);
 //            dump($facilities['founded']->type->name);
 
