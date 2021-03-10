@@ -157,7 +157,7 @@ class FacilitiesController extends Controller
             $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
 
 
-            return;
+//            return;
             FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
 
             $proposal_is_not_exist = Auth::user()->proposalIsNotExist($my_facility->id, $facility->id);
