@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
  * @property Facility[] $facilities     - Объекты пользователя
  * @property File[] $facilitiesFiles    - Файлы всех объектов пользователя
  * @property Variable[] $variables      - Переменные которые вбил пользователь
+ * @property boolean verified           - Верификация
  *
  * Class User
  * @package App\Models

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="verified">
         <div class="card mb-3">
             <div class="card-header">
                 {{ __('admin.users') }}
@@ -9,7 +9,7 @@
 
             <div class="card-body">
                 <form method="POST">
-                    @method('DELETE')
+                    @method('PUT')
                     @csrf
                     <table class="table">
                         <thead>
@@ -39,18 +39,22 @@
                                     {{ $user->role->name }}
                                 </td>
                                 <td>
-                                    <select class="form-select @error('verified') is-invalid @enderror"
-                                            id="verified" name="verified">
-                                        <option value="0" {{ $user->verified === 0 ? 'selected' : '' }}>
-                                            {{ __('dictionary.No') }}
-                                        </option>
-                                        <option value="1" {{ $user->verified === 1 ? 'selected' : '' }}>
-                                            {{ __('dictionary.Yes') }}
-                                        </option>
-                                    </select>
-                                    @error('verified')
-                                        <x-invalid-feedback :message="$message"/>
-                                    @enderror
+{{--                                    <select class="form-select @error('verified') is-invalid @enderror"--}}
+{{--                                            id="verified" name="verified">--}}
+{{--                                        <option value="0" {{ $user->verified === 0 ? 'selected' : '' }}>--}}
+{{--                                            {{ __('dictionary.No') }}--}}
+{{--                                        </option>--}}
+{{--                                        <option value="1" {{ $user->verified === 1 ? 'selected' : '' }}>--}}
+{{--                                            {{ __('dictionary.Yes') }}--}}
+{{--                                        </option>--}}
+{{--                                    </select>--}}
+                                    <input type="checkbox" name="verified" @change="setVerified"
+                                           class="form-check-input {{--@error('verified') is-invalid @enderror--}}"
+                                           route="{{ route('admin.users.verify', $user) }}"
+                                        {{ $user->verified ? 'checked' : '' }}>
+{{--                                    @error('verified')--}}
+{{--                                        <x-invalid-feedback :message="$message"/>--}}
+{{--                                    @enderror--}}
                                 </td>
 {{--                                <td>--}}
 {{--                                    <button type="submit" class="btn btn-danger btn-sm"--}}
@@ -69,4 +73,8 @@
             {{ $users->links() }}
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/users.js') }}" defer></script>
 @endsection

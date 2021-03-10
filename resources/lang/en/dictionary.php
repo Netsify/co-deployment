@@ -11,8 +11,9 @@ return [
     'EditProfile'        => "Edit Personal Data",
     'Email'              => "Email",
 
-    'errors'             => [
-        'delete_user'    => "Could not delete user. Please, contact the administrator."
+    'errors'               => [
+        'delete_user'      => "Could not delete user. Please, contact the administrator.",
+        'user_not_updated' => "Could not update user. Please, contact the administrator.",
     ],
 
     'FirstName'          => "First Name",
@@ -40,6 +41,7 @@ return [
     'Save'               => "Save",
     'Summary'            => "Summary",
     'UpdatePassword'     => "Optional to fill. Here you can change your password.",
+    'user_updated'       => "The user has been successfully updated!",
     'Verified'           => "Verified",
     'Yes'                => "Yes",
 ];
