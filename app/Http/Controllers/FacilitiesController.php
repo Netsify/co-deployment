@@ -11,6 +11,7 @@ use App\Models\File;
 use App\Models\Role;
 use App\Services\FacilitiesService;
 use App\Services\VariablesService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -148,22 +149,32 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-        $facility->load('compatibilityParams.translations', 'type.translations', 'files');
+        $facility->load('compatibilityParams.translations', 'files');
         $my_facility = request()->input('my_facility');
 
         $proposal_is_not_exist = false;
 
         if ($my_facility) {
-            $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
+            $my_facility = Facility::find($my_facility);
+            $facilities = new Collection([
+                'my' => $my_facility,
+                'founded' => $facility
+            ]);
+            $facilities->load('type.translations');
+//            dump($facilities['my']->type->name);
+//            dump($facilities['founded']->type->name);
 
+//            return;
+            FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['founded']);
 
-            return;
-            FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
-
-            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($my_facility->id, $facility->id);
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['founded']->id);
         }
 
-        return view('facilities.show', compact('facility', 'my_facility', 'proposal_is_not_exist'));
+        return view('facilities.show', [
+            'facility' => $facilities['founded'],
+            'my_facility' => $facilities['my'],
+            'proposal_is_not_exist' => $proposal_is_not_exist
+        ]);
     }
 
     /**
