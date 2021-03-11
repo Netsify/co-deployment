@@ -86,22 +86,33 @@ class User extends Authenticatable
     ];
 
     /**
-     * Полное имя пользователя (с иконкой если подтвержден)
+     * Get the user's full name.
      *
      * @return string
      */
     public function getFullNameAttribute(): string
     {
-        $fullName = "{$this->first_name} {$this->last_name}";
+        return "{$this->first_name} {$this->last_name}";
+    }
 
-        $message = __('dictionary.verified_desc', compact('fullName'));
+    /**
+     * Путь до иконки подтверждения
+     *
+     * @return string
+     */
+    public function getVerifiedUrlAttribute(): string
+    {
+        return Storage::url(self::ICON_VERIFIED);
+    }
 
-        if ($this->verified) {
-            $fullName .= '<sup><img src='. Storage::url(self::ICON_VERIFIED) .' height="20px"
-                            alt="'. $message .'" title="'. $message .'"></sup>';
-        }
-
-        return $fullName;
+    /**
+     * Хинт иконки подтверждения
+     *
+     * @return string
+     */
+    public function getVerifiedTitleAttribute(): string
+    {
+        return __('dictionary.verified_desc', ['fullName' => $this->full_name]);
     }
 
     /**

@@ -29,7 +29,13 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td>
-                                    {!! $user->full_name !!}
+                                    {{ $user->full_name }}
+                                    @if($user->verified)
+                                        <sup>
+                                            <img src="{{ $user->verified_url }}" height="25px"
+                                                  title="{{ $user->verified_title }}" alt="">
+                                        </sup>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $user->email }}
