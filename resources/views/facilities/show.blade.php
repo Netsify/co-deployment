@@ -32,6 +32,10 @@
                             <p>{{ __('facility.no_loaded_files') }}</p>
                         @endforelse
 
+                        @isset($facilities)
+                            @include('facilities.show-variables')
+                        @endisset
+
                         @can('use-advanced-search')
                             @if ($facility->compatibility_level)
                                 <hr>

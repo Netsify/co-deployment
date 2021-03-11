@@ -172,33 +172,25 @@ class FacilitiesController extends Controller
             $facilities->put('found', $facility);
             $facilities->load('compatibilityParams', 'user', 'type.translations');
 
-            /* Переменные текущего пользователя по типу его объекта */
-            $my_group_variables = $facilities['my']->type
-                ->variablesGroups()
-                ->where('slug', "var_{$facilities['my']->type->slug}")
-                ->first();
+            foreach ($facilities as $key => $facility) {
+                $variablesGroups = new Collection();
+                foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
+                    $group = new \stdClass();
+                    $group->title = $variablesGroup->getTitle();
+                    $group->variables = (new VariablesService($variablesGroup, $facility->user))->get();
+                    $variablesGroups->put($g_key, $group);
+                }
 
-            $my_variables_service = new VariablesService($my_group_variables);
-            $my_variables = $my_variables_service->get();
-            /* Переменные текущего пользователя по типу его объекта */
+                $facilities[$key]->variablesGroups = $variablesGroups;
+            }
 
-            /* Переменные владельца найденого объета по указанному типу */
-            $found_group_variables = $facilities['found']->type
-                ->variablesGroups()
-                ->where('slug', "var_{$facilities['found']->type->slug}")
-                ->first();
-
-            $found_variables_service = new VariablesService($found_group_variables, $facilities['found']->user);
-            $found_variables = $found_variables_service->get();
-            /* Переменные владельца найденого объета по указанному типу */
-
-//            return;
             FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
 
             $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
 
 
             return view('facilities.show', [
+                'facilities' => $facilities,
                 'facility' => $facilities['found'],
                 'my_facility' => $facilities['my'],
                 'proposal_is_not_exist' => $proposal_is_not_exist
@@ -308,7 +300,7 @@ class FacilitiesController extends Controller
      */
     public function accountIndex(Request $request): View
     {
-        $facilities = Facility::with('type', 'visibility')
+        $facilities = Facility::with('type.translations', 'visibility.translations')
             ->whereHas('user', fn($q) => $q->where('users.id', Auth::user()->id))
             ->get();
 
