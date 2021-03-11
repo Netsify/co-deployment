@@ -25,7 +25,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Верифицировать пользователя
      *
      * @param User $user
      * @return JsonResponse

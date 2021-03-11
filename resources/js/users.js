@@ -10,13 +10,13 @@ const app = new Vue({
 
             let route = element.getAttribute('route');
 
-            Api.put(route,{
-                verified: element.value,
+            Api.put(route);/*,{
+                //
             }).then(response => {
                 //
             }).catch(function (error) {
                 //
-            });
+            });*/
         }
     },
 });

@@ -1,7 +1,7 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    laravel.test:
+    build-road:
         build:
             context: ./vendor/laravel/sail/runtimes/8.0
             dockerfile: Dockerfile
@@ -21,6 +21,7 @@ services:
             - mysql
     mysql:
         image: 'mysql:8.0'
+        container_name: build-road-db
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:

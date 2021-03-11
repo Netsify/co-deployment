@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Storage;
  * Класс пользователей
  *
  * @property int $id
- * @property string $name               - Имя
- * @property string $surname            - Фамилия
+ * @property string $first_name         - Имя
+ * @property string $last_name          - Фамилия
  * @property string $email
  * @property string $password
  * @property Carbon $last_activity_at   - Метка последней активности
@@ -44,6 +44,11 @@ class User extends Authenticatable
      * Путь до фото профиля по умолчанию
      */
     const DEFAULT_PHOTO = 'photo/default.svg';
+
+    /**
+     * Путь до иконки подтверждено
+     */
+    const ICON_VERIFIED = 'icons/verified.jpg';
 
     /**
      * The attributes that are mass assignable.
@@ -81,13 +86,22 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's full name.
+     * Полное имя пользователя (с иконкой если подтвержден)
      *
      * @return string
      */
-    public function getFullNameAttribute() : string
+    public function getFullNameAttribute(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        $fullName = "{$this->first_name} {$this->last_name}";
+
+        $message = __('dictionary.verified_desc', compact('fullName'));
+
+        if ($this->verified) {
+            $fullName .= '<sup><img src='. Storage::url(self::ICON_VERIFIED) .' height="20px"
+                            alt="'. $message .'" title="'. $message .'"></sup>';
+        }
+
+        return $fullName;
     }
 
     /**
@@ -95,7 +109,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getPhotoAttribute() : string
+    public function getPhotoAttribute(): string
     {
         return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
     }
