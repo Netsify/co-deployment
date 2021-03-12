@@ -5,6 +5,7 @@ return [
     'create_facility' => "Create facility",
     'c_level' => "Compatibility level",
     'description' => "Description",
+    'e_level' => "Level of economic efficiency",
     'edit_facility' => "Edit facility",
     'errors'                   => [
         'delete_facility'      => 'Could not delete facility. Please contact the administrator.',
