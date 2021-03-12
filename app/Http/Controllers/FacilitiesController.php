@@ -173,15 +173,29 @@ class FacilitiesController extends Controller
             $facilities->load('compatibilityParams', 'user', 'type.translations');
 
             foreach ($facilities as $key => $facility) {
-                $variablesGroups = new Collection();
+                $variablesGroups = [];
                 foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
-                    $group = new \stdClass();
-                    $group->title = $variablesGroup->getTitle();
-                    $group->variables = (new VariablesService($variablesGroup, $facility->user))->get();
-                    $variablesGroups->put($g_key, $group);
+                    $variablesGroups[] = [
+                        'title' => $variablesGroup->getTitle(),
+                        'variables' => (new VariablesService($variablesGroup, $facility->user))->get()->toArray()
+                    ];
+//                    $group = new \stdClass();
+//                    $group->title = $variablesGroup->getTitle();
+//                    $group->variables = (new VariablesService($variablesGroup, $facility->user))->get();
+//                    $variablesGroups->put($g_key, $group);
                 }
 
                 $facilities[$key]->variablesGroups = $variablesGroups;
+            }
+
+            if (\request()->has('show_array') && \request()->input('show_array') === 'true') {
+                /*
+                 * Скорее всего Вам будут нужны ключи title, slug, value, description
+                 * */
+                echo "User " . $facilities['my']->user->full_name;
+                dump($facilities['my']->variablesGroups);
+                echo "User " . $facilities['found']->user->full_name;
+                dd($facilities['found']->variablesGroups);
             }
 
             FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
