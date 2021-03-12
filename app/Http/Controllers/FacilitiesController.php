@@ -155,14 +155,11 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-
-//        $facility->load('compatibilityParams.translations', 'files');
         $my_facility = request()->input('my_facility');
-//        $facilities->put('my', $my_facility);
 
         if ($my_facility) {
             $facilities = new Collection();
-            $my_facility = Auth::user()->facilities()->find($my_facility);
+            $my_facility = Auth::user() ? Auth::user()->facilities()->find($my_facility) : null;
 
             if (!$my_facility) {
                 abort(404);
@@ -179,26 +176,16 @@ class FacilitiesController extends Controller
                         'title' => $variablesGroup->getTitle(),
                         'variables' => (new VariablesService($variablesGroup, $facility->user))->get()->toArray()
                     ];
-//                    $group = new \stdClass();
-//                    $group->title = $variablesGroup->getTitle();
-//                    $group->variables = (new VariablesService($variablesGroup, $facility->user))->get();
-//                    $variablesGroups->put($g_key, $group);
                 }
 
                 $facilities[$key]->variablesGroups = $variablesGroups;
             }
 
-            if (\request()->has('show_array') && \request()->input('show_array') === 'true') {
-                /*
-                 * Скорее всего Вам будут нужны ключи title, slug, value, description
-                 * */
-                echo "User " . $facilities['my']->user->full_name;
-                dump($facilities['my']->variablesGroups);
-                echo "User " . $facilities['found']->user->full_name;
-                dd($facilities['found']->variablesGroups);
-            }
+            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
 
-            FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
+            /* Вадим, Вам нужно будет реализовать этот метод */
+            $economic_efficiency = FacilitiesService::getEconomicEfficiency($facilities['my'], $facilities['found']);
+            /* Вадим, Вам нужно будет реализовать этот метод */
 
             $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
 
@@ -207,7 +194,9 @@ class FacilitiesController extends Controller
                 'facilities' => $facilities,
                 'facility' => $facilities['found'],
                 'my_facility' => $facilities['my'],
-                'proposal_is_not_exist' => $proposal_is_not_exist
+                'proposal_is_not_exist' => $proposal_is_not_exist,
+                'economic_efficiency' => $economic_efficiency,
+                'c_level' => $c_level
             ]);
         }
 

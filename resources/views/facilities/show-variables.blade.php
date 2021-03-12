@@ -1,4 +1,5 @@
-{{ __('account.economic_variables') }}
+<hr>
+<h3 class="text-center">{{ __('account.economic_variables') }}</h3>
 @foreach($facilities as $facility)
     <h5>{{ $facility->user->full_name }}</h5>
     @foreach($facility->variablesGroups as $group)

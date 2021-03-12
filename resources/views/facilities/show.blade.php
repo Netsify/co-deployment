@@ -32,27 +32,37 @@
                             <p>{{ __('facility.no_loaded_files') }}</p>
                         @endforelse
 
-                        @isset($facilities)
-                            @include('facilities.show-variables')
-                        @endisset
-
                         @can('use-advanced-search')
-                            @if ($facility->compatibility_level)
-                                <hr>
-                                <div class="row">
-                                    <p class="card-text text-justify">
-                                        <b>{{ __('facility.c_level') }}: </b>{{ $facility->compatibility_level }}
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    @if($proposal_is_not_exist)
+                            <hr>
+                            <div class="row">
+                                @isset($c_level)
+                                    <div class="col col-sm-6">
+                                        <p class="card-text text-justify">
+                                            <b>{{ __('facility.c_level') }}: </b>{{ $c_level }}
+                                        </p>
+                                    </div>
+                                @endisset
+
+                                @isset($economic_efficiency)
+                                    <div class="col col-sm-6">
+                                        <p class="card-text text-justify">
+                                            <b>{{ __('facility.e_level') }}: </b>{{ $economic_efficiency }}
+                                        </p>
+                                    </div>
+                                @endisset
+                            </div>
+                            <div class="row">
+                                @if($proposal_is_not_exist)
                                     {{--Форма отправки предложения--}}
                                     <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
                                     {{--Форма отправки предложения--}}
-                                    @endif
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                         @endcan
+
+                        @isset($facilities)
+                            @include('facilities.show-variables')
+                        @endisset
                     </div>
                 </div>
             </div>
