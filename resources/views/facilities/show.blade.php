@@ -51,13 +51,17 @@
                                     </div>
                                 @endisset
                             </div>
-                            <div class="row">
+
+                            @isset($proposal_is_not_exist)
                                 @if($proposal_is_not_exist)
-                                    {{--Форма отправки предложения--}}
-                                    <x-proposal-form :sender-facility="$my_facility" :receiver-facility="$facility"/>
-                                    {{--Форма отправки предложения--}}
+                                    <div class="row">
+                                        {{--Форма отправки предложения--}}
+                                        <x-proposal-form :sender-facility="$my_facility"
+                                                         :receiver-facility="$facility"/>
+                                        {{--Форма отправки предложения--}}
+                                    </div>
                                 @endif
-                            </div>
+                            @endisset
                         @endcan
 
                         @isset($facilities)
