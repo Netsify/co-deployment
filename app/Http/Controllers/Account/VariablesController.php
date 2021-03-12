@@ -27,7 +27,7 @@ class VariablesController extends Controller
 
     public function list(Group $group)
     {
-        $group->load('facilityTypes.translations');
+        $group->load('facilityTypes.translations', 'variables.translations');
 
         $variablesService = new VariablesService($group);
         $variables = $variablesService->get();

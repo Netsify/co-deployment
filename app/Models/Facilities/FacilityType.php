@@ -26,6 +26,8 @@ class FacilityType extends Model implements TranslatableContract
 {
     use HasFactory, Translatable;
 
+    protected $with = ['variablesGroups'];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -9,8 +9,11 @@ use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\FacilityVisibility;
 use App\Models\File;
 use App\Models\Role;
+use App\Models\Variables\Group;
+use App\Models\Variables\Variable;
 use App\Services\FacilitiesService;
 use App\Services\VariablesService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,8 +66,12 @@ class FacilitiesController extends Controller
         $types = FacilityType::query();
 
         switch (true) {
-            case $users_role == Role::ROLE_ICT_OWNER : $types->where('slug', '!=', 'ict'); break;
-            case $users_role == Role::ROLE_ROADS_OWNER : $types->where('slug', 'ict'); break;
+            case $users_role == Role::ROLE_ICT_OWNER :
+                $types->where('slug', '!=', 'ict');
+                break;
+            case $users_role == Role::ROLE_ROADS_OWNER :
+                $types->where('slug', 'ict');
+                break;
         }
 
         $types = $types->orderByTranslation('name')->get();
@@ -123,7 +130,7 @@ class FacilitiesController extends Controller
 
         $facilityService = new FacilitiesService($facility, $c_params);
 
-        if($request->has('attachments')) {
+        if ($request->has('attachments')) {
             $facilityService->attachFiles($request->file('attachments'));
         }
 
@@ -137,7 +144,7 @@ class FacilitiesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * [     * Display the specified resource.
      *
      * @param Facility $facility
      * @return \Illuminate\Http\Response
@@ -148,22 +155,52 @@ class FacilitiesController extends Controller
             abort(403);
         }
 
-        $facility->load('compatibilityParams.translations', 'type.translations', 'files');
         $my_facility = request()->input('my_facility');
 
-        $proposal_is_not_exist = false;
-
         if ($my_facility) {
-            $my_facility = Facility::find($my_facility)->load('compatibilityParams.translations');
+            $facilities = new Collection();
+            $my_facility = Auth::user() ? Auth::user()->facilities()->find($my_facility) : null;
+
+            if (!$my_facility) {
+                abort(404);
+            }
+
+            $facilities->put('my', $my_facility);
+            $facilities->put('found', $facility);
+            $facilities->load('compatibilityParams', 'user', 'type.translations');
+
+            foreach ($facilities as $key => $facility) {
+                $variablesGroups = [];
+                foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
+                    $variablesGroups[] = [
+                        'title' => $variablesGroup->getTitle(),
+                        'variables' => (new VariablesService($variablesGroup, $facility->user))->get()->toArray()
+                    ];
+                }
+
+                $facilities[$key]->variablesGroups = $variablesGroups;
+            }
+
+            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
+
+            /* Вадим, Вам нужно будет реализовать этот метод */
+            $economic_efficiency = FacilitiesService::getEconomicEfficiency($facilities['my'], $facilities['found']);
+            /* Вадим, Вам нужно будет реализовать этот метод */
+
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
 
 
-//            return;
-            FacilitiesService::getCompatibilityRatingByParams($my_facility->compatibilityParams, $facility);
-
-            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($my_facility->id, $facility->id);
+            return view('facilities.show', [
+                'facilities' => $facilities,
+                'facility' => $facilities['found'],
+                'my_facility' => $facilities['my'],
+                'proposal_is_not_exist' => $proposal_is_not_exist,
+                'economic_efficiency' => $economic_efficiency,
+                'c_level' => $c_level
+            ]);
         }
 
-        return view('facilities.show', compact('facility', 'my_facility', 'proposal_is_not_exist'));
+        return view('facilities.show', compact('facility', 'my_facility'));
     }
 
     /**
@@ -248,9 +285,9 @@ class FacilitiesController extends Controller
             Session::flash('error', __('facility.errors.delete_facility'));
 
             Log::error("Не удалось удалить объект", [
-                'message'  => $e->getMessage(),
-                'code'     => $e->getCode(),
-                'trace'    => $e->getTrace(),
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace(),
                 'facility' => $facility->toArray()
             ]);
         }
@@ -266,7 +303,7 @@ class FacilitiesController extends Controller
      */
     public function accountIndex(Request $request): View
     {
-        $facilities = Facility::with('type', 'visibility')
+        $facilities = Facility::with('type.translations', 'visibility.translations')
             ->whereHas('user', fn($q) => $q->where('users.id', Auth::user()->id))
             ->get();
 
@@ -294,9 +331,9 @@ class FacilitiesController extends Controller
 
             Log::error("Не удалось удалить файл у объекта", [
                 'message' => $e->getMessage(),
-                'code'    => $e->getCode(),
-                'trace'   => $e->getTrace(),
-                'file'    => $file
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace(),
+                'file' => $file
             ]);
         }
 

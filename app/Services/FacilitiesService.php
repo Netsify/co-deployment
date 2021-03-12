@@ -165,7 +165,7 @@ class FacilitiesService
         $f_params = $facility->compatibilityParams;
         $objects->load('compatibilityParams.translations');
             foreach ($objects as $key => $object) {
-                self::getCompatibilityRatingByParams($f_params, $object);
+                $object->compatibility_level = self::getCompatibilityRatingByParams($f_params, $object);
                 $objects[$key] = $object;
             }
 
@@ -175,11 +175,12 @@ class FacilitiesService
      * Метод задаёт параметр совместимости для объекта с которым сравнивается выбранный объект пользователя
      *
      * @param Collection $my_facility_c_params
-     * @param Facility $facility
+     * @param Facility $facility     *
+     *
+     * @return float
      */
-    public static function getCompatibilityRatingByParams(Collection $my_facility_c_params, Facility &$facility)
+    public static function getCompatibilityRatingByParams(Collection $my_facility_c_params, Facility $facility)
     {
-
         $param_ids = $my_facility_c_params->pluck('group_id', 'id');
         $facility_c_params = $facility->compatibilityParams;
 
@@ -194,6 +195,31 @@ class FacilitiesService
         foreach ($array as $value) {
             $sum += array_sum($value) / count($value);
         }
-        $facility->compatibility_level = round($sum / count($array), 2);
+
+        return round($sum / count($array), 2);
+    }
+
+    /**
+     * Метод задаёт экономическую эффективность между объектами
+     *(Вадим, этот метод Вам)
+     *
+     * @param Facility $facility1
+     * @param Facility $facility2
+     * @return int
+     */
+    public static function getEconomicEfficiency(Facility $facility1, Facility $facility2)
+    {
+        //Если гет параметр show_array = true то отображатся два массива
+        if (\request()->has('show_array') && \request()->input('show_array') === 'true') {
+            /*
+             * Скорее всего Вам будут нужны ключи title, slug, value, description
+             * */
+            echo "User " . $facility1->user->full_name;
+            dump($facility1->variablesGroups);
+            echo "User " . $facility2->user->full_name;
+            dd($facility2->variablesGroups);
+        }
+
+        return 10; // тут будет число полученное после расчётов
     }
 }
