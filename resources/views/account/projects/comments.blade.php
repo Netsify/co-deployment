@@ -8,7 +8,8 @@
             @forelse($comments as $comment)
                 <div class="row">
                     <div class="col-1">
-                        <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}
+                        <img src="{{ $comment->user->photo }}" height="40"> {{ $comment->user->full_name }}<x-icon-verified
+                            :user="$comment->user"></x-icon-verified>
                     </div>
                     <div class="col-9">
                         {!! $comment->content !!}

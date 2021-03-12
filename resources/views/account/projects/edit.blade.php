@@ -43,7 +43,8 @@
                         <label class="col-form-label">{{ __('account.participants') }}</label>
                         <div name="participants">
                             @foreach($project->users as $user)
-                                <img src="{{ $user->photo }}" height="40"> {{ $user->full_name }}
+                                <img src="{{ $user->photo }}" height="40"> {{ $user->full_name }}<x-icon-verified
+                                    :user="$user"></x-icon-verified>
                             @endforeach
                         </div>
                     </div>

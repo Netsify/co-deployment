@@ -37,7 +37,7 @@
                                 <td>{{ $facility->title }}</td>
                                 <td>{{ $facility->visibility->name }}</td>
                                 <td>{{ $facility->type->name }}</td>
-                                <td>{{ $facility->description }}</td>
+                                <td>{{ $facility->preview }}</td>
                                 <td>
                                     <a type="submit" href="{{ route('account.facilities.edit', $facility) }}"
                                        class="btn btn-warning btn-sm">

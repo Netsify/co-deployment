@@ -48,7 +48,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted float-right">{{ $article->user->full_name }}</p>
+                            <p class="text-muted float-right">{{ $article->user->full_name }}<x-icon-verified
+                                    :user="$article->user"></x-icon-verified></p>
                             <p>{{ $article->preview  }}</p>
 
                             <a href="{{ route('admin.articles.show', $article) }}"
