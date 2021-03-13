@@ -29,7 +29,10 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td>
-                                    {{ $user->full_name }}<x-icon-verified :user="$user"></x-icon-verified>
+                                    {{ $user->full_name }}<x-icon-verified :user="$user"></x-icon-verified><span v-if="user && user.id === {{ $user->id }}">
+{{--                                        <icon-verified :url="userVerifiedUrl" :title="userVerifiedTitle"></icon-verified>--}}
+                                        <icon-verified :user="user"></icon-verified>
+                                    </span>
                                 </td>
                                 <td>
                                     {{ $user->email }}
@@ -41,6 +44,12 @@
                                     <input type="checkbox" name="verified" @change="setVerified"
                                            class="form-check-input" route="{{ route('admin.users.verify', $user) }}"
                                         {{ $user->verified ? 'checked' : '' }}>
+
+                                    <div style="color: red" v-if="user">
+                                        <span v-if="user.id === {{ $user->id }}">
+                                            @{{ message }}
+                                        </span>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

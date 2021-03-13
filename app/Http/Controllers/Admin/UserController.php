@@ -35,14 +35,17 @@ class UserController extends Controller
         $user->verified = !$user->verified;
 
         if ($user->save()) {
-            $message = __('dictionary.user_updated');
+            $message = $user->verified ? __('dictionary.user_verified') : __('dictionary.user_unverified');
         } else {
             $message = __('dictionary.errors.user_not_updated');
 
             Log::error('Не удалось обновить пользователя', compact($user));
         }
 
-        return response()->json(compact('message'));
+        $user->verified_url = $user->verified_url;
+        $user->verified_title = $user->verified_title;
+
+        return response()->json(compact('message', 'user'));
     }
 
     /**
