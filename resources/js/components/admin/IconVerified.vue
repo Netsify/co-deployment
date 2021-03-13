@@ -6,7 +6,12 @@
 
 <script>
     export default {
-        props: ['user'],
+        props: ['user', 'primary', 'url', 'title'],
+        mounted() {
+            this.user = this.primary;
+            this.user.verified_url = this.url;
+            this.user.verified_title = this.title;
+        }
     }
 </script>
 

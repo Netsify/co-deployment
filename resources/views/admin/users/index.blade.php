@@ -29,9 +29,10 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td>
-                                    {{ $user->full_name }}<x-icon-verified :user="$user"></x-icon-verified><span v-if="user && user.id === {{ $user->id }}">
-{{--                                        <icon-verified :url="userVerifiedUrl" :title="userVerifiedTitle"></icon-verified>--}}
-                                        <icon-verified :user="user"></icon-verified>
+                                    {{ $user->full_name }}
+                                    <span v-if="{{ $user->verified }} || (user && user.id === {{ $user->id }} && user.verified)">
+                                        <icon-verified :primary="{{ $user }}" :url="'{{ $user->verified_url }}'"
+                                                       :title="'{{ $user->verified_title }}'" :user="user"></icon-verified>
                                     </span>
                                 </td>
                                 <td>
