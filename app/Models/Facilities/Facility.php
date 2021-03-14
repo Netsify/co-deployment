@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $title                             - Название
  * @property string $location                          - Местоположение
  * @property string $description                       - Описание
+ * @property string $length                            - Протяжённость
  * @property-read string $identificator                - Уникальный идентификатор объекта
  * @property-read string $locale                       - В какой локали создавался объект
  * @property Carbon $created_at                        - Дата создания
@@ -42,7 +43,7 @@ class Facility extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'location', 'description'];
+    protected $fillable = ['title', 'location', 'description', 'length'];
 
     /**
      * файлы

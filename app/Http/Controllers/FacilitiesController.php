@@ -120,7 +120,7 @@ class FacilitiesController extends Controller
     {
         $identitficator = Str::random(rand(20, 50));
 
-        $facility = new Facility($request->only('title', 'description', 'location'));
+        $facility = new Facility($request->only('title', 'description', 'location', 'length'));
         $facility->type_id = $request->input('type');
         $facility->visibility_id = $request->input('visibility');
         $facility->setIdentificator($identitficator);

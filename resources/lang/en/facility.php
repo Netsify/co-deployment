@@ -21,6 +21,7 @@ return [
     'facility_search' => "Search of facilities",
     'facility_updated' => "Object has been successfully updated!",
     'find' => "Find",
+    'length' => "Facility's length (km.)",
     'location' => "Location",
     'min_c_level' => "Minimal compatibility level",
     'my_facilities' => "My facilities",
