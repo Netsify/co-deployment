@@ -16,22 +16,25 @@ use Illuminate\Support\Facades\Log;
  */
 class VariablesService
 {
-    private $variables;
+    private $groups;
     private $user_variables;
 
-    public function __construct(Group $group, ?User $user = null)
+    public function __construct($user)
     {
-        $this->variables = $group->variables->sortBy('description')/*()->orderByTranslation('description')->get()*/;
+        $this->groups = Group::query()->with('variables.translations')->get();
+//        $this->variables = $group->variables->sortBy('description')/*()->orderByTranslation('description')->get()*/;
 
-        $user_variables = $user ? $user->variables() : Auth::user()->variables();
+        $this->user_variables = $user->variables;
 
-        $this->user_variables = $user_variables->where('group_id', $group->id)->orderByTranslation('description')->get();
+//        $this->user_variables = $user_variables->where('group_id', $group->id)->orderByTranslation('description')->get();
     }
 
-    public function get()
+    public function get(Group $group)
     {
+        $variables = $this->groups->find($group)->variables;
+
         $collection = new Collection();
-        foreach ($this->variables as $key => $variable) {
+        foreach ($variables as $key => $variable) {
             if ($this->user_variables->contains($variable)) {
                 $variable->value = $this->user_variables->find($variable->id)->pivot->value;
             } else {
@@ -49,12 +52,12 @@ class VariablesService
      *
      * @param array $user_variables
      */
-    public function storeForUser(array $user_variables)
+    public function storeForUser(array $user_variables, Group $group)
     {
-        $variables = $this->variables->pluck('default_val', 'id')->toArray();
+        $variables = $group->variables->pluck('default_val', 'id')->toArray();
 
         $user_variables = array_diff_assoc($user_variables, $variables);
-        $variables = $this->variables->whereIn('id', array_keys($user_variables));
+        $variables = $group->variables->whereIn('id', array_keys($user_variables));
 
         $attach = [];
         foreach ($variables as $variable) {
@@ -70,8 +73,8 @@ class VariablesService
             }
         }
 
-        DB::transaction(function () use ($attach) {
-                Auth::user()->variables()->detach($this->variables);
+        DB::transaction(function () use ($attach, $group) {
+                Auth::user()->variables()->detach($group->variables);
                 Auth::user()->variables()->sync($attach, false);
         });
 
