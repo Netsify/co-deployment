@@ -42,8 +42,8 @@ class UserController extends Controller
             Log::error('Не удалось обновить пользователя', compact($user));
         }
 
-        $user->verified_url = $user->verified_url;
-        $user->verified_title = $user->verified_title;
+        $user->v_url = $user->verified_url;
+        $user->v_title = $user->verified_title;
 
         return response()->json(compact('message', 'user'));
     }

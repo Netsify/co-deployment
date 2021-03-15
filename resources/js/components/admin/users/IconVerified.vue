@@ -1,16 +1,21 @@
 <template>
     <sup>
-        <img :src="user.verified_url" alt="" height="25px" :title="user.verified_title">
+        <img :src="userVue.v_url" alt="" height="25px" :title="userVue.v_title">
     </sup>
 </template>
 
 <script>
     export default {
-        props: ['user', 'primary', 'url', 'title'],
+        props: ['userapi', 'user', 'url', 'title'],
+        data() {
+            return {
+                userVue: this.userapi,
+            }
+        },
         mounted() {
-            this.user = this.primary;
-            this.user.verified_url = this.url;
-            this.user.verified_title = this.title;
+            this.userVue = this.user;
+            this.userVue.v_url = this.url;
+            this.userVue.v_title = this.title;
         }
     }
 </script>

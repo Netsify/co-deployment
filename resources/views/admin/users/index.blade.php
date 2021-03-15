@@ -8,19 +8,58 @@
             </div>
 
             <div class="card-body">
+                <form method="POST">
+                    @method('PUT')
+                    @csrf
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">{{ __('dictionary.FullName') }}</th>
-                                <th scope="col">{{ __('dictionary.Email') }}</th>
-                                <th scope="col">{{ __('dictionary.Role') }}</th>
-                                <th scope="col">{{ __('dictionary.Verified') }}</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{ __('dictionary.FullName') }}</th>
+                            <th scope="col">{{ __('dictionary.Email') }}</th>
+                            <th scope="col">{{ __('dictionary.Role') }}</th>
+                            <th scope="col">{{ __('dictionary.Verified') }}</th>
+                        </tr>
                         </thead>
 
-                        <t-body :users="{{ $users }}" :route="{{ route('admin.users.verify', $user) }}"></t-body>
+                        <tbody>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td>
+                                    <div id="icon" :user="{{ $user }}">
+                                        {{ $user->full_name }}<span v-if="{{ $user->verified }}
+                                            || (userApi.id === {{ $user->id }} && userApi.verified)">
+                                            <icon-verified :user="{{ $user }}" :url="'{{ $user->verified_url }}'"
+                                                           :title="'{{ $user->verified_title }}'" :userapi="userApi">
+                                            </icon-verified>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ $user->email }}
+                                </td>
+                                <td>
+                                    {{ $user->role->name }}
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="verified" @change="setVerified"
+                                           class="form-check-input" route="{{ route('admin.users.verify', $user) }}"
+                                        {{ $user->verified ? 'checked' : '' }}>
+
+                                    <div style="color: red">
+                                        <span v-if="userApi.id === {{ $user->id }}">
+                                            @{{ message }}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
+                </form>
             </div>
         </div>
         <div class="d-flex justify-content-center">

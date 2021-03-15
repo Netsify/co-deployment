@@ -8,7 +8,7 @@ import IconVerified from "./components/admin/users/IconVerified";
 Vue.component('TBody', {
     data() {
         return {
-            apiUser: this.apiUser,
+            userApi: this.userApi,
         }
     },
 })
@@ -22,7 +22,7 @@ const app = new Vue({
     data() {
         return {
             message: null,
-            apiUser: null,
+            userApi: {},
         }
     },
     methods: {
@@ -34,7 +34,7 @@ const app = new Vue({
             Api.put(route)
                 .then(response => {
                     this.message = response.data.message;
-                    this.apiUser = response.data.user;
+                    this.userApi = response.data.user;
                 })
                 .catch(error => console.log(error));
         }

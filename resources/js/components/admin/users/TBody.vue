@@ -6,7 +6,7 @@
             </td>
             <td>
                     {{ user.first_name + 'test5130' + user.last_name }}
-                    <span v-if="user.verified /*|| (user && user.id === {{ $user->id }} && user.verified)*/">
+                    <span v-if="user.verified || (user && user.id === apiUser.id && user.verified)">
                         <sup>
                             <img :src="apiUser.verified_url" alt="" height="25px" :title="user.verified_title">
                         </sup>
@@ -19,11 +19,11 @@
                 {{ user.role.name }}
             </td>
             <td>
-                <input type="checkbox" name="verified" @change="setVerified"
-                       class="form-check-input" :route=route :checked="user.verified">
+                <input type="checkbox" name="verified" @change="setVerified" class="form-check-input"
+                       :route=route :checked="user.verified">
 
                 <div style="color: red" v-if="user">
-                    <span v-if="user.id === {{ $user->id }}">
+                    <span v-if="user.id === apiUser.id">
                         @{{ message }}
                     </span>
                 </div>
