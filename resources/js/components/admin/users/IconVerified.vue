@@ -11,13 +11,11 @@
         props: ['user', 'url', 'title', 'userapi'],
         data() {
             return {
-                // userVue: this.userapi,
-                userVue: this.user,
+                userVue: {},
             }
         },
         mounted() {
-            console.log(this.userVue);
-            // this.userVue = this.user;
+            this.userVue = this.user;
             this.userVue.v_url = this.url;
             this.userVue.v_title = this.title;
         }
