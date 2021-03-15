@@ -29,7 +29,7 @@ class FacilitiesSearchController extends Controller
             $facilitiesSearchService->searchByType($type);
         } else {
             $facilitiesSearchService->searchByAvailableTypes();
-        };
+        }
 
         if ($owner) {
             $facilitiesSearchService->searchByOwner($owner);

@@ -169,9 +169,11 @@ class FacilitiesController extends Controller
             $facilities->put('found', $facility);
             $facilities->load('compatibilityParams', 'user', 'type.translations');
 
-            $my_variables_ser
+            $variables_service = new VariablesService();
+//            return;
+//            dump($variables_service);
 
-            return;
+//            return;
 //            foreach ($facilities as $key => $facility) {
 //                $variablesGroups = [];
 //                foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
@@ -184,23 +186,23 @@ class FacilitiesController extends Controller
 //                $facilities[$key]->variablesGroups = $variablesGroups;
 //            }
 //
-//            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
+            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
 //
 //            /* Вадим, Вам нужно будет реализовать этот метод */
 //            $economic_efficiency = FacilitiesService::getEconomicEfficiency($facilities['my'], $facilities['found']);
 //            /* Вадим, Вам нужно будет реализовать этот метод */
 //
-//            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
-//
-//
-//            return view('facilities.show', [
-//                'facilities' => $facilities,
-//                'facility' => $facilities['found'],
-//                'my_facility' => $facilities['my'],
-//                'proposal_is_not_exist' => $proposal_is_not_exist,
-//                'economic_efficiency' => $economic_efficiency,
-//                'c_level' => $c_level
-//            ]);
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
+
+
+            return view('facilities.show', [
+                'facilities' => $facilities,
+                'facility' => $facilities['found'],
+                'my_facility' => $facilities['my'],
+                'proposal_is_not_exist' => $proposal_is_not_exist,
+                'economic_efficiency' => 10,
+                'c_level' => $c_level
+            ]);
         }
 
         return view('facilities.show', compact('facility', 'my_facility'));

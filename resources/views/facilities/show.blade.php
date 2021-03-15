@@ -64,9 +64,9 @@
                             @endisset
                         @endcan
 
-                        @isset($facilities)
+                        {{--@isset($facilities)
                             @include('facilities.show-variables')
-                        @endisset
+                        @endisset--}}
                     </div>
                 </div>
             </div>

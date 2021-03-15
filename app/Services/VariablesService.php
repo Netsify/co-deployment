@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Variables\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -19,14 +20,25 @@ class VariablesService
     private $groups;
     private $user_variables;
 
-    public function __construct($user)
+    public function __construct()
     {
-        $this->groups = Group::query()->with('variables.translations')->get();
+//        $this->groups = Group::query()->with('variables.translations')->get();
+
+        $this->groups = Cache::remember('groups-variables', now()->addMinutes(3), function () {
+            return Group::query()->with('variables.translations')->get();
+        });
+//        dump($this->groups);
 //        $this->variables = $group->variables->sortBy('description')/*()->orderByTranslation('description')->get()*/;
 
-        $this->user_variables = $user->variables;
 
 //        $this->user_variables = $user_variables->where('group_id', $group->id)->orderByTranslation('description')->get();
+    }
+
+    public function forUser(User $user)
+    {
+        $this->user_variables = $user->variables;
+
+        return $this;
     }
 
     public function get(Group $group)
@@ -52,7 +64,7 @@ class VariablesService
      *
      * @param array $user_variables
      */
-    public function storeForUser(array $user_variables, Group $group)
+    public function store(array $user_variables, Group $group)
     {
         $variables = $group->variables->pluck('default_val', 'id')->toArray();
 
