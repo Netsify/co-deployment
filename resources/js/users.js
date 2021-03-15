@@ -1,21 +1,28 @@
+import TBody from "./components/admin/users/TBody";
+
 window.Vue = require('vue');
 
 import Api from './api';
-import IconVerified from "./components/admin/IconVerified";
+import IconVerified from "./components/admin/users/IconVerified";
+
+Vue.component('TBody', {
+    data() {
+        return {
+            apiUser: this.apiUser,
+        }
+    },
+})
 
 const app = new Vue({
     el: '#verified',
     components: {
-        'icon-verified' : IconVerified
+        'icon-verified' : IconVerified,
+        't-body' : TBody
     },
     data() {
         return {
             message: null,
-            user: null,
-            // userId: null,
-            // userVerified: null,
-            // userVerifiedUrl: null,
-            // userVerifiedTitle: null,
+            apiUser: null,
         }
     },
     methods: {
@@ -27,11 +34,7 @@ const app = new Vue({
             Api.put(route)
                 .then(response => {
                     this.message = response.data.message;
-                    this.user = response.data.user;
-                    // this.userVerifiedUrl = response.data.user.verified_url;
-                    // this.userVerifiedTitle = response.data.user.verified_title;
-                    // this.userId = response.data.user.id;
-                    // this.userVerified = response.data.user.verified;
+                    this.apiUser = response.data.user;
                 })
                 .catch(error => console.log(error));
         }
