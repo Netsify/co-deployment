@@ -169,6 +169,8 @@ class FacilitiesController extends Controller
             $facilities->put('found', $facility);
             $facilities->load('compatibilityParams', 'user', 'type.translations');
 
+//            dd($facilities->l);
+
             $variables_service = new VariablesService();
 //            return;
 //            dump($variables_service);
