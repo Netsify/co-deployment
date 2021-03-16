@@ -41,7 +41,9 @@ return [
     'Save'               => "Save",
     'Summary'            => "Summary",
     'UpdatePassword'     => "Optional to fill. Here you can change your password.",
-    'user_updated'       => "The user has been successfully updated!",
+    'user_verified'      => "The user has been successfully verified!",
+    'user_unverified'    => "Verification has been canceled!",
     'Verified'           => "Verified",
+    'verified_desc'      => "Verified user. User :fullName has been verified.",
     'Yes'                => "Yes",
 ];

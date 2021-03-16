@@ -1,7 +1,7 @@
 <template>
-    <div v-if="computedUser.verified">
+    <div v-if="computedUserVue.verified">
         <sup>
-            <img :src="computedUser.v_url" alt="" height="25px" :title="computedUser.v_title">
+            <img :src="computedUserVue.v_url" alt="" height="25px" :title="computedUserVue.v_title">
         </sup>
     </div>
 </template>
@@ -15,7 +15,7 @@
             }
         },
         computed: {
-            computedUser: function() {
+            computedUserVue: function() {
                 return this.userVue = this.userVue.id === this.userapi.id ? this.userapi : this.userVue;
             }
         },
