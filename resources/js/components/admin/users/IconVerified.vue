@@ -1,7 +1,7 @@
 <template>
-    <div v-if="userVue.verified || (userVue.id === this.userapi.id)">
+    <div v-if="computedUser.verified">
         <sup>
-            <img :src="userVue.v_url" alt="" height="25px" :title="userVue.v_title">
+            <img :src="computedUser.v_url" alt="" height="25px" :title="computedUser.v_title">
         </sup>
     </div>
 </template>
@@ -12,6 +12,11 @@
         data() {
             return {
                 userVue: {},
+            }
+        },
+        computed: {
+            computedUser: function() {
+                return this.userVue = this.userVue.id === this.userapi.id ? this.userapi : this.userVue;
             }
         },
         mounted() {
