@@ -82,12 +82,11 @@
                         </li>
                     @endif
                 @else
-
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
-                            {{ Auth::user()->full_name }}
+                            {{ Auth::user()->full_name }} <x-icon-verified :user="auth()->user()"></x-icon-verified>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

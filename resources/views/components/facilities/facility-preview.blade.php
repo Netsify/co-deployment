@@ -6,7 +6,8 @@
         <h6 class="card-text">{{ $facility->preview }}</h6>
         <p><b>{{ __('facility.type') }}: </b> {{ $facility->type->name }}</p>
         <p><b>{{ __('facility.location') }}: </b> {{ $facility->location }}</p>
-        <p><b>{{ __('facility.owner') }}: </b> {{ $facility->user->full_name }}</p>
+        <p><b>{{ __('facility.owner') }}: </b> {{ $facility->user->full_name }}<x-icon-verified
+                :user="$facility->user"></x-icon-verified></p>
         <hr>
 
         @if($showCompatibilityLevel)

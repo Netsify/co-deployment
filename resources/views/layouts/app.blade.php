@@ -20,6 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap5.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/table.css') }}" rel="stylesheet">
 </head>
 <body>
 <div>
