@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
  * @property int $id
  * @property string $name               - Имя
  * @property string $surname            - Фамилия
+ * @property-read string $full_name     - ФамилияИмя
  * @property string $email
  * @property string $password
  * @property Carbon $last_activity_at   - Метка последней активности

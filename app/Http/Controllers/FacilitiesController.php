@@ -11,6 +11,7 @@ use App\Models\File;
 use App\Models\Role;
 use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
+use App\Services\FacilitiesCalcService;
 use App\Services\FacilitiesService;
 use App\Services\VariablesService;
 use Illuminate\Database\Eloquent\Collection;
@@ -166,13 +167,17 @@ class FacilitiesController extends Controller
             }
 
             $facilities->put('my', $my_facility);
-            $facilities->put('found', $facility);
-            $facilities->load('compatibilityParams', 'user', 'type.translations');
+            $facilities->add($facility);
+            $facilities->load('type', 'user');
 
-//            dd($facilities->l);
+            $ict_facility = $facilities['my']->type->slug == FacilityType::ICT ? $facilities['my'] : $facilities[0];
+            $road_railway_electricity_other_facility = $facilities['my']->type->slug != FacilityType::ICT ? $facilities['my'] : $facilities[0];
 
-            $variables_service = new VariablesService();
-//            return;
+            $facilityCalcService = new FacilitiesCalcService();
+            $facilityCalcService->setIctFacility($ict_facility);
+            $facilityCalcService->setRoadRailwayElectrycityOtherFacility($road_railway_electricity_other_facility);
+            $economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+            return;
 //            dump($variables_service);
 
 //            return;

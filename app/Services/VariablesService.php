@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\Models\User;
 use App\Models\Variables\Group;
+use App\Models\Variables\Variable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -17,7 +18,18 @@ use Illuminate\Support\Facades\Log;
  */
 class VariablesService
 {
+    /**
+     * Группы переменных
+     *
+     * @var Group[]
+     */
     private $groups;
+
+    /**
+     * Значения переменных введённых пользователем
+     *
+     * @var Variable[]
+     */
     private $user_variables;
 
     public function __construct()
@@ -41,7 +53,13 @@ class VariablesService
         return $this;
     }
 
-    public function get(Group $group)
+    /**
+     * Переменные из группы
+     *
+     * @param Group $group
+     * @return Variable[]
+     */
+    public function get(Group $group) : Collection
     {
         $variables = $this->groups->find($group)->variables;
 
@@ -90,5 +108,13 @@ class VariablesService
                 Auth::user()->variables()->sync($attach, false);
         });
 
+    }
+
+    /** Получаем все группы переменных
+     * @return Group[]
+     */
+    public function getGroups(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->groups;
     }
 }
