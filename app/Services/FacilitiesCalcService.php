@@ -2,8 +2,11 @@
 
 namespace App\Services;
 use App\Models\Facilities\Facility;
+use App\Models\Facilities\FacilityType;
+use App\Models\User;
 use App\Models\Variables\Group;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Сервис для расчётов связанных с объектами
@@ -41,10 +44,18 @@ class FacilitiesCalcService
      */
     protected $variables_groups;
 
+    /**
+     * Пользователь которого берём переменные
+     *
+     * @var User
+     */
+    protected $user;
+
     public function __construct()
     {
         $this->variables_service = new VariablesService();
         $this->variables_groups = $this->variables_service->getGroups()->load('facilityTypes.translations');
+        $this->user = Auth::user();
     }
 
     /**
@@ -80,12 +91,11 @@ class FacilitiesCalcService
          * Минимальная длина
          */
         $len_fac = $this->getMinLength();
+        echo "<p>Минимальная длина = $len_fac</p>";
 
-        return $economic_efficiency;
-
-        foreach ($this->variables_groups as $group) {
-            echo "<h3>Переменные пользователя " . $this->ict_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
-            $variables = $this->variables_service->forUser($this->ict_facility->user)->get($group);
+        foreach ($this->getVariablesGroups() as $group) {
+            echo "<h3>Переменные пользователя " . $this->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
+            $variables = $this->variables_service->forUser($this->user)->get($group);
 
             foreach ($variables as $variable) {
                 echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
@@ -95,17 +105,6 @@ class FacilitiesCalcService
         }
 
         echo "<hr>";
-
-        foreach ($this->variables_groups as $group) {
-            echo "<h3>Переменные пользователя " . $this->road_railway_electricity_other_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
-            $variables = $this->variables_service->forUser($this->road_railway_electricity_other_facility->user)->get($group);
-
-            foreach ($variables as $variable) {
-                echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
-            }
-
-            echo "<br>";
-        }
 
         return $economic_efficiency; // итог
     }
@@ -154,5 +153,21 @@ class FacilitiesCalcService
     private function getAbsDivBetweenSameParam(int $param_id) : int
     {
         return abs($this->ict_facility->compatibilityParams->find($param_id)->pivot->value - $this->road_railway_electricity_other_facility->compatibilityParams->find($param_id)->pivot->value);
+    }
+
+    /**
+     * Получаем коллекцию нужных групп переменных
+     *
+     * @return Collection|Group[]
+     */
+    private function getVariablesGroups() : Collection
+    {
+        $types = [
+            'var_' . FacilityType::ICT,
+            'var_' . $this->road_railway_electricity_other_facility->type->slug,
+            'var_' . FacilityType::ICT . '_' . $this->road_railway_electricity_other_facility->type->slug
+        ];
+
+        return $this->variables_groups->whereIn('slug', $types);
     }
 }

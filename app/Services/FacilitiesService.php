@@ -154,52 +154,6 @@ class FacilitiesService
     }
 
     /**
-     * Метод задаёт параметры совместимости для объектов в коллекции с которыми сравнивается выбранный объект
-     *
-     * @param Facility $facility
-     * @param Collection $objects
-     */
-    public static function getCompatibilityRating(Facility $facility, Collection &$objects)
-    {
-        $facility->load('compatibilityParams.translations');
-        $f_params = $facility->compatibilityParams;
-        $objects->load('compatibilityParams.translations');
-            foreach ($objects as $key => $object) {
-                $object->compatibility_level = self::getCompatibilityRatingByParams($f_params, $object);
-                $objects[$key] = $object;
-            }
-
-    }
-
-    /**
-     * Метод задаёт параметр совместимости для объекта с которым сравнивается выбранный объект пользователя
-     *
-     * @param Collection $my_facility_c_params
-     * @param Facility $facility     *
-     *
-     * @return float
-     */
-    public static function getCompatibilityRatingByParams(Collection $my_facility_c_params, Facility $facility)
-    {
-        $param_ids = $my_facility_c_params->pluck('group_id', 'id');
-        $facility_c_params = $facility->compatibilityParams;
-
-        $array = [];
-        foreach ($param_ids as $param_id => $group) {
-            $div = $facility_c_params->find($param_id)->pivot->value - $my_facility_c_params->find($param_id)->pivot->value;
-            $div = abs($div);
-            $array[$group][] = $div;
-        }
-
-        $sum = 0;
-        foreach ($array as $value) {
-            $sum += array_sum($value) / count($value);
-        }
-
-        return round($sum / count($array), 2);
-    }
-
-    /**
      * Метод задаёт экономическую эффективность между объектами
      *(Вадим, этот метод Вам)
      *
