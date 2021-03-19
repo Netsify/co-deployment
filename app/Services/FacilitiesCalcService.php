@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\Facilities\Facility;
+use App\Models\Variables\Group;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -25,6 +26,26 @@ class FacilitiesCalcService
      * @var Facility
      */
     protected $ict_facility;
+
+    /**
+     * Сервис для работы с переменными
+     *
+     * @var VariablesService
+     */
+    protected $variables_service;
+
+    /**
+     * Группы переменных
+     *
+     * @var Group[]
+     */
+    protected $variables_groups;
+
+    public function __construct()
+    {
+        $this->variables_service = new VariablesService();
+        $this->variables_groups = $this->variables_service->getGroups()->load('facilityTypes.translations');
+    }
 
     /**
      * Устанавливаем объект типа дорога и тд
@@ -60,12 +81,11 @@ class FacilitiesCalcService
          */
         $len_fac = $this->getMinLength();
 
-        $variablesService = new VariablesService();
-        $groups = $variablesService->getGroups()->load('facilityTypes.translations');
+        return $economic_efficiency;
 
-        /*foreach ($groups as $group) {
+        foreach ($this->variables_groups as $group) {
             echo "<h3>Переменные пользователя " . $this->ict_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
-            $variables = $variablesService->forUser($this->ict_facility->user)->get($group);
+            $variables = $this->variables_service->forUser($this->ict_facility->user)->get($group);
 
             foreach ($variables as $variable) {
                 echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
@@ -76,16 +96,16 @@ class FacilitiesCalcService
 
         echo "<hr>";
 
-        foreach ($groups as $group) {
+        foreach ($this->variables_groups as $group) {
             echo "<h3>Переменные пользователя " . $this->road_railway_electricity_other_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
-            $variables = $variablesService->forUser($this->road_railway_electricity_other_facility->user)->get($group);
+            $variables = $this->variables_service->forUser($this->road_railway_electricity_other_facility->user)->get($group);
 
             foreach ($variables as $variable) {
                 echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
             }
 
             echo "<br>";
-        }*/
+        }
 
         return $economic_efficiency; // итог
     }
