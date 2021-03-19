@@ -168,7 +168,7 @@ class FacilitiesController extends Controller
 
             $facilities->put('my', $my_facility);
             $facilities->add($facility);
-            $facilities->load('type', 'user');
+            $facilities->load('type', 'user.variables', 'compatibilityParams');
 
             $ict_facility = $facilities['my']->type->slug == FacilityType::ICT ? $facilities['my'] : $facilities[0];
             $road_railway_electricity_other_facility = $facilities['my']->type->slug != FacilityType::ICT ? $facilities['my'] : $facilities[0];
@@ -177,37 +177,19 @@ class FacilitiesController extends Controller
             $facilityCalcService->setIctFacility($ict_facility);
             $facilityCalcService->setRoadRailwayElectrycityOtherFacility($road_railway_electricity_other_facility);
             $economic_efficiency = $facilityCalcService->getEconomicEfficiency();
-            return;
-//            dump($variables_service);
-
+            $c_level = $facilityCalcService->getCompatibilityLevel();
+//            dump($c_level);
 //            return;
-//            foreach ($facilities as $key => $facility) {
-//                $variablesGroups = [];
-//                foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
-//                    $variablesGroups[] = [
-//                        'title' => $variablesGroup->getTitle(),
-//                        'variables' => (new VariablesService($facility->user))->get()->toArray()
-//                    ];
-//                }
-//
-//                $facilities[$key]->variablesGroups = $variablesGroups;
-//            }
-//
-            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
-//
-//            /* Вадим, Вам нужно будет реализовать этот метод */
-//            $economic_efficiency = FacilitiesService::getEconomicEfficiency($facilities['my'], $facilities['found']);
-//            /* Вадим, Вам нужно будет реализовать этот метод */
-//
-            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
+//            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facility);
 
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facility->id);
 
             return view('facilities.show', [
                 'facilities' => $facilities,
-                'facility' => $facilities['found'],
+                'facility' => $facility,
                 'my_facility' => $facilities['my'],
                 'proposal_is_not_exist' => $proposal_is_not_exist,
-                'economic_efficiency' => 10,
+                'economic_efficiency' => $economic_efficiency,
                 'c_level' => $c_level
             ]);
         }

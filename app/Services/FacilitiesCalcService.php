@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\Facilities\Facility;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Сервис для расчётов связанных с объектами
@@ -52,6 +53,8 @@ class FacilitiesCalcService
      */
     public function getEconomicEfficiency()
     {
+        $economic_efficiency = 0;
+
         /*
          * Минимальная длина
          */
@@ -59,16 +62,32 @@ class FacilitiesCalcService
 
         $variablesService = new VariablesService();
         $groups = $variablesService->getGroups()->load('facilityTypes.translations');
-        foreach ($groups as $group) {
-            echo "<h4>Переменные пользователя " . $this->ict_facility->user->full_name ." для группы: " . $group->getTitle() . '<br>';
+
+        /*foreach ($groups as $group) {
+            echo "<h3>Переменные пользователя " . $this->ict_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
             $variables = $variablesService->forUser($this->ict_facility->user)->get($group);
+
             foreach ($variables as $variable) {
                 echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
             }
-            echo "<hr>";
+
+            echo "<br>";
         }
 
-        return 10; // итог
+        echo "<hr>";
+
+        foreach ($groups as $group) {
+            echo "<h3>Переменные пользователя " . $this->road_railway_electricity_other_facility->user->full_name ." для группы: " . $group->getTitle() . '</h3>';
+            $variables = $variablesService->forUser($this->road_railway_electricity_other_facility->user)->get($group);
+
+            foreach ($variables as $variable) {
+                echo $variable->id . ' - ' . $variable->slug . ' - ' . $variable->value . '<br>';
+            }
+
+            echo "<br>";
+        }*/
+
+        return $economic_efficiency; // итог
     }
 
     /**
@@ -81,5 +100,39 @@ class FacilitiesCalcService
         $ict_len = $this->ict_facility->length;
         $rreo_len = $this->road_railway_electricity_other_facility->length;
         return $ict_len <= $rreo_len ? $ict_len : $rreo_len;
+    }
+
+    /**
+     * Получаем уровень совместимости между двумя объектами
+     *
+     * @return float
+     */
+    public function getCompatibilityLevel() : float
+    {
+        $array = [];
+        $sum = 0;
+
+        $param_ids = $this->ict_facility->compatibilityParams->pluck('group_id', 'id');
+
+        foreach ($param_ids as $param_id => $group) {
+            $array[$group][] = $this->getAbsDivBetweenSameParam($param_id);
+        }
+
+        foreach ($array as $value) {
+            $sum += array_sum($value) / count($value);
+        }
+
+        return round($sum / count($array), 2);
+    }
+
+    /**
+     * Получаем абсолютное число из разности двух схожих параметров
+     *
+     * @param int $param_id
+     * @return int
+     */
+    private function getAbsDivBetweenSameParam(int $param_id) : int
+    {
+        return abs($this->ict_facility->compatibilityParams->find($param_id)->pivot->value - $this->road_railway_electricity_other_facility->compatibilityParams->find($param_id)->pivot->value);
     }
 }
