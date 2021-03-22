@@ -44,7 +44,7 @@
                                 <select name="category" id="category" class="form-control form-control-sm @error('category') is-invalid @enderror">
                                     <option value="0">Выберите категорию</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('category') ?? $variable->category_of_variable_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ (old('category') ?? $variable->category_of_variable_id) == $category->id ? 'selected' : '' }}>{{ $category->slug }}</option>
                                     @endforeach
                                 </select>
                                 @error('category')
