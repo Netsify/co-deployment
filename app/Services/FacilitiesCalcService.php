@@ -550,7 +550,7 @@ class FacilitiesCalcService
 
         if ($capex_road_it_codep > 0)
         {
-            $economic_efficiency =    (($capex_road_sep + $capex_it_sep)/$capex_road_it_codep*100 - 100);
+            $economic_efficiency =    ((($capex_road_sep + $capex_it_sep)/$capex_road_it_codep)*100 - 100);
         }
 
 
