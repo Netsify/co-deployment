@@ -11,7 +11,7 @@
                             {{-- Отображаем превью объекта из компонента --}}
                             <x-facility-preview :facility="$facility" show-compatibility-level="true">
                                 <div class="d-grid gap-2">
-                                    <a href="{{ route('facilities.show', $facility->id) }}@can('use-advanced-search')?my_facility={{request()->input('facility')}}@endcan"
+                                    <a href="{{ $facility->link ?? route('facilities.show', $facility->id) }}"
                                        class="btn btn-sm btn-info">{{ __('facility.open') }}</a>
                                 </div>
                             </x-facility-preview>

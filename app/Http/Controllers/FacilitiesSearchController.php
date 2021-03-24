@@ -59,6 +59,7 @@ class FacilitiesSearchController extends Controller
                          $facilityCalcService->setRoadRailwayElectrycityOtherFacility($facility);
                          $facility->compatibility_level = $facilityCalcService->getCompatibilityLevel();
                          $facility->economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+                         $facility->link = route('facilities.show', $facility->id) . '?my_facility=' . $my_facility->id;
                          $collection->add($facility);
                      }
                 } else {
@@ -68,6 +69,7 @@ class FacilitiesSearchController extends Controller
                         $facilityCalcService->setIctFacility($facility);
                         $facility->compatibility_level = $facilityCalcService->getCompatibilityLevel();
                         $facility->economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+                        $facility->link = route('facilities.show', $facility->id) . '?my_facility=' . $my_facility->id;
                         $collection->add($facility);
                     }
                 }
