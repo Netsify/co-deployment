@@ -1,3 +1,4 @@
+--Дамп переменных
 INSERT INTO `variables` (`id`, `slug`, `min_val`, `max_val`, `default_val`, `type`, `group_id`, `category_of_variable_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'IT.Design.LaborNormDesign', 0.00, 100000000.00, 16.00, 'INT', 5, 1, '2021-02-23 16:05:41', '2021-02-23 16:05:41', NULL),
 (2, 'IT.Design.LaborCostDesign', 0.00, 100000000.00, 5.00, 'INT', 5, 1, '2021-02-23 16:05:42', '2021-02-23 16:05:42', NULL),
