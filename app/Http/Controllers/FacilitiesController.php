@@ -11,6 +11,7 @@ use App\Models\File;
 use App\Models\Role;
 use App\Models\Variables\Group;
 use App\Models\Variables\Variable;
+use App\Services\FacilitiesCalcService;
 use App\Services\FacilitiesService;
 use App\Services\VariablesService;
 use Illuminate\Database\Eloquent\Collection;
@@ -120,7 +121,7 @@ class FacilitiesController extends Controller
     {
         $identitficator = Str::random(rand(20, 50));
 
-        $facility = new Facility($request->only('title', 'description', 'location'));
+        $facility = new Facility($request->only('title', 'description', 'location', 'length'));
         $facility->type_id = $request->input('type');
         $facility->visibility_id = $request->input('visibility');
         $facility->setIdentificator($identitficator);
@@ -166,33 +167,26 @@ class FacilitiesController extends Controller
             }
 
             $facilities->put('my', $my_facility);
-            $facilities->put('found', $facility);
-            $facilities->load('compatibilityParams', 'user', 'type.translations');
+            $facilities->add($facility);
+            $facilities->load('type', 'user.variables', 'compatibilityParams');
 
-            foreach ($facilities as $key => $facility) {
-                $variablesGroups = [];
-                foreach ($facility->type->variablesGroups->load('facilityTypes.translations', 'variables.translations') as $g_key => $variablesGroup) {
-                    $variablesGroups[] = [
-                        'title' => $variablesGroup->getTitle(),
-                        'variables' => (new VariablesService($variablesGroup, $facility->user))->get()->toArray()
-                    ];
-                }
+            $ict_facility = $facilities['my']->type->slug == FacilityType::ICT ? $facilities['my'] : $facilities[0];
+            $road_railway_electricity_other_facility = $facilities['my']->type->slug != FacilityType::ICT ? $facilities['my'] : $facilities[0];
 
-                $facilities[$key]->variablesGroups = $variablesGroups;
-            }
+            $facilityCalcService = new FacilitiesCalcService();
+            $facilityCalcService->setIctFacility($ict_facility);
+            $facilityCalcService->setRoadRailwayElectrycityOtherFacility($road_railway_electricity_other_facility);
+            $economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+            $c_level = $facilityCalcService->getCompatibilityLevel();
+//            dump($c_level);
+//            return;
+//            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facility);
 
-            $c_level = FacilitiesService::getCompatibilityRatingByParams($facilities['my']->compatibilityParams, $facilities['found']);
-
-            /* Вадим, Вам нужно будет реализовать этот метод */
-            $economic_efficiency = FacilitiesService::getEconomicEfficiency($facilities['my'], $facilities['found']);
-            /* Вадим, Вам нужно будет реализовать этот метод */
-
-            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facilities['found']->id);
-
+            $proposal_is_not_exist = Auth::user()->proposalIsNotExist($facilities['my']->id, $facility->id);
 
             return view('facilities.show', [
                 'facilities' => $facilities,
-                'facility' => $facilities['found'],
+                'facility' => $facility,
                 'my_facility' => $facilities['my'],
                 'proposal_is_not_exist' => $proposal_is_not_exist,
                 'economic_efficiency' => $economic_efficiency,

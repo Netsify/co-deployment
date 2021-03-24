@@ -5,6 +5,7 @@ namespace App\Models\Facilities;
 use App\Models\File;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,22 +19,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Объекты инфраструктуры
  *
  * @property int $id
- * @property int $user_id                              - ИД пользователя
- * @property int $type_id                              - ИД типа объекта
- * @property int $visibility_id                        - ИД видимости объекта
- * @property string $title                             - Название
- * @property string $location                          - Местоположение
- * @property string $description                       - Описание
- * @property-read string $identificator                - Уникальный идентификатор объекта
- * @property-read string $locale                       - В какой локали создавался объект
- * @property Carbon $created_at                        - Дата создания
- * @property Carbon $updated_at                        - Дата редактирования
- * @property Carbon $deleted_at                        - Дата удаления
- * @property User $user                                - Пользователь
- * @property FacilityType $type                        - Тип
- * @property FacilityVisibility $visibility            - Кому виден объект
- * @property File[] $files                             - Файлы приклеплённые к объекту
- * @property CompatibilityParam[] $compatibilityParams - Параметры своместимости
+ * @property int $user_id                                         - ИД пользователя
+ * @property int $type_id                                         - ИД типа объекта
+ * @property int $visibility_id                                   - ИД видимости объекта
+ * @property string $title                                        - Название
+ * @property string $location                                     - Местоположение
+ * @property string $description                                  - Описание
+ * @property double $length                                       - Протяжённость
+ * @property-read string $identificator                           - Уникальный идентификатор объекта
+ * @property-read string $locale                                  - В какой локали создавался объект
+ * @property Carbon $created_at                                   - Дата создания
+ * @property Carbon $updated_at                                   - Дата редактирования
+ * @property Carbon $deleted_at                                   - Дата удаления
+ * @property User $user                                           - Пользователь
+ * @property FacilityType $type                                   - Тип
+ * @property FacilityVisibility $visibility                       - Кому виден объект
+ * @property File[] $files                                        - Файлы приклеплённые к объекту
+ * @property Collection|CompatibilityParam[] $compatibilityParams - Параметры своместимости
  *
  * Class Facility
  * @package App\Models\Facilities
@@ -42,7 +44,7 @@ class Facility extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'location', 'description'];
+    protected $fillable = ['title', 'location', 'description', 'length'];
 
     /**
      * файлы

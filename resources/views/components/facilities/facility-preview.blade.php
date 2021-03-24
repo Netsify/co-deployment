@@ -13,6 +13,7 @@
         @if($showCompatibilityLevel)
             @can('use-advanced-search')
                 <p><b>{{ __('facility.c_level') }}: </b> {{ $facility->compatibility_level }}</p>
+                <p><b>{{ __('facility.e_level') }}: </b> {{ $facility->economic_efficiency }}%</p>
             @endcan
         @endif
 

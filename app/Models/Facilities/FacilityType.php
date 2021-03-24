@@ -26,7 +26,11 @@ class FacilityType extends Model implements TranslatableContract
 {
     use HasFactory, Translatable;
 
-    protected $with = ['variablesGroups'];
+    const ROAD = 'road';
+    const ICT = 'ict';
+    const ELECTRICITY = 'electricity';
+    const RAILWAY = 'railway';
+    const OTHER = 'other';
 
     /**
      * The attributes that are mass assignable.

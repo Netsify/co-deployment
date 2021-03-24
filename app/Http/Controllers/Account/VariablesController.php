@@ -27,10 +27,10 @@ class VariablesController extends Controller
 
     public function list(Group $group)
     {
-        $group->load('facilityTypes.translations', 'variables.translations');
+        $group->load('facilityTypes.translations');
 
-        $variablesService = new VariablesService($group);
-        $variables = $variablesService->get();
+        $variablesService = new VariablesService();
+        $variables = $variablesService->forUser(Auth::user())->get($group);
 
         $groups = Group::query()->where('id', '!=',  $group->id)
             ->with('facilityTypes.translations')->get();
@@ -40,10 +40,10 @@ class VariablesController extends Controller
 
     public function storeForUser(Group $group, Request $request)
     {
-        $variablesService = new VariablesService($group);
+        $variablesService = new VariablesService();
 
         try {
-            $variablesService->storeForUser($request->input('variable'));
+            $variablesService->forUser(Auth::user())->store($request->input('variable'), $group);
         } catch (\Exception $e) {
             Log::error('Не удалось сохранить переменные для пользователя. ', [
                 'message'   => $e->getMessage(),

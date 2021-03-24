@@ -68,6 +68,17 @@
     </div>
 </div>
 <div class="mb-3 row">
+    <label for="length"
+           class="col-sm-2 col-form-label">{{ __('facility.length') }}</label>
+    <div class="col-sm-10">
+        <input type="number" name="length" id="length" class="form-control  @error('length') is-invalid @enderror"
+               value="{{ old('length') ?? $facility->length }}" step="0.001">
+        @error('length')
+        <x-invalid-feedback :message="$message"/>
+        @enderror
+    </div>
+</div>
+<div class="mb-3 row">
     <label for="attachments"
            class="col-sm-2 col-form-label">{{ __('facility.attachments') }}</label>
     <div class="col-sm-10">
