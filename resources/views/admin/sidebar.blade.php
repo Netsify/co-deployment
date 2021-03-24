@@ -12,5 +12,8 @@
         <li class="list-group-item text-center">
             <a href="{{ route('admin.facilities.variables.index') }}" class="btn btn-link">{{ __('admin.economic_efficient_vars') }}</a>
         </li>
+        <li class="list-group-item text-center">
+            <a href="{{ route('admin.users.index') }}" class="btn btn-link">{{ __('admin.users') }}</a>
+        </li>
     </ul>
 </div>

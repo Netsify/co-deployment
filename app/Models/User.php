@@ -20,9 +20,8 @@ use Illuminate\Support\Facades\Storage;
  * Класс пользователей
  *
  * @property int $id
- * @property string $name               - Имя
- * @property string $surname            - Фамилия
- * @property-read string $full_name     - ФамилияИмя
+ * @property string $first_name         - Имя
+ * @property string $last_name          - Фамилия
  * @property string $email
  * @property string $password
  * @property Carbon $last_activity_at   - Метка последней активности
@@ -32,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
  * @property Facility[] $facilities     - Объекты пользователя
  * @property File[] $facilitiesFiles    - Файлы всех объектов пользователя
  * @property Variable[] $variables      - Переменные которые вбил пользователь
+ * @property boolean verified           - Верификация
  *
  * Class User
  * @package App\Models
@@ -44,6 +44,11 @@ class User extends Authenticatable
      * Путь до фото профиля по умолчанию
      */
     const DEFAULT_PHOTO = 'photo/default.svg';
+
+    /**
+     * Путь до иконки подтверждено
+     */
+    const ICON_VERIFIED = 'icons/verified.jpg';
 
     /**
      * The attributes that are mass assignable.
@@ -85,9 +90,29 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getFullNameAttribute() : string
+    public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Путь до иконки подтверждения
+     *
+     * @return string
+     */
+    public function getVerifiedUrlAttribute(): string
+    {
+        return Storage::url(self::ICON_VERIFIED);
+    }
+
+    /**
+     * Хинт иконки подтверждения
+     *
+     * @return string
+     */
+    public function getVerifiedTitleAttribute(): string
+    {
+        return __('dictionary.verified_desc', ['fullName' => $this->full_name]);
     }
 
     /**
@@ -95,7 +120,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getPhotoAttribute() : string
+    public function getPhotoAttribute(): string
     {
         return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
     }

@@ -18,7 +18,8 @@
                                 <p><b>{{ __('facility.location') }}: </b>{{ $facility->location }}</p>
                             </div>
                             <div class="col col-sm-4 text-center">
-                                <p><b>{{ __('facility.owner') }}: </b>{{ $facility->user->full_name }}</p>
+                                <p><b>{{ __('facility.owner') }}: </b>{{ $facility->user->full_name }}<x-icon-verified
+                                        :user="$facility->user"></x-icon-verified></p>
                             </div>
                         </div>
                         <hr>
