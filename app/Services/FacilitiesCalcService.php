@@ -554,7 +554,7 @@ class FacilitiesCalcService
         }
 
 
-        return $economic_efficiency; // тут будет число полученное после расчётов
+        return round($economic_efficiency, 2); // тут будет число полученное после расчётов
     }
 
     /**

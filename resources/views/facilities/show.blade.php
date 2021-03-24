@@ -46,7 +46,7 @@
                                 @isset($economic_efficiency)
                                     <div class="col col-sm-6">
                                         <p class="card-text text-justify">
-                                            <b>{{ __('facility.e_level') }}: </b>{{ $economic_efficiency }}
+                                            <b>{{ __('facility.e_level') }}: </b>{{ $economic_efficiency }}%
                                         </p>
                                     </div>
                                 @endisset
