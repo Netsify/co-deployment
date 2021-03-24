@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,12 +26,18 @@ class ProfileRequest extends FormRequest
      */
     public function rules(): array
     {
+        $role = ['required', 'integer', 'exists:roles,id'];
+
+        if (optional(Auth::user())->role_id != Role::ROLE_ADMIN_ID) {
+            $role[] = 'not_in:' . Role::ROLE_ADMIN_ID;
+        }
+
         return [
             'photo'             => ['sometimes', 'image'],
             'first_name'        => ['required', 'string:255'],
             'last_name'         => ['required', 'string:255'],
-            'role_id'           => ['required', 'integer', 'exists:roles,id', 'not_in:' . Role::ROLE_ADMIN_ID],
-            'phone'             => ['nullable', 'integer'],
+            'role_id'           => $role,
+            'phone'             => ['nullable'],
             'email'             => ['required', 'string:255', 'email', Rule::unique('users')->ignore($this->user())],
             'password'          => ['nullable', 'string', 'min:8', 'confirmed'],
             'organization'      => ['nullable', 'string:255'],
