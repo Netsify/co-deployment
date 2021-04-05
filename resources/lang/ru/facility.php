@@ -1,5 +1,5 @@
 <?php
-
+//
 return [
     'attachments' => "Прикреплённые файлы",
     'create_facility' => "Создать объект",
