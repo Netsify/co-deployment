@@ -22,16 +22,25 @@ use Illuminate\Support\Facades\Storage;
  * @property int $id
  * @property string $first_name         - Имя
  * @property string $last_name          - Фамилия
- * @property string $email
- * @property string $password
+ * @property string $email              - Почта
+ * @property Carbon $email_verified_at  - Дата подтверждения почты
+ * @property string $phone              - Телефон пользователя
+ * @property string $organization       - Организация пользователя
+ * @property string $summary            - Дополнительная информация
+ * @property string $photo_path         - Путь до фото профиля
+ * @property string $password           - Пароль
  * @property Carbon $last_activity_at   - Метка последней активности
  * @property boolean $active            - Статус
+ * @property boolean $verified          - Верификация
+ * @property boolean $remember_token    - Токен запоминания при авторизации
+ * @property Carbon $created_at         - Дата создания
+ * @property Carbon $updated_at         - Дата обновления
+ * @property Carbon $deleted_at         - Дата удаления
  * @property Article[] $articles        - Статьи пользователя
  * @property Role $role                 - Роль пользователя
  * @property Facility[] $facilities     - Объекты пользователя
  * @property File[] $facilitiesFiles    - Файлы всех объектов пользователя
  * @property Variable[] $variables      - Переменные которые вбил пользователь
- * @property boolean verified           - Верификация
  *
  * Class User
  * @package App\Models

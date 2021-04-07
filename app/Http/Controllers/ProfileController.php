@@ -32,55 +32,57 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $profile
      * @return View
      */
-    public function edit(User $profile) : View
+    public function edit() : View
     {
-        $roles = $profile->isAdmin()
+        $user = Auth::user();
+
+        $roles = $user->isAdmin()
             ? Role::orderByTranslation('id')->get()
             : Role::orderByTranslation('id')->get()->except(Role::ROLE_ADMIN_ID);
 
-        return view('profile.edit', ['user' => $profile, 'roles' => $roles]);
+        return view('profile.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param ProfileRequest $request
-     * @param User $profile
      * @return RedirectResponse
      */
-    public function update(ProfileRequest $request, User $profile) : RedirectResponse
+    public function update(ProfileRequest $request) : RedirectResponse
     {
-        $profile->fill($request->validated());
+        $user = Auth::user();
+
+        $user->fill($request->validated());
 
         if ($request->has('photo')) {
-            $profile->photo_path = $request->file('photo')->store('profiles', 'public');
+            $user->photo_path = $request->file('photo')->store('profiles', 'public');
         }
 
         if ($request->filled('phone')) {
-            $profile->phone = $request->input('phone');
+            $user->phone = $request->input('phone');
         }
 
         if ($request->filled('password')) {
-            $profile->password = Hash::make($request->input('password'));
+            $user->password = Hash::make($request->input('password'));
         }
 
         if ($request->filled('organization')) {
-            $profile->organization = $request->input('organization');
+            $user->organization = $request->input('organization');
         }
 
         if ($request->filled('summary')) {
-            $profile->summary = $request->input('summary');
+            $user->summary = $request->input('summary');
         }
 
-        if ($profile->save()) {
+        if ($user->save()) {
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
             session()->flash('message', __('dictionary.ProfileNotSaved'));
 
-            Log::error('Не удалось обновить профиль', compact('profile'));
+            Log::error('Не удалось обновить профиль', compact('user'));
         }
 
         return back();
