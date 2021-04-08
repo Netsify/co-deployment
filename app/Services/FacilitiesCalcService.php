@@ -9,6 +9,7 @@ use App\Models\Variables\Variable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Сервис для расчётов связанных с объектами
@@ -627,6 +628,7 @@ class FacilitiesCalcService
                 $vars = $vars->merge($this->variables_service->forUser(Auth::user())->get($group));
             }
             $this->variables = $vars->pluck('value', 'slug');
+            Log::info("Получены следующие переменные", ['variables' => $this->variables]);
         }
 
         try {
