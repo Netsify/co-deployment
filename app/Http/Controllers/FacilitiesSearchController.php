@@ -75,7 +75,7 @@ class FacilitiesSearchController extends Controller
                 }
                 $facilities = $collection;
 
-                $facilities = $facilities->where('compatibility_level', '<=', $level);
+                $facilities = $facilities->where('compatibility_level', '>=', $level);
             }
         }
 
