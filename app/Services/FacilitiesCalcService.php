@@ -628,16 +628,21 @@ class FacilitiesCalcService
                 $vars = $vars->merge($this->variables_service->forUser(Auth::user())->get($group));
             }
             $this->variables = $vars->pluck('value', 'slug');
-            Log::info("Получены следующие переменные", ['variables' => $this->variables]);
+            Log::info("Получены следующие переменные", [
+                'variables' => $this->variables,
+                'user_id'   => Auth::id()
+            ]);
         }
 
         try {
             return $this->variables[$variable];
         } catch (\Exception $e) {
             Log::error("Переменная не найдена", [
-                'error' => $e->getMessage(),
-                'code'  => $e->getCode(),
-                'trace' => $e->getTrace()
+                'error'   => $e->getMessage(),
+                'code'    => $e->getCode(),
+                'trace'   => $e->getTrace(),
+                'user_id' => Auth::id()
+
             ]);
 
             return 0;
