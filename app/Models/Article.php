@@ -36,6 +36,13 @@ class Article extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * Спецсимволы которые могут попасться
+     *
+     * @var array
+     */
+    private $special_chars = ['&nbsp;'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -88,7 +95,8 @@ class Article extends Model
      */
     public function getPreviewAttribute()
     {
-        return mb_substr(strip_tags($this->content), 0, 50, 'UTF-8');
+        $preview =trim(strip_tags(str_replace($this->special_chars, ' ', $this->content)));
+        return mb_substr($preview, 0, 50, 'UTF-8');
     }
 
     /**
