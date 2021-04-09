@@ -43,7 +43,7 @@ class FacilitiesSearchController extends Controller
         $facilities = $facilitiesSearchService->getSearched();
 
         if (Gate::allows('use-advanced-search')) {
-            if ($my_facility_identificator && $level) {
+            if ($my_facility_identificator) {
                 $my_facility = Facility::find($my_facility_identificator);
                 $facilities->put('my', $my_facility);
                 $facilities->load('type.translations', 'user.variables', 'compatibilityParams');
@@ -75,7 +75,7 @@ class FacilitiesSearchController extends Controller
                 }
                 $facilities = $collection;
 
-                $facilities = $facilities->where('compatibility_level', '>=', $level);
+                $facilities = $facilities->where('compatibility_level', '>=', $level ?? 0);
             }
         }
 
