@@ -53,6 +53,7 @@ class FacilitiesCalcService
      * @var \Illuminate\Support\Collection
      */
     protected $variables;
+
     public function __construct()
     {
         $this->variables_service = new VariablesService();
@@ -86,6 +87,12 @@ class FacilitiesCalcService
      */
     public function getEconomicEfficiency()
     {
+        $vars = new Collection();
+        foreach ($this->getVariablesGroups() as $group) {
+            $vars = $vars->merge($this->variables_service->forUser(Auth::user())->get($group));
+        }
+        $this->variables = $vars->pluck('value', 'slug');
+
         $economic_efficiency = 0;
 
         /*
@@ -104,11 +111,6 @@ class FacilitiesCalcService
          * Выбрано в зависимости от типа объекта инфраструктуры с которым оценивается объект типа IT
          */
         $codep_group_name = $sep_group_name . "+IT";
-
-        /*
-         * Переменные из групп Road или Railway или Electricity или Other (теперь можно обращаться по ключу массива)
-         */
-        $sep_variables = $this->variables_service->forUser(Auth::user())->get($sep_group)->pluck('value', 'slug');
 
         //В эту переменную будет сложен CAPEX для объектов типа дороги, ЖД, электричества
         //Рассчитывается с использованием подкласса Road. или Railway. или Electricity. или Other. в зависимости от типа
@@ -554,7 +556,6 @@ class FacilitiesCalcService
             $economic_efficiency =    ((($capex_road_sep + $capex_it_sep)/$capex_road_it_codep)*100 - 100);
         }
 
-
         return round($economic_efficiency, 2); // тут будет число полученное после расчётов
     }
 
@@ -620,20 +621,14 @@ class FacilitiesCalcService
         return $this->variables_groups->whereIn('slug', $types);
     }
 
+    /**
+     * Получаем значение переменной
+     *
+     * @param $variable
+     * @return int|float
+     */
     private function getValueOfVariable($variable)
     {
-        if (!$this->variables) {
-            $vars = new Collection();
-            foreach ($this->getVariablesGroups() as $group) {
-                $vars = $vars->merge($this->variables_service->forUser(Auth::user())->get($group));
-            }
-            $this->variables = $vars->pluck('value', 'slug');
-            Log::info("Получены следующие переменные", [
-                'variables' => $this->variables,
-                'user_id'   => Auth::id()
-            ]);
-        }
-
         try {
             return $this->variables[$variable];
         } catch (\Exception $e) {
