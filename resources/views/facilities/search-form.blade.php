@@ -26,6 +26,10 @@
                     <input type="text" name="level" id="level" class="form-control">
                 </div>
                 <div class="mb-3">
+                    <label for="efficiency" class="form-label">{{ __('facility.min_e_level') }}</label>
+                    <input type="text" name="efficiency" id="efficiency" class="form-control">
+                </div>
+                <div class="mb-3">
                     <label for="facility" class="form-label">{{ __('facility.my_facilities') }}</label>
                     <select class="form-select" id="facility" name="facility">
                         <option value="0" selected>{{ __('facility.select_facility') }}</option>

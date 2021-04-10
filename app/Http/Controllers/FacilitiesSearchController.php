@@ -9,33 +9,27 @@ use App\Services\FacilitiesSearchService;
 use App\Services\FacilitiesService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class FacilitiesSearchController extends Controller
 {
     public function search(Request $request)
     {
-        $type = $request->input('type');
-        $name_or_id = $request->input('name_or_id');
-        $owner = trim(strip_tags($request->input('owner')));
-
-        $my_facility_identificator = abs((int)$request->input('facility'));
-        $level = floatval($request->input('level'));
-
         $facilitiesSearchService = new FacilitiesSearchService();
 
-        if ($name_or_id) {
-            $facilitiesSearchService->searcByNameOrID($name_or_id);
+        if ($request->filled('name_or_id')) {
+            $facilitiesSearchService->searcByNameOrID($request->input('name_or_id'));
         }
 
-        if ($type) {
-            $facilitiesSearchService->searchByType($type);
+        if ($request->filled('type')) {
+            $facilitiesSearchService->searchByType($request->input('type'));
         } else {
             $facilitiesSearchService->searchByAvailableTypes();
         }
 
-        if ($owner) {
-            $facilitiesSearchService->searchByOwner($owner);
+        if ($request->filled('owner')) {
+            $facilitiesSearchService->searchByOwner(trim(strip_tags($request->input('owner'))));
         }
 
         $facilitiesSearchService->searchByVisibilities();
@@ -43,8 +37,12 @@ class FacilitiesSearchController extends Controller
         $facilities = $facilitiesSearchService->getSearched();
 
         if (Gate::allows('use-advanced-search')) {
-            if ($my_facility_identificator) {
-                $my_facility = Facility::find($my_facility_identificator);
+            if ($request->filled('facility')) {
+                $my_facility = Auth::user()->facilities->find($request->input('facility'));
+                if (!$my_facility) {
+                    abort(404);
+                }
+
                 $facilities->put('my', $my_facility);
                 $facilities->load('type.translations', 'user.variables', 'compatibilityParams');
                 $my_facility = $facilities->get('my');
@@ -75,7 +73,13 @@ class FacilitiesSearchController extends Controller
                 }
                 $facilities = $collection;
 
-                $facilities = $facilities->where('compatibility_level', '>=', $level ?? 0);
+                if ($request->filled('level')) {
+                    $facilities = $facilities->where('compatibility_level', '>=', floatval($request->input('level')));
+                }
+
+                if ($request->filled('efficiency')) {
+                    $facilities = $facilities->where('economic_efficiency', '>=', floatval($request->input('efficiency')));
+                }
             }
         }
 

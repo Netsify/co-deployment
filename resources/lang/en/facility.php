@@ -24,6 +24,7 @@ return [
     'length' => "Facility's length (km.)",
     'location' => "Location",
     'min_c_level' => "Minimal compatibility level",
+    'min_e_level' => "Minimal economic efficiency's level (%)",
     'my_facilities' => "My facilities",
     'new_facility' => "New facility",
     'no_loaded_files' => "This facility has no loaded files",
