@@ -27,14 +27,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
+        ->only('index', 'edit', 'update');
+
+    Route::delete('profile/{user}/delete_photo', [\App\Http\Controllers\ProfileController::class, 'deletePhoto'])
+        ->name('profile.delete_photo');
+
     Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
         ->except(['index', 'show']);
 
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
-
-    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-        ->only('index', 'edit', 'update');
 
     Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
         [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');

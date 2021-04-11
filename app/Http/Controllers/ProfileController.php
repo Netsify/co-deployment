@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Контроллер профиля пользователя
@@ -53,7 +54,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request) : RedirectResponse
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         $user->fill($request->validated());
 
@@ -77,13 +78,42 @@ class ProfileController extends Controller
             $user->summary = $request->input('summary');
         }
 
+        $this->save($user);
+
+        return back();
+    }
+
+    /**
+     * Действия при сохранении пользователя
+     *
+     * @param User $user
+     */
+    public function save(User $user)
+    {
         if ($user->save()) {
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
-            session()->flash('message', __('dictionary.ProfileNotSaved'));
-
             Log::error('Не удалось обновить профиль', compact('user'));
+
+            session()->flash('message', __('dictionary.ProfileNotSaved'));
         }
+    }
+
+    /**
+     * Удаляет фото профиля
+     *
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function deletePhoto(User $user): RedirectResponse
+    {
+        if (Storage::delete($user->photo_path) === false) {
+            Log::error('Не удалось удалить фото профиля', compact('user'));
+        }
+
+        $user->photo_path = null;
+
+        $this->save($user);
 
         return back();
     }
