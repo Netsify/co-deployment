@@ -11,7 +11,7 @@ class ProfilePolicy
     use HandlesAuthorization;
 
     /**
-     * Может ли текущий пользователь удалить фото профайла другого пользователя
+     * Является ли текущий пользователь пользователем из роута
      *
      * @param User $user
      * @return bool

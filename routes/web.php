@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::delete('profile/{user}/delete_photo', [\App\Http\Controllers\ProfileController::class, 'deletePhoto'])
+    Route::delete('profile/{user}/delete_photo', [\App\Http\Controllers\ProfileController::class, 'nullifyPhoto'])
         ->name('profile.delete_photo');
 
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)

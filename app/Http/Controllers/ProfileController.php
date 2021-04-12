@@ -59,6 +59,10 @@ class ProfileController extends Controller
         $user->fill($request->validated());
 
         if ($request->has('photo')) {
+            if ($user->photo_path) {
+                $this->removePhoto($user);
+            }
+
             $user->photo_path = $request->file('photo')->store('profiles', 'public');
         }
 
@@ -90,7 +94,7 @@ class ProfileController extends Controller
      */
     public function save(User $user)
     {
-        if ($user->save()) {
+        if ($user->save() === true) {
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
             Log::error('Не удалось обновить профиль', compact('user'));
@@ -100,20 +104,30 @@ class ProfileController extends Controller
     }
 
     /**
-     * Удаляет фото профиля
+     * Действия при удалении фото пользователя из хранилища
+     *
+     * @param User $user
+     */
+    public function removePhoto(User $user)
+    {
+        if (Storage::delete($user->photo_path) === false) {
+            Log::error('Не удалось удалить фото профиля', compact('user'));
+        }
+    }
+
+    /**
+     * Обнуляет фото профиля
      *
      * @param User $user
      * @return RedirectResponse
      */
-    public function deletePhoto(User $user): RedirectResponse
+    public function nullifyPhoto(User $user): RedirectResponse
     {
         if ($user->cannot('deletePhoto', $user)) {
             abort(403);
         }
 
-        if (Storage::delete($user->photo_path) === false) {
-            Log::error('Не удалось удалить фото профиля', compact('user'));
-        }
+        $this->removePhoto($user);
 
         $user->photo_path = null;
 
