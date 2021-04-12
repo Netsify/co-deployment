@@ -76,6 +76,7 @@ class ProjectController extends Controller
         $project->with('users', 'status', 'facilities', 'comments');
 
         $statuses = ProjectStatus::orderByTranslation('name')->get();
+
         $comments = $project->comments->load('files');
 
         return view('account.projects.edit', compact('project', 'statuses', 'comments'));

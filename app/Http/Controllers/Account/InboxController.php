@@ -92,12 +92,9 @@ class InboxController extends Controller
      * @param Proposal $proposal
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Proposal $proposal, $id, $status)
+    public function update(Proposal $proposal, $status)
     {
-//        echo($status);
-
 //        $proposal->status_id = $status;
-//        $proposal->save();
 
 //        if ($proposal->save()) {
 //            session()->flash('message', __('account.ProposalSaved'));
@@ -106,8 +103,6 @@ class InboxController extends Controller
 //
 //            Log::error('Не удалось обновить статус предложения', compact('proposal'));
 //        }
-
-//        var_dump($proposal->status_id);
 
 //        return response()->json(['success' => true],200);
     }
