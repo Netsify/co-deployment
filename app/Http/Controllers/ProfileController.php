@@ -107,7 +107,7 @@ class ProfileController extends Controller
      */
     public function deletePhoto(User $user): RedirectResponse
     {
-        if ($user->cannot('deletePhoto')) {
+        if ($user->cannot('deletePhoto', $user)) {
             abort(403);
         }
 

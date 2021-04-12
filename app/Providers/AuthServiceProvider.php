@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Article;
-use App\Models\Comment;
 use App\Models\Facilities\Facility;
 use App\Models\File;
 use App\Models\Project;

@@ -18,6 +18,6 @@ class ProfilePolicy
      */
     public function deletePhoto(User $user): bool
     {
-        return Auth::check();
+        return Auth::user() == $user;
     }
 }
