@@ -107,6 +107,10 @@ class ProfileController extends Controller
      */
     public function deletePhoto(User $user): RedirectResponse
     {
+        if ($user->cannot('deletePhoto')) {
+            abort(403);
+        }
+
         if (Storage::delete($user->photo_path) === false) {
             Log::error('Не удалось удалить фото профиля', compact('user'));
         }
