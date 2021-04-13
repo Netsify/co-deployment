@@ -42,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('use-advanced-search', function (?User $user) {
             $role = optional($user)->role;
+
             return in_array(optional($role)->slug, [Role::ROLE_ICT_OWNER, Role::ROLE_ROADS_OWNER]);
         });
     }

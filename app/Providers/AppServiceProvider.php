@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Facilities\Facility;
+use App\Models\Role;
+use App\Models\User;
 use App\View\Components\DeleteButtton;
 use App\View\Components\InvalidFeedback;
 use App\Models\Facilities\Proposal;
@@ -93,5 +95,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::useBootstrap();
+
+        /**
+         * Директива роль пользователя владелец инфраструктуры или оператор ИКТ
+         */
+        Blade::if('roleRoadOrICT', function (User $user) {
+            return in_array($user->role->slug, [Role::ROLE_ROADS_OWNER, Role::ROLE_ICT_OWNER]);
+        });
     }
 }
