@@ -3,11 +3,13 @@
 window.Vue = require('vue');
 import Api from './api';
 import CParamDescription from './components/facilities/CParamDescription';
+import CParamSlider from './components/facilities/CParamSlider';
 
 const app = new Vue({
     el: '#div-facilities',
     components: {
-        'c-param-description' : CParamDescription
+        'c-param-description' : CParamDescription,
+        'c-param-slider' : CParamSlider,
     },
     data() {
         return {
