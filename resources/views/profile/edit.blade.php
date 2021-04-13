@@ -17,7 +17,12 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('profile.update', $user) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('profile.delete_photo', $user) }}" method="POST" id="photo">
+                            @method('DELETE')
+                            @csrf
+                        </form>
+
+                        <form action="{{ route('profile.update', $user) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -25,7 +30,15 @@
                                 <label for="photo" class="col-form-label">{{ __('dictionary.Photo') }}</label>
 
                                 <div class="mb-3">
-                                    <img src="{{ $user->photo }}" height="200">
+                                    <img src="{{ $user->photo }}" height="200" alt="photo">
+                                </div>
+
+                                <div class="mb-3">
+                                    @if ($user->photo_path)
+                                        <button type="submit" class="btn btn-danger btn-sm" form="photo">
+                                            {{ __('knowledgebase.delete') }}
+                                        </button>
+                                    @endif
                                 </div>
 
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Контроллер профиля пользователя
@@ -53,11 +54,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request) : RedirectResponse
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         $user->fill($request->validated());
 
         if ($request->has('photo')) {
+            if ($user->photo_path) {
+                $this->removePhoto($user);
+            }
+
             $user->photo_path = $request->file('photo')->store('profiles', 'public');
         }
 
@@ -77,13 +82,56 @@ class ProfileController extends Controller
             $user->summary = $request->input('summary');
         }
 
-        if ($user->save()) {
+        $this->save($user);
+
+        return back();
+    }
+
+    /**
+     * Действия при сохранении пользователя
+     *
+     * @param User $user
+     */
+    public function save(User $user)
+    {
+        if ($user->save() === true) {
             session()->flash('message', __('dictionary.ProfileSaved'));
         } else {
-            session()->flash('message', __('dictionary.ProfileNotSaved'));
-
             Log::error('Не удалось обновить профиль', compact('user'));
+
+            session()->flash('message', __('dictionary.ProfileNotSaved'));
         }
+    }
+
+    /**
+     * Действия при удалении фото пользователя из хранилища
+     *
+     * @param User $user
+     */
+    public function removePhoto(User $user)
+    {
+        if (Storage::delete($user->photo_path) === false) {
+            Log::error('Не удалось удалить фото профиля', compact('user'));
+        }
+    }
+
+    /**
+     * Обнуляет фото профиля
+     *
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function nullifyPhoto(User $user): RedirectResponse
+    {
+        if ($user->cannot('deletePhoto', $user)) {
+            abort(403);
+        }
+
+        $this->removePhoto($user);
+
+        $user->photo_path = null;
+
+        $this->save($user);
 
         return back();
     }

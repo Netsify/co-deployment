@@ -27,14 +27,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
-        ->except(['index', 'show']);
+    Route::delete('profile/{user}/delete_photo', [\App\Http\Controllers\ProfileController::class, 'nullifyPhoto'])
+        ->name('profile.delete_photo');
+
+    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
+        ->only('index', 'edit', 'update');
 
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
 
-    Route::resource('profile', \App\Http\Controllers\ProfileController::class)
-        ->only('index', 'edit', 'update');
+    Route::resource('articles', \App\Http\Controllers\ArticlesController::class)
+        ->except(['index', 'show']);
 
     Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
         [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');
@@ -53,8 +56,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('facilities', \App\Http\Controllers\FacilitiesController::class)
             ->except('index', 'show');
 
-        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class);
-
         Route::post('projects/{project}/add_comment',
             [\App\Http\Controllers\Account\ProjectController::class, 'addComment'])
             ->name('projects.add_comment');
@@ -63,7 +64,7 @@ Route::middleware('auth')->group(function () {
             [\App\Http\Controllers\Account\ProjectController::class, 'deleteFileFromComment'])
             ->name('projects.delete_file');
 
-        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class);
+        Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class);
 
         Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
             ->name('proposal.decline');
@@ -71,17 +72,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/inbox/proposal/{proposal}/accept', [\App\Http\Controllers\ProposalController::class, 'accept'])
             ->name('proposal.accept');
 
-        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
-            ->except('destroy');
-
         Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\InboxController::class, 'destroy'])
             ->name('inbox.delete');
 
-        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
+        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
             ->except('destroy');
 
         Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])
             ->name('sent-proposals.delete');
+
+        Route::resource('sent-proposals', \App\Http\Controllers\Account\SentProposalController::class)
+            ->except('destroy');
 
         Route::get('/variables', [\App\Http\Controllers\Account\VariablesController::class, 'index'])
             ->name('variables.index');
@@ -143,7 +144,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
     ->name('articles.search');
 
-Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only('show');
-
 Route::get('articles/category/{category}', [\App\Http\Controllers\ArticlesController::class, 'index'])
     ->name('articles.index');
+
+Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only('show');
