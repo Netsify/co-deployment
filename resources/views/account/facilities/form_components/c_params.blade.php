@@ -7,7 +7,8 @@
             </div>
             <div class="col-sm-4">
                 <c-param-slider name="c_param[{{ $param->id }}]" min="{{ $param->min_val }}" max="{{ $param->max_val }}"
-                                default-val="{{ optional($facility->compatibilityParam($param->id))->value ?? $param->default_val }}"
+                                selected-value="{{ optional($facility->compatibilityParam($param->id))->value ?? $param->default_val }}"
+                                id="c_param[{{ $param->id }}]"
                 ></c-param-slider>
                 {{--<input type="range" id="c_param[{{ $param->id }}]" name="c_param[{{ $param->id }}]" class="form-range"
                        min="{{ $param->min_val }}" max="{{ $param->max_val }}"

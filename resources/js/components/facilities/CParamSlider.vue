@@ -1,20 +1,41 @@
 <template>
-    <input type="range"
-           :name="name"
-           :min="min"
-           :max="max"
-           :value="defaultVal"
-           @change="setValue"
-    >
+    <div class="range-wrap">
+        <div class="range-value" :id="id">
+            <span>{{ localValue }}</span>
+        </div>
+        <input type="range"
+               :name="name"
+               :min="min"
+               :max="max"
+               v-model="localValue"
+               @input="setValue"
+        >
+    </div>
 </template>
 
 <script>
     export default {
-        props: ['name', 'min', 'max', 'defaultVal'],
-        methods: {
-            setValue(event) {
-                console.log(event.target.value);
+        props: ['name', 'min', 'max', 'selectedValue', 'id'],
+        data() {
+            return {
+                localValue: this.selectedValue
             }
+        },
+        methods: {
+            setValue() {
+                const newValue = Number((this.localValue - this.min) * 100 / (this.max - this.min));
+                const newPosition = 10 - (newValue * 0.2);
+                const rangeV = document.getElementById(this.id);
+                rangeV.style.left = "calc(" + newValue + "% + " + newPosition + "px)";
+            }
+        },
+        mounted() {
+            this.setValue();
+        },
+        computed: {
+            // changedValue() {
+            //     return this.selectedValue + " ggg";
+            // }
         }
     }
 </script>
