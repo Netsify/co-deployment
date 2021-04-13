@@ -6,9 +6,12 @@
                 <label for="c_param[{{ $param->id }}]" class="form-label">{{ $param->name }}</label>
             </div>
             <div class="col-sm-4">
-                <input type="range" id="c_param[{{ $param->id }}]" name="c_param[{{ $param->id }}]" class="form-range"
+                <c-param-slider name="c_param[{{ $param->id }}]" min="{{ $param->min_val }}" max="{{ $param->max_val }}"
+                                default-val="{{ optional($facility->compatibilityParam($param->id))->value ?? $param->default_val }}"
+                ></c-param-slider>
+                {{--<input type="range" id="c_param[{{ $param->id }}]" name="c_param[{{ $param->id }}]" class="form-range"
                        min="{{ $param->min_val }}" max="{{ $param->max_val }}"
-                       value="{{ optional($facility->compatibilityParam($param->id))->value ?? $param->default_val }}" id="customRange2">
+                       value="{{ optional($facility->compatibilityParam($param->id))->value ?? $param->default_val }}" id="customRange2">--}}
             </div>
             <c-param-description :descriptions="descriptions" type-id="{{ $param->id }}"></c-param-description>
         </div>
