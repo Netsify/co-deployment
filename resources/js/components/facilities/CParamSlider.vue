@@ -31,11 +31,6 @@
         },
         mounted() {
             this.setValue();
-        },
-        computed: {
-            // changedValue() {
-            //     return this.selectedValue + " ggg";
-            // }
         }
     }
 </script>
