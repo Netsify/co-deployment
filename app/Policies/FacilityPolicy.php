@@ -56,7 +56,7 @@ class FacilityPolicy
      */
     public function update(User $user, Facility $facility)
     {
-        //
+        return $user->facilities->contains($facility);
     }
 
     /**
@@ -68,7 +68,7 @@ class FacilityPolicy
      */
     public function delete(User $user, Facility $facility)
     {
-        //
+        return $user->facilities->contains($facility);
     }
 
     /**

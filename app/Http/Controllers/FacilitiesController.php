@@ -205,6 +205,10 @@ class FacilitiesController extends Controller
      */
     public function edit(Facility $facility): View
     {
+        if (Gate::denies('update', $facility)) {
+            abort(403);
+        }
+
         $visibilities = FacilityVisibility::query()->orderByTranslation('name')->get();
 
         $types = FacilityType::orderByTranslation('name')->get();
@@ -232,6 +236,10 @@ class FacilitiesController extends Controller
      */
     public function update(FacilityRequest $request, Facility $facility): RedirectResponse
     {
+        if (Gate::denies('update', $facility)) {
+            abort(403);
+        }
+
         $facility->fill($request->validated());
 
         $facility->type_id = $request->input('type');
@@ -273,8 +281,19 @@ class FacilitiesController extends Controller
      */
     public function destroy(Facility $facility): RedirectResponse
     {
+        if (Gate::denies('delete', $facility)) {
+            abort(403);
+        }
+
         try {
-            $facility->delete();
+            if (!$facility->delete()) {
+                Session::flash('error', __('facility.errors.delete_facility'));
+
+                Log::error("Не удалось удалить объект", [
+                    'facility' => $facility->toArray(),
+                    'user'     => Auth::user()->toArray()
+                ]);
+            }
         } catch (\Exception $e) {
             Session::flash('error', __('facility.errors.delete_facility'));
 

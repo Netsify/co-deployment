@@ -6,6 +6,7 @@ use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use App\Models\Variables\Variable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
