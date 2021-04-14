@@ -9,11 +9,6 @@
             <div class="col col-sm-9">
                 <h4>{{ $title }}</h4>
 
-                @if(session()->has('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{ session()->get('error') }}
-                    </div>
-                @endif
                 @forelse($articles as $article)
                     <div class="card">
                         <div class="card-header">
@@ -33,12 +28,6 @@
                                                         class="btn btn-success btn-sm">{{ __('knowledgebase.publicate') }}</button>
                                             </div>
                                             @endarticleNotPublished
-                                            @articleNotRejected($article)
-                                            <div class="btn-group me-2" role="group" aria-label="Second group">
-                                                <button type="submit" name="reject"
-                                                        class="btn btn-warning btn-sm">{{ __('knowledgebase.reject') }}</button>
-                                            </div>
-                                            @endarticleNotRejected
                                         </form>
                                         @articleNotDeleted($article)
                                         <x-delete-button :article="$article" route="admin.articles.destroy"/>

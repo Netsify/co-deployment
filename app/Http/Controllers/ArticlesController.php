@@ -148,11 +148,15 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article, $routeBack = false)
     {
+        $category_id = $article->category_id;
+        $article->published = null;
         try {
-            if (!$article->delete()) {
-                Session::flash('error', __('knowledgebase.errors.delete'));
+            if ($article->save()) {
+                if (!$article->delete()) {
+                    Session::flash('error', __('knowledgebase.errors.delete'));
 
-                Log::error("Не удалось удалить статью", ['article' => $article->toArray()]);
+                    Log::error("Не удалось удалить статью", ['article' => $article->toArray()]);
+                }
             }
         } catch (\Exception $e) {
             Session::flash('error', __('knowledgebase.errors.delete'));
@@ -171,7 +175,7 @@ class ArticlesController extends Controller
             return redirect()->back();
         }
 
-        return redirect()->route('articles.index');
+        return redirect()->route('articles.index', $category_id);
     }
 
     /**
