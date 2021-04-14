@@ -13,6 +13,7 @@ use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -99,8 +100,8 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Директива роль пользователя владелец инфраструктуры или оператор ИКТ
          */
-        Blade::if('roleRoadOrICT', function (User $user) {
-            return in_array($user->role->slug, [Role::ROLE_ROADS_OWNER, Role::ROLE_ICT_OWNER]);
+        Blade::if('roleRoadOrICT', function () {
+            return Auth::user()->isRoadOrICT();
         });
     }
 }

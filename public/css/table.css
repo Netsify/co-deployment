@@ -1,6 +1,6 @@
 table {
     text-align: center;
 
-    table-layout: auto;
+    table-layout: fixed;
     word-wrap: break-word;
 }

@@ -95,7 +95,7 @@
                                 {{ __('account.profile') }}
                             </a>
 
-                            @roleRoadOrICT(auth()->user())
+                            @roleRoadOrICT()
                             <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
                                 {{ __('facility.facilities') }}
                             </a>

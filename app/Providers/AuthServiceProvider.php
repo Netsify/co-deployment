@@ -8,7 +8,6 @@ use App\Models\File;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
-use App\Policies\CommentPolicy;
 use App\Policies\FacilityPolicy;
 use App\Policies\KnowledgeBase\ArticlePolicy;
 use App\Policies\ProfilePolicy;
