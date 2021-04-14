@@ -137,7 +137,7 @@ class ProjectController extends Controller
      */
     public function addComment(CommentRequest $request, Project $project): RedirectResponse
     {
-        if (Auth::user()->cannot('userHasProject', $project)) {
+        if ($request->user()->cannot('userHasProject', $project)) {
             abort(403);
         }
 
@@ -150,8 +150,8 @@ class ProjectController extends Controller
 
             $files = $request->file('files');
 
-            if (!is_null($files)) {
-                if (!$this->attachFilesToComment($comment, $files)) {
+            if (isset($files)) {
+                if ($this->attachFilesToComment($comment, $files) === false) {
 
                     Log::error('Не удалось прикрепить файлы к комментарию проекта', [
                         'comment' => $comment,

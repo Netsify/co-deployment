@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     /**
      * Роуты для работы с вкладками личного кабинета (профиль, объекты, проекты, входящие, отправленные предложения)
      */
-    Route::prefix('account')->name('account.')->group(function () {
+    Route::prefix('account')->middleware('road.ict')->name('account.')->group(function () {
 
         Route::get('facilities', [\App\Http\Controllers\FacilitiesController::class, 'accountIndex'])
             ->name('facilities.index');

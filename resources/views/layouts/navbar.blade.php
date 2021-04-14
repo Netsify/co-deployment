@@ -95,6 +95,7 @@
                                 {{ __('account.profile') }}
                             </a>
 
+                            @roleRoadOrICT()
                             <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
                                 {{ __('facility.facilities') }}
                             </a>
@@ -114,6 +115,7 @@
                             <a class="dropdown-item" href="{{ route('account.variables.index') }}">
                                 {{ __('account.economic_variables') }}
                             </a>
+                            @endroleRoadOrICT
 
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

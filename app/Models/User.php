@@ -165,6 +165,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Является ли пользователь владельцем инфраструктуры или оператором ИКТ
+     *
+     * @return bool
+     */
+    public function isRoadOrICT(): bool
+    {
+        return in_array($this->role->slug, [Role::ROLE_ROADS_OWNER, Role::ROLE_ICT_OWNER]);
+    }
+
+    /**
      * Объекты пользователя
      *
      * @return HasMany

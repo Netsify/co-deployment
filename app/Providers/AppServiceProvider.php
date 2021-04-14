@@ -5,12 +5,15 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Facilities\Facility;
+use App\Models\Role;
+use App\Models\User;
 use App\View\Components\DeleteButtton;
 use App\View\Components\InvalidFeedback;
 use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -93,5 +96,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::useBootstrap();
+
+        /**
+         * Директива роль пользователя владелец инфраструктуры или оператор ИКТ
+         */
+        Blade::if('roleRoadOrICT', function () {
+            return Auth::user()->isRoadOrICT();
+        });
     }
 }
