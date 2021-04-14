@@ -37,14 +37,14 @@ class FacilitiesSearchController extends Controller
         $facilities = $facilitiesSearchService->getSearched();
 
         if (Gate::allows('use-advanced-search')) {
-            if ($request->filled('facility')) {
+            if ($request->input('facility')) {
                 $my_facility = Auth::user()->facilities->find($request->input('facility'));
                 if (!$my_facility) {
                     abort(404);
                 }
 
                 $facilities->put('my', $my_facility);
-                $facilities->load('type.translations', 'user.variables', 'compatibilityParams');
+                $facilities->load('user.variables', 'compatibilityParams');
                 $my_facility = $facilities->get('my');
                 $facilities->forget('my');
 

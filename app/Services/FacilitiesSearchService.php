@@ -121,6 +121,6 @@ class FacilitiesSearchService
      */
     public function getSearched()
     {
-        return $this->builder->get();
+        return $this->builder->get()->load('type.translations', 'user');
     }
 }

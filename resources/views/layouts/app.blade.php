@@ -28,9 +28,7 @@
 
     <main class="py-4">
         @if(session()->has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session()->get('error') }}
-            </div>
+            <x-alert class="danger" :message="session()->get('error')"/>
         @endif
 
         @yield('content')
