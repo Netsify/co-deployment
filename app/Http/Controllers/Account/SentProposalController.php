@@ -25,9 +25,7 @@ class SentProposalController extends Controller
             ->where('sender_id', Auth::user()->id)
             ->get();
 
-        $statuses = ProposalStatus::all();
-
-        return view('account.sent-proposals.index', compact('proposals', 'statuses'));
+        return view('account.sent-proposals.index', compact('proposals'));
     }
 
     /**

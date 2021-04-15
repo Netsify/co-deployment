@@ -76,6 +76,7 @@ Route::middleware('auth')->group(function () {
             ->name('inbox.delete');
 
         Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
+            ->parameter('inbox', 'proposal')
             ->except('destroy');
 
         Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\SentProposalController::class, 'destroy'])

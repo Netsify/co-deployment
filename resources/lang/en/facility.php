@@ -4,8 +4,10 @@ return [
     'attachments' => "Attachments",
     'create_facility' => "Create facility",
     'c_level' => "Compatibility level",
+    'c_level_between' => "Compatibility level between facilities",
     'description' => "Description",
     'e_level' => "Level of economic efficiency",
+    'e_level_between' => "Level of economic efficiency between facilities",
     'edit_facility' => "Edit facility",
     'errors'                   => [
         'delete_facility'      => 'Could not delete facility. Please contact the administrator.',

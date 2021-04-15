@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Facilities\Facility;
+use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
+use App\Services\FacilitiesCalcService;
 use App\Services\FacilitiesService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -27,9 +30,8 @@ class InboxController extends Controller
             ->where('receiver_id', Auth::user()->id)
             ->get();
 
-        $statuses = ProposalStatus::all();
 
-        return view('account.inbox.index', compact('proposals', 'statuses'));
+        return view('account.inbox.index', compact('proposals'));
     }
 
     /**
@@ -56,22 +58,35 @@ class InboxController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Proposal $proposal
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Proposal $proposal)
     {
-        $proposal = Proposal::query()->find($id);
-        $facilities = $proposal->facilities()->withTrashed()->get()->load('type.translations', 'compatibilityParams.translations');
+        $facilities = $proposal->facilities()
+            ->withTrashed()
+            ->get()
+            ->load('type.translations', 'compatibilityParams.translations', 'user.variables');
 
         if ($facilities[0]->isDeleted() || $facilities[1]->isDeleted()) {
             return view('account.sent-proposals.show-d');
         }
 
-        FacilitiesService::getCompatibilityRatingByParams($facilities[0]->compatibilityParams, $facilities[1]);
-        $c_level = $facilities[1]->compatibility_level;
+        $ict_facility = $facilities->filter(function (Facility $facility) {
+            return $facility->type->slug == FacilityType::ICT;
+        })->first();
+        $road_railway_electricity_other_facility = $facilities->filter(function (Facility $facility) {
+            return $facility->type->slug != FacilityType::ICT;
+        })->first();
 
-        return view('account.sent-proposals.show', compact('proposal', 'facilities', 'c_level'));
+        $facilityCalcService = new FacilitiesCalcService();
+        $facilityCalcService->setIctFacility($ict_facility);
+        $facilityCalcService->setRoadRailwayElectrycityOtherFacility($road_railway_electricity_other_facility);
+        $economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+        $c_level = $facilityCalcService->getCompatibilityLevel();
+
+        return view('account.sent-proposals.show',
+            compact('proposal', 'facilities', 'c_level', 'economic_efficiency'));
     }
 
     /**

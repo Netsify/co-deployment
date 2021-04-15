@@ -28,8 +28,8 @@
                         {{ __('proposal.contains_no_attachments') }}
                     @endforelse
                 </p>
-                <p class="card-text"><b>{{ __('facility.facilities') }}: </b> ({{ __('facility.c_level') }}
-                    = {{ $c_level }})</p>
+                <p class="card-text"><b>{{ __('facility.c_level_between') }}: </b>{{ $c_level }}</p>
+                <p class="card-text"><b>{{ __('facility.e_level_between') }}: </b>{{ $economic_efficiency }}</p>
                 <div class="row">
                     @foreach($facilities as $facility)
                         <div class="col">
