@@ -137,7 +137,8 @@ Route::middleware('auth')->group(function () {
             /**
              * Роуты для работы с переменными для экономической эффективности объектов (кроме show)
              */
-            Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class)->except('show');
+            Route::resource('variables', \App\Http\Controllers\Admin\VariablesController::class)
+                ->except('show');
         });
     });
 });
@@ -145,7 +146,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/articles/search', [\App\Http\Controllers\ArticlesController::class, 'search'])
     ->name('articles.search');
 
-Route::get('articles/category/{category}', [\App\Http\Controllers\ArticlesController::class, 'index'])
-    ->name('articles.index');
+Route::get('articles/category/{category}', [\App\Http\Controllers\ArticlesController::class, 'getByCategory'])
+    ->name('articles.category');
 
-Route::resource('articles',\App\Http\Controllers\ArticlesController::class)->only('show');
+Route::resource('articles',\App\Http\Controllers\ArticlesController::class)
+    ->only('index', 'show');

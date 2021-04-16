@@ -38,17 +38,10 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">
-                                {{ __('knowledgebase.ArticleCategories') }}
+                            <a class="dropdown-item" href="{{ route('articles.index') }}">
+                                {{ __('knowledgebase.Articles') }}
                             </a>
                         </li>
-                        @foreach($categories as $category)
-                            <li>
-                                <a class="dropdown-item"
-                                   href="{{ route('articles.index', $category->id) }}">{{ $category->name }}
-                                </a>
-                            </li>
-                        @endforeach
                     </ul>
                 </li>
 
@@ -86,7 +79,7 @@
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
-                            {{ Auth::user()->full_name }} <x-icon-verified :user="auth()->user()"></x-icon-verified>
+                            {{ Auth::user()->full_name }}<x-icon-verified :user="auth()->user()"></x-icon-verified>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

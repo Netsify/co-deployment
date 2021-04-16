@@ -38,7 +38,7 @@ class CategoryController extends Controller
             'ru'        => ['name' => $request->input('name_ru')],
         ];
 
-        if (Category::create($params) === true) {
+        if (Category::create($params)) {
             Session::flash('message', __('knowledgebase.CategoryAdded'));
         } else {
             Session::flash('message', __('knowledgebase.errors.storeCategory'));
@@ -58,13 +58,11 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         try {
-            if ($category->delete() === false) {
-                Session::flash('error', __('knowledgebase.errors.deleteCategory'));
-
-                Log::error("Не удалось удалить категорию", ['category' => $category->toArray()]);
+            if ($category->delete() === true) {
+                Session::flash('message', __('knowledgebase.deleteCategory'));
             }
         } catch (\Exception $e) {
-            Session::flash('error', __('knowledgebase.errors.deleteCategory'));
+            Session::flash('message', __('knowledgebase.errors.deleteCategory'));
 
             Log::error("Не удалось удалить категорию", [
                 'message'  => $e->getMessage(),

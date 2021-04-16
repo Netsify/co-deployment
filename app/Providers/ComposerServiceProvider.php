@@ -27,7 +27,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         $categories = Category::orderByTranslation('name')->get();
 
-        View::composer('layouts.app', function($view) use ($categories) {
+        View::composer('knowledgebase.categories.sidebar', function($view) use ($categories) {
             $view->with(compact('categories'));
         });
     }
