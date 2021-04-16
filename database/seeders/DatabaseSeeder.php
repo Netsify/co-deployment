@@ -22,12 +22,14 @@ class DatabaseSeeder extends Seeder
 //        $this->call(FacilityTypesSeeder::class);
 //        $this->call(FacilityVisibilitySeeder::class);
 //        $this->call(TagsSeeder::class);
+//        $this->call(CategoriesOfVariablesSeeder::class);
 
         /**
          * Actual Seeders
          */
         $this->call(ProposalStatusSeeder::class);
         $this->call(ProjectStatusSeeder::class);
+        $this->call(GroupOfVariableSeeder::class);
 
         /*
          * Fake Seeders

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h1>{{ __('knowledgebase.AllArticles') . $category->name }}</h1>
                 @forelse($articles as $article)
                     <div class="card">

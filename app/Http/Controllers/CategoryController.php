@@ -7,15 +7,16 @@ use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $categories = Category::with('articles')->orderByTranslation('name')->get();
 
@@ -37,10 +38,11 @@ class CategoryController extends Controller
             'ru'        => ['name' => $request->input('name_ru')],
         ];
 
-        if (Category::create($params)) {
+        if (Category::create($params) === true) {
             Session::flash('message', __('knowledgebase.CategoryAdded'));
         } else {
             Session::flash('message', __('knowledgebase.errors.storeCategory'));
+
             Log::error('Не удалось создать категорию', $params);
         }
 
@@ -56,7 +58,7 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         try {
-            if (!$category->delete()) {
+            if ($category->delete() === false) {
                 Session::flash('error', __('knowledgebase.errors.deleteCategory'));
 
                 Log::error("Не удалось удалить категорию", ['category' => $category->toArray()]);

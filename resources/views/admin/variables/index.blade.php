@@ -3,7 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col col-sm-2">
+                @include('admin.sidebar')
+            </div>
+            <div class="col col-sm-10">
                 <div class="card">
                     <div class="card-header">
                         Переменные для экономической эффективности
@@ -41,7 +44,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="{{ route('admin.facilities.variables.edit', $variable) }}"
-                                                       class="btn btn-sm btn-info">Редактировать</a>
+                                                       class="btn btn-sm btn-info mb-2">Редактировать</a>
                                                     <button class="btn btn-sm btn-danger">Удалить</button>
                                                 </form>
                                             </div>

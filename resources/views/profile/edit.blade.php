@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         {{ __('dictionary.EditProfile') }}
@@ -167,7 +167,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-success">{{ __('dictionary.Save') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('dictionary.Save') }}</button>
                         </form>
                     </div>
                 </div>
