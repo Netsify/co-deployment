@@ -15,7 +15,7 @@
                                 <input type="search" name="content" class="form-control rounded"
                                        placeholder="{{ __('knowledgebase.Search') }}"
                                        aria-label="Search" aria-describedby="search-addon"
-                                       value="{{ request('content') }}" />
+                                       value="{{ request('content') }}"/>
                             </div>
 
                             <div class="mb-3">
@@ -24,7 +24,7 @@
                                     <option value="">{{ __('knowledgebase.SelectCategory') }}</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            {{ $category->id == request()->input('category') ? 'selected' : '' }}>
+                                                {{ $category->id == request()->input('category') ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -35,15 +35,15 @@
                                 <label for="tag" class="form-label">{{ __('knowledgebase.Tag') }}</label>
                                 <select name="tag[]" id="tag" class="form-select" multiple>
                                     <option value="">{{ __('knowledgebase.SelectTags') }}</option>
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}"
-                                                    @if (request()->input('tag'))
-                                                    {{ in_array($tag->id, request()->input('tag')) ? 'selected' : '' }}
-                                                    @endif
-                                                    >
-                                                {{ $tag->name }}
-                                            </option>
-                                        @endforeach
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}"
+                                        @if (request()->input('tag'))
+                                            {{ in_array($tag->id, request()->input('tag')) ? 'selected' : '' }}
+                                                @endif
+                                        >
+                                            {{ $tag->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -55,29 +55,30 @@
 
                     @isset($articles)
                         <div class="mt-4">
-                            @if ($articles->isEmpty())
-                                <h4 align="center" style="color: red">{{ __('knowledgebase.articles_not_found') }}</h4>
-                            @else
-                                <h2 align="center">{{ __('knowledgebase.FoundArticles') }}</h2>
-                                @foreach($articles as $article)
-                                    <div class="card mt-4">
-                                        <div class="card-header">
-                                            <h5 class="card-title">{{ $article->title }}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>{{ $article->preview  }}</p>
-
-                                            <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.view') }}</a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            {{ $article->created_at }}
-                                        </div>
-                                    </div>
-                                @endforeach
+                            @if($articles->count() > 0)
+                                <x-alert class="info"
+                                         message="{{ __('knowledgebase.found', ['count' => $articles->count()]) }}"/>
                             @endif
+                            @forelse($articles as $article)
+                                <div class="card mt-4">
+                                    <div class="card-header">
+                                        <h5 class="card-title">{{ $article->title }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{ $article->preview  }}</p>
+
+                                        <a href="{{ route('articles.show', $article) }}"
+                                           class="card-link">{{ __('knowledgebase.view') }}</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        {{ $article->created_at }}
+                                    </div>
+                                </div>
+                            @empty
+                                <x-alert class="warning" message="{{ __('knowledgebase.articles_not_found') }}"/>
+                            @endforelse
                         </div>
                     @endisset
-
                 </div>
             </div>
         </div>
