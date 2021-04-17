@@ -20,6 +20,7 @@ return [
     'Edit'                       => "Edit",
     'EditArticle'                => "Edit article",
     'Files'                      => "Attached files:",
+    'found' => "Found articles: :count",
     'FoundArticles'              => "Found articles",
 
     'errors'                     => [
