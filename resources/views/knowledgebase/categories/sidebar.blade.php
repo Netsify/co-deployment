@@ -25,7 +25,7 @@
                                             {{ $child->name }}
                                         </a>
                                         <span class="badge bg-primary rounded-pill">
-                                            {{ $child->articles()->published()->count() }}
+                                            {{ $child->articles->count() }}
                                         </span>
                                     </div>
                                 </li>

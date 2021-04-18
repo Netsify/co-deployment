@@ -19,8 +19,7 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = Category::with('articles', 'parent', 'parent.translations')
-            ->orderByTranslation('id')->get();
+        $categories = Category::with('articles', 'parent.translations', 'translations')->get();
 
         $parentCategories = $categories->filter(fn($categories) => is_null($categories->parent));
 
