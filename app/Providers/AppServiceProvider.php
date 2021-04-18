@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Facilities\Facility;
 use App\Models\Role;
@@ -102,6 +103,13 @@ class AppServiceProvider extends ServiceProvider
          */
         Blade::if('roleRoadOrICT', function () {
             return Auth::user()->isRoadOrICT();
+        });
+
+        /**
+         * Директива есть ли у категории подкатегории
+         */
+        Blade::if('categoryHasChildren', function (Category $category) {
+            return $category->children->isNotEmpty();
         });
     }
 }

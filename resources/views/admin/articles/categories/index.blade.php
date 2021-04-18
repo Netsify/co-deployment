@@ -68,24 +68,24 @@
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.AddNew') }}</button>
                         </form>
 
-                        <table class="table mt-5">
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ __('knowledgebase.Title') }}</th>
-                                    <th scope="col">{{ __('knowledgebase.CategoryParent') }}</th>
-                                    <th scope="col">{{ __('knowledgebase.ArticlesCount') }}</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
+                        <form method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <table class="table mt-5">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ __('knowledgebase.Title') }}</th>
+                                        <th scope="col">{{ __('knowledgebase.CategoryParent') }}</th>
+                                        <th scope="col">{{ __('knowledgebase.ArticlesCount') }}</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                <form method="POST">
-                                    @method('DELETE')
-                                    @csrf
+                                <tbody>
                                     @foreach($categories as $category)
                                         <tr>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ $category->parent->name ?? '' }}</td>
+                                            <td>{{ $category->parent->name ?? null }}</td>
                                             <td>{{ $category->articles->count() }}</td>
                                             <td>
                                                 <button type="submit" class="btn btn-danger btn-sm"
@@ -95,10 +95,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </form>
-                            </tbody>
-                        </table>
-
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>

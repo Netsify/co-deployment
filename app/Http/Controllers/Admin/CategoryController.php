@@ -19,11 +19,10 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categoriesQuery = Category::with('articles')->orderByTranslation('name');
+        $categories = Category::with('articles', 'parent', 'parent.translations')
+            ->orderByTranslation('id')->get();
 
-        $categories = $categoriesQuery->get();
-
-        $parentCategories = $categoriesQuery->whereNull('parent_id')->get();
+        $parentCategories = $categories->filter(fn($categories) => is_null($categories->parent));
 
         return view('admin.articles.categories.index', compact('categories', 'parentCategories'));
     }

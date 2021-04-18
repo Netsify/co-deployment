@@ -16,20 +16,22 @@
                         {{ $category->articles->count() }}
                     </span>
 
-                    @foreach($category->children as $child)
+                    @categoryHasChildren($category)
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <a href="{{ route('articles.category', $child->id) }}">
-                                        {{ $child->name }}
-                                    </a>
-                                    <span class="badge bg-primary rounded-pill">
-                                        {{ $child->articles->count() }}
-                                    </span>
-                                </div>
-                            </li>
+                            @foreach($category->children as $child)
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <a href="{{ route('articles.category', $child->id) }}">
+                                            {{ $child->name }}
+                                        </a>
+                                        <span class="badge bg-primary rounded-pill">
+                                            {{ $child->articles()->published()->count() }}
+                                        </span>
+                                    </div>
+                                </li>
+                            @endforeach
                         </ul>
-                    @endforeach
+                    @endcategoryHasChildren
                 </div>
             </li>
         @endforeach
