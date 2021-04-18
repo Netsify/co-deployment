@@ -52,9 +52,10 @@
 
                                 <select name="parent_category" class="form-select @error('parent_category') is-invalid @enderror">
                                     <option hidden></option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('parent_category') ?? $category) === $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                    @foreach($parentCategories as $parentCategory)
+                                        <option value="{{ $parentCategory->id }}"
+                                            {{ (old('parent_category') ?? $parentCategory) === $parentCategory->id ? 'selected' : '' }}>
+                                            {{ $parentCategory->name }}
                                         </option>
                                     @endforeach
                                 </select>

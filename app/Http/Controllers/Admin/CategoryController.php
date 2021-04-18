@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
@@ -18,9 +19,13 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = Category::with('articles')->orderByTranslation('name')->get();
+        $categoriesQuery = Category::with('articles')->orderByTranslation('name');
 
-        return view('admin.articles.categories.index', compact('categories'));
+        $categories = $categoriesQuery->get();
+
+        $parentCategories = $categoriesQuery->whereNull('parent_id')->get();
+
+        return view('admin.articles.categories.index', compact('categories', 'parentCategories'));
     }
 
     /**

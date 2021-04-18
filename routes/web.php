@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('articles')->name('articles.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'articles'])->name('index');
 
-            Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+            Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
 
             Route::get('/unchecked', [\App\Http\Controllers\Admin\ArticlesController::class, 'unchecked'])->name('unchecked');
             Route::get('/published', [\App\Http\Controllers\Admin\ArticlesController::class, 'published'])->name('published');

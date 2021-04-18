@@ -48,7 +48,7 @@ class ArticlesController extends Controller
     public function getByCategory(Category $category): View
     {
         $articles = Article::published()
-            ->with(['tags.translations', 'user'])
+            ->with(['tags.translations', 'user', 'category'])
             ->whereHas('category', fn($q) => $q->where('id', $category->id))
             ->orderByDesc('created_at')
             ->get();
