@@ -3,10 +3,17 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header">
                         {{ __('dictionary.PersonalData') }}
+                        <div class="btn-toolbar" role="toolbar" style="float: right">
+                            <div class="btn-group me-2" role="group">
+                                <a href="{{ route('profile.edit', $user) }}"
+                                   class="btn btn-sm btn-success"
+                                   style="float: right">{{ __('dictionary.EditProfile') }}</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card-body">
@@ -61,9 +68,6 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary" href="{{ route('profile.edit', $user) }}">
-                    {{ __('dictionary.EditProfile') }}
-                </a>
             </div>
         </div>
     </div>

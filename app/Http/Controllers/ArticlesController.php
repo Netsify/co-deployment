@@ -32,18 +32,28 @@ class ArticlesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return View
+     */
+    public function index(): View
+    {
+        return view('knowledgebase.index');
+    }
+
+    /**
+     * Все статьи по категории
+     *
      * @param Category $category
      * @return View
      */
-    public function index(Category $category): View
+    public function getByCategory(Category $category): View
     {
         $articles = Article::published()
-            ->with(['tags.translations', 'user'])
+            ->with(['tags.translations', 'user', 'category'])
             ->whereHas('category', fn($q) => $q->where('id', $category->id))
             ->orderByDesc('created_at')
             ->get();
 
-        return view('knowledgebase.index', compact('articles', 'category'));
+        return view('knowledgebase.categories.index', compact('articles', 'category'));
     }
 
     /**

@@ -5,7 +5,7 @@
 
 return [
     'AddNew'                     => "Добавить новую",
-    'AllArticles'                => "Все статьи по категории: ",
+    'Articles'                   => "Статьи",
     'articles_not_found'         => "Статьи не найдены",
     'ArticleCategories'          => "Категории статей",
     'ArticlesCount'              => "Количество статей",
@@ -16,6 +16,7 @@ return [
     'Content'                    => "Контент",
     'CreateArticle'              => "Создать статью",
     'delete'                     => "Удалить",
+    'deleteCategory'             => "Категория была успешно удалена!",
     'Edit'                       => "Редактировать",
     'EditArticle'                => "Редактировать статью",
     'Files'                      => "Прикрепленные файлы:",

@@ -21,6 +21,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
+
+    @yield('styles')
+
 </head>
 <body>
 <div>

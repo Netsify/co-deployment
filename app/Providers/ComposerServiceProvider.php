@@ -25,10 +25,14 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::orderByTranslation('name')->get();
+        $categories = Category::query()
+            ->with(['articles' => fn($q) => $q->published(),
+                    'translations',
+                    'children.translations',
+                    'children.articles' => fn($q) => $q->published()])
+            ->whereNull('parent_id')
+            ->get();
 
-        View::composer('layouts.app', function($view) use ($categories) {
-            $view->with(compact('categories'));
-        });
+        View::composer('knowledgebase.categories.sidebar', fn($view) => $view->with(['categories' => $categories]));
     }
 }

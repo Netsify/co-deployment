@@ -1,25 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $categories = Category::with('articles')->orderByTranslation('name')->get();
+        $categories = Category::with('articles', 'parent.translations', 'translations')->get();
 
-        return view('admin.articles.categories.index', compact('categories'));
+        $parentCategories = $categories->filter(fn($categories) => is_null($categories->parent));
+
+        return view('admin.articles.categories.index', compact('categories', 'parentCategories'));
     }
 
     /**
@@ -41,6 +45,7 @@ class CategoryController extends Controller
             Session::flash('message', __('knowledgebase.CategoryAdded'));
         } else {
             Session::flash('message', __('knowledgebase.errors.storeCategory'));
+
             Log::error('Не удалось создать категорию', $params);
         }
 
@@ -56,13 +61,11 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         try {
-            if (!$category->delete()) {
-                Session::flash('error', __('knowledgebase.errors.deleteCategory'));
-
-                Log::error("Не удалось удалить категорию", ['category' => $category->toArray()]);
+            if ($category->delete() === true) {
+                Session::flash('message', __('knowledgebase.deleteCategory'));
             }
         } catch (\Exception $e) {
-            Session::flash('error', __('knowledgebase.errors.deleteCategory'));
+            Session::flash('message', __('knowledgebase.errors.deleteCategory'));
 
             Log::error("Не удалось удалить категорию", [
                 'message'  => $e->getMessage(),

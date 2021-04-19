@@ -3,7 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col col-sm-3">
+                @include('knowledgebase.categories.sidebar')
+            </div>
+            <div class="col col-sm-9">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">{{ __('knowledgebase.KB') }}</h5>
@@ -52,34 +55,35 @@
                             </div>
                         </form>
                     </div>
-
-                    @isset($articles)
-                        <div class="mt-4">
-                            @if($articles->count() > 0)
-                                <x-alert class="info"
-                                         message="{{ __('knowledgebase.found', ['count' => $articles->count()]) }}"/>
-                            @endif
-                            @forelse($articles as $article)
-                                <div class="card mt-4">
-                                    <div class="card-header">
-                                        <h5 class="card-title">{{ $article->title }}</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>{{ $article->preview  }}</p>
-
-                                        <a href="{{ route('articles.show', $article) }}"
-                                           class="card-link">{{ __('knowledgebase.view') }}</a>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        {{ $article->created_at }}
-                                    </div>
-                                </div>
-                            @empty
-                                <x-alert class="warning" message="{{ __('knowledgebase.articles_not_found') }}"/>
-                            @endforelse
-                        </div>
-                    @endisset
                 </div>
+
+                @isset($articles)
+                    <div class="mt-4">
+                        @if ($articles->count() > 0)
+                            <x-alert class="info"
+                                     message="{{ __('knowledgebase.found', ['count' => $articles->count()]) }}"/>
+                        @endif
+
+                        @forelse($articles as $article)
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    <h5 class="card-title">{{ $article->title }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>{{ $article->preview  }}</p>
+
+                                    <a href="{{ route('articles.show', $article) }}"
+                                       class="card-link">{{ __('knowledgebase.view') }}</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    {{ $article->created_at }}
+                                </div>
+                            </div>
+                        @empty
+                            <x-alert class="warning" message="{{ __('knowledgebase.articles_not_found') }}"/>
+                        @endforelse
+                    </div>
+                @endisset
             </div>
         </div>
     </div>

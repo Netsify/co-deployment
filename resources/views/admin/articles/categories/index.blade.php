@@ -2,8 +2,11 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
+        <div class="row">
+            <div class="col col-sm-3">
+                @include('admin.articles.sidebar')
+            </div>
+            <div class="col col-sm-9">
                 <div class="card">
                     <div class="card-header">
                         {{ __('knowledgebase.Categories') }}
@@ -49,9 +52,10 @@
 
                                 <select name="parent_category" class="form-select @error('parent_category') is-invalid @enderror">
                                     <option hidden></option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('parent_category') ?? $category) === $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                    @foreach($parentCategories as $parentCategory)
+                                        <option value="{{ $parentCategory->id }}"
+                                            {{ (old('parent_category') ?? $parentCategory) === $parentCategory->id ? 'selected' : '' }}>
+                                            {{ $parentCategory->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -64,24 +68,24 @@
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.AddNew') }}</button>
                         </form>
 
-                        <table class="table mt-5">
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ __('knowledgebase.Title') }}</th>
-                                    <th scope="col">{{ __('knowledgebase.CategoryParent') }}</th>
-                                    <th scope="col">{{ __('knowledgebase.ArticlesCount') }}</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
+                        <form method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <table class="table mt-5">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{{ __('knowledgebase.Title') }}</th>
+                                        <th scope="col">{{ __('knowledgebase.CategoryParent') }}</th>
+                                        <th scope="col">{{ __('knowledgebase.ArticlesCount') }}</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                <form method="POST">
-                                    @method('DELETE')
-                                    @csrf
+                                <tbody>
                                     @foreach($categories as $category)
                                         <tr>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ $category->parent->name ?? '' }}</td>
+                                            <td>{{ $category->parent->name ?? null }}</td>
                                             <td>{{ $category->articles->count() }}</td>
                                             <td>
                                                 <button type="submit" class="btn btn-danger btn-sm"
@@ -91,10 +95,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </form>
-                            </tbody>
-                        </table>
-
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
