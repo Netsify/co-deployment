@@ -27,9 +27,10 @@ class ComposerServiceProvider extends ServiceProvider
     {
         $categories = Category::query()
             ->with(['articles' => fn($q) => $q->published(),
+                    'translations',
                     'children.translations',
                     'children.articles' => fn($q) => $q->published()])
-            ->orderByTranslation('id')
+            ->whereNull('parent_id')
             ->get();
 
         View::composer('knowledgebase.categories.sidebar', fn($view) => $view->with(['categories' => $categories]));
