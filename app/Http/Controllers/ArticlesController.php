@@ -53,7 +53,9 @@ class ArticlesController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        return view('knowledgebase.categories.index', compact('articles', 'category'));
+        $title = $category->name;
+
+        return view('knowledgebase.categories.index', compact('articles', 'title'));
     }
 
     /**
@@ -82,7 +84,8 @@ class ArticlesController extends Controller
 
         $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
         if ($knowledgeBaseService->createArticle($request->get('tag'), $request->file('files'))) {
-            return redirect()->route('home');
+            Session::flash('success', __('knowledgebase.success_create_message'));
+            return redirect()->route('articles.my');
         }
 
         Session::flash('error', __('knowledgebase.errors.store'));
@@ -157,7 +160,7 @@ class ArticlesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article, $routeBack = false)
-    {
+        {
         $category_id = $article->category_id;
         $article->published = null;
         try {
@@ -261,5 +264,14 @@ class ArticlesController extends Controller
         }
 
         return view('knowledgebase.search', $vars);
+    }
+
+    public function my()
+    {
+        $articles = Auth::user()->articles()->published()->orderByDesc('created_at')->get();
+
+        $title = __('knowledgebase.my');
+
+        return view('knowledgebase.categories.index', compact('articles', 'title'));
     }
 }

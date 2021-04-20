@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', \App\Http\Controllers\ProfileController::class)
         ->only('index', 'edit', 'update');
 
+    Route::get('/articles/my', [\App\Http\Controllers\ArticlesController::class, 'my'])->name('articles.my');
+
     Route::delete('/articles/{article}/file/{file}/delete', [\App\Http\Controllers\Admin\ArticlesController::class, 'deleteFile'])
         ->name('articles.delete_file');
 

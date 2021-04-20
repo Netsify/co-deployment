@@ -35,6 +35,7 @@ return [
 
     'KB'                         => "Knowledge base",
     'last_added_articles'        => "Last added articles in knowledgebase",
+    'my' => "My articles",
     'new_article'                => "New article",
     'no_chosen_tags'             => "No one tag is chosen",
     'Optional'                   => "(optional)",
@@ -46,6 +47,7 @@ return [
     'Search'                     => "Search",
     'SelectCategory'             => "Select a category",
     'SelectTags'                 => "Select tags",
+    'success_create_message' => "Your article is successfully created and will be published after the checking by admin",
     'Tag'                        => "Tag",
     'Title'                      => "Title",
     'TitleEn'                    => "Title (English)",

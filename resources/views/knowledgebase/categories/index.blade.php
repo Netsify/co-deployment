@@ -7,6 +7,11 @@
                 @include('knowledgebase.categories.sidebar')
             </div>
             <div class="col col-sm-9">
+                <h3>{{ $title }}</h3>
+                @if(session()->has('success'))
+                    <x-alert class="success" message="{{ session()->get('success') }}"/>
+                @endif
+
                 @forelse($articles as $article)
                     <div class="card">
                         <div class="card-header">

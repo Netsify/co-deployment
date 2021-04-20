@@ -42,6 +42,12 @@
                                 {{ __('knowledgebase.Articles') }}
                             </a>
                         </li>
+
+                        <li>
+                            <a class="dropdown-item" href="{{ route('articles.my') }}">
+                                {{ __('knowledgebase.my') }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
