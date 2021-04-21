@@ -5,7 +5,7 @@
  * @return string
  */
 function currentRoute() {
-    $url = url()->current();
+    $url = url()->full();
     $url = trim(str_replace(env('APP_URL'), '', $url), '/');
     $segments = explode('/', $url);
 
