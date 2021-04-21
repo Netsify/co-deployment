@@ -104,7 +104,7 @@ class FacilitiesCalcService
          * Выбрано в зависимости от типа объекта инфраструктуры с которым оценивается объект типа IT
          */
         $sep_group_name = $this->road_railway_electricity_other_facility->type->slug;
-        $sep_group = $this->variables_groups->where('slug', 'var_' . $sep_group_name)->first();
+//        $sep_group = $this->variables_groups->where('slug', 'var_' . $sep_group_name)->first();
         $sep_group_name = ucfirst($sep_group_name);
 
         /*
@@ -315,11 +315,11 @@ class FacilitiesCalcService
         $capex_it_sep += $Permits_Taxes;
 
         //Затраты, связанные с получением разрешения на использование радиочастотного ресурса (при необходимости)
-        $Permits_Spectrum = 0; //IT.Permits.Spectrum
+        $Permits_Spectrum = $this->getValueOfVariable('IT.Permits.Spectrum');
         $capex_it_sep += $Permits_Spectrum;
 
         //Затраты на получение разрешения на доступ и строительные работы вдоль дорожного полотна, на временное перекрытие дороги  и т.п.
-        $Permits_Access = 0; //IT.Permits.Access
+        $Permits_Access = $this->getValueOfVariable('IT.Permits.Access');
         $capex_it_sep += $Permits_Access;
 
         //IT - DIRECT GROUP
