@@ -22,7 +22,7 @@
                     <div class="card-body">
                         @foreach($groups as $group)
                             <h5>{{ $group->getTitle() }}</h5>
-                            <table class="table table-sm table-bordered">
+                            <table class="table table-sm">
                                 <thead>
                                     <tr>
                                         <th>{{ __('admin_variable.variable_name') }}</th>
@@ -40,7 +40,7 @@
                                         <td>{{ $variable->default_val }} {{ $variable->unit }}</td>
                                         <td>
                                             <a href="{{ route('admin.facilities.variables.edit', $variable) }}"
-                                               class="btn btn-sm btn-success">
+                                               class="btn btn-sm btn-warning">
                                                 {{ __('knowledgebase.Edit') }}
                                             </a>
                                         </td>
