@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <p class="text-muted float-right">{{ $article->user->full_name }}<x-icon-verified
                                     :user="$article->user"></x-icon-verified></p>
-                            <p>{{ $article->preview  }}</p>
+                            <p>{{ $article->preview }}</p>
 
                             <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.view') }}</a>
                         </div>

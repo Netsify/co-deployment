@@ -45,7 +45,7 @@ return [
     'rejected_deleted_articles'  => "Rejected and deleted articles",
     'Save'                       => "Save",
     'Search'                     => "Search",
-    'SelectCategory'             => "Select a category",
+    'SelectCategory'             => "Select Category",
     'SelectTags'                 => "Select tags",
     'success_create_message' => "Your article is successfully created and will be published after the checking by admin",
     'Tag'                        => "Tag",
