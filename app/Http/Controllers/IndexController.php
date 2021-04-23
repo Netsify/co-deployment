@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Storage\UIStore;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {
@@ -14,13 +16,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        /*$articles = Article::published()
-            ->with(['category.translations', 'user'])
-            ->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
+        $ict_image = Storage::url(UIStore::ICT_START_PAGE_IMAGE);
+        $road_image = Storage::url(UIStore::ROAD_START_PAGE_IMAGE);
 
-        return view('index', compact('articles'));*/
-        return view('attention');
+        return view('index', compact('ict_image', 'road_image'));
     }
 }

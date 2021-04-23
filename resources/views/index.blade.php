@@ -2,22 +2,27 @@
 
 @section('content')
     <div class="container">
-        <h4>{{ __('knowledgebase.last_added_articles') }}</h4>
-        @forelse($articles as $article)
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ $article->title }}
-                        <span style="float: right" class="card-subtitle mb-2 text-muted">{{ $article->user->full_name }}</span>
-                    </h5>
-                    <p class="card-text">{{ $article->preview }}...</p>
-                    <a href="{{ route('articles.show', $article) }}" class="card-link">{{ __('knowledgebase.view') }}</a>
-                    <small style="float: right">{{ $article->created_at }}</small>
+        <div class="row">
+            <div class="col col-sm-6">
+                <div class="card bg-dark text-white">
+                    <img src="{{ $ict_image }}" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Last updated 3 mins ago</p>
+                    </div>
                 </div>
             </div>
-            <br>
-        @empty
-            <p>{{ __('knowledgebase.articles_not_found') }}</p>
-        @endforelse
+            <div class="col col-sm-6">
+                <div class="card bg-dark text-white">
+                    <img src="{{ $road_image }}" class="card-img" alt="...">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text">Last updated 3 mins ago</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
