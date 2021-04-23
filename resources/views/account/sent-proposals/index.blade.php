@@ -44,10 +44,12 @@
                                         {{ $proposal->status->name }}
                                     </td>
                                     <td>
+                                        @proposalUnderConsideration($proposal)
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 formaction="{{ route('account.inbox.delete', $proposal) }}">
                                             {{ __('account.delete') }}
                                         </button>
+                                        @endproposalUnderConsideration($proposal)
                                     </td>
                                 </tr>
                             @endforeach
