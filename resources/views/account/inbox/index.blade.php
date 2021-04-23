@@ -13,7 +13,7 @@
                     @csrf
 
                     <table class="table">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">{{ __('account.open') }}</th>
                                 <th scope="col">{{ __('account.sender') }}</th>
@@ -46,10 +46,12 @@
                                         {{ $proposal->status->name }}
                                     </td>
                                     <td>
+                                        @proposalUnderConsideration($proposal)
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 formaction="{{ route('account.inbox.delete', $proposal) }}">
                                             {{ __('account.delete') }}
                                         </button>
+                                        @endproposalUnderConsideration
                                     </td>
                                 </tr>
                             @endforeach

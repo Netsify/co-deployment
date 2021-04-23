@@ -12,7 +12,7 @@
                     @method('DELETE')
                     @csrf
                     <table class="table">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">{{ __('account.open') }}</th>
                                 <th scope="col">{{ __('account.receiver') }}</th>
@@ -49,7 +49,7 @@
                                                 formaction="{{ route('account.inbox.delete', $proposal) }}">
                                             {{ __('account.delete') }}
                                         </button>
-                                        @endproposalUnderConsideration($proposal)
+                                        @endproposalUnderConsideration
                                     </td>
                                 </tr>
                             @endforeach
