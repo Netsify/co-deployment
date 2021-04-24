@@ -61,6 +61,26 @@ class User extends Authenticatable
     const ICON_VERIFIED = 'icons/verified.jpg';
 
     /**
+     * Путь до иконки пользователя в профиле
+     */
+    const ICON_PROFILE_USER = 'icons/profile/user.jpg';
+
+    /**
+     * Путь до иконки почты в профиле
+     */
+    const ICON_PROFILE_MAIL = 'icons/profile/mail.jpg';
+
+    /**
+     * Путь до иконки телефона в профиле
+     */
+    const ICON_PROFILE_PHONE = 'icons/profile/phone.jpg';
+
+    /**
+     * Путь до иконки адреса в профиле
+     */
+    const ICON_PROFILE_ADDRESS = 'icons/profile/address.jpg';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -113,6 +133,46 @@ class User extends Authenticatable
     public function getVerifiedUrlAttribute(): string
     {
         return Storage::url(self::ICON_VERIFIED);
+    }
+
+    /**
+     * Путь до иконки пользователя в профиле
+     *
+     * @return string
+     */
+    public function getUserIconAttribute(): string
+    {
+        return Storage::url(self::ICON_PROFILE_USER);
+    }
+
+    /**
+     * Путь до иконки почты в профиле
+     *
+     * @return string
+     */
+    public function getMailIconAttribute(): string
+    {
+        return Storage::url(self::ICON_PROFILE_MAIL);
+    }
+
+    /**
+     * Путь до иконки телефона в профиле
+     *
+     * @return string
+     */
+    public function getPhoneIconAttribute(): string
+    {
+        return Storage::url(self::ICON_PROFILE_PHONE);
+    }
+
+    /**
+     * Путь до иконки адреса в профиле
+     *
+     * @return string
+     */
+    public function getAddressIconAttribute(): string
+    {
+        return Storage::url(self::ICON_PROFILE_ADDRESS);
     }
 
     /**
