@@ -18,7 +18,8 @@ class IndexController extends Controller
     {
         $ict_image = Storage::url(UIStore::ICT_START_PAGE_IMAGE);
         $road_image = Storage::url(UIStore::ROAD_START_PAGE_IMAGE);
+        $background = Storage::url(UIStore::BACKGROUND_GREY);
 
-        return view('index', compact('ict_image', 'road_image'));
+        return view('index', compact('ict_image', 'road_image', 'background'));
     }
 }

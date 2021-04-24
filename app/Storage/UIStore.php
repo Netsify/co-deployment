@@ -19,4 +19,9 @@ class UIStore
      * Владельцы инфраструктуры
      */
     const ROAD_START_PAGE_IMAGE = 'assets/road.jpg';
+
+    /**
+     * Серый фон (для надписи)
+     */
+    const BACKGROUND_GREY = 'assets/grey.svg';
 }
