@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Facilities\Facility;
+use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
+use App\Services\FacilitiesCalcService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +20,7 @@ class SentProposalController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index() : View
     {
@@ -52,12 +55,35 @@ class SentProposalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Proposal $proposal
+     * @return View
      */
-    public function show($id)
+    public function show(Proposal $proposal): View
     {
-        //
+        $facilities = $proposal->facilities()
+            ->withTrashed()
+            ->get()
+            ->load('type.translations', 'compatibilityParams.translations', 'user.variables');
+
+        if ($facilities[0]->isDeleted() || $facilities[1]->isDeleted()) {
+            return view('account.sent-proposals.show-d');
+        }
+
+        $ict_facility = $facilities->filter(function (Facility $facility) {
+            return $facility->type->slug == FacilityType::ICT;
+        })->first();
+        $road_railway_electricity_other_facility = $facilities->filter(function (Facility $facility) {
+            return $facility->type->slug != FacilityType::ICT;
+        })->first();
+
+        $facilityCalcService = new FacilitiesCalcService();
+        $facilityCalcService->setIctFacility($ict_facility);
+        $facilityCalcService->setRoadRailwayElectrycityOtherFacility($road_railway_electricity_other_facility);
+        $economic_efficiency = $facilityCalcService->getEconomicEfficiency();
+        $c_level = $facilityCalcService->getCompatibilityLevel();
+
+        return view('account.sent-proposals.show',
+            compact('proposal', 'facilities', 'c_level', 'economic_efficiency'));
     }
 
     /**
@@ -92,11 +118,19 @@ class SentProposalController extends Controller
     public function destroy(Proposal $proposal): RedirectResponse
     {
         try {
-            $proposal->delete();
+            if ($proposal->delete() === true) {
+                $proposal->deleted_by_user_id = Auth::user()->id;
+
+                $proposal->save() === true
+                    ? Session::flash('message', __('account.proposal_deleted'))
+                    : throw new \Exception('Не сохранен пользователь (отправитель) удаливший предложение');
+            } else {
+                throw new \Exception('Не удалось удалить предложение отправителем');
+            }
         } catch (\Exception $e) {
             Session::flash('error', __('account.errors.deleteProposal'));
 
-            Log::error("Не удалось удалить предложение отправителем", [
+            Log::error("Проблемы с удалением предложения отправителем", [
                 'message'  => $e->getMessage(),
                 'code'     => $e->getCode(),
                 'trace'    => $e->getTrace(),

@@ -131,13 +131,19 @@ class InboxController extends Controller
     public function destroy(Proposal $proposal): RedirectResponse
     {
         try {
-            $proposal->delete();
-            $proposal->deleted_at_by_receiver = Carbon::now();
-            $proposal->save();
+            if ($proposal->delete() === true) {
+                $proposal->deleted_by_user_id = Auth::user()->id;
+
+                $proposal->save() === true
+                    ? Session::flash('message', __('account.proposal_deleted'))
+                    : throw new \Exception('Не сохранен пользователь (получатель) удаливший предложение');
+            } else {
+                throw new \Exception('Не удалось удалить предложение получателем');
+            }
         } catch (\Exception $e) {
             Session::flash('error', __('account.errors.deleteProposal'));
 
-            Log::error("Не удалось удалить предложение получателем", [
+            Log::error("Проблемы с удалением предложения получателем", [
                 'message'  => $e->getMessage(),
                 'code'     => $e->getCode(),
                 'trace'    => $e->getTrace(),

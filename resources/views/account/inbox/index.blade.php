@@ -29,7 +29,8 @@
                                 <tr>
                                     <td>
                                         <a href="{{ route('account.inbox.show', $proposal) }}"
-                                           class="btn btn-sm btn-info">{{ __('account.open') }}</a>
+                                           class="btn btn-sm btn-info">{{ __('account.open') }}
+                                        </a>
                                     </td>
                                     <td>
                                         {{ $proposal->sender->full_name }}

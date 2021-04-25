@@ -30,9 +30,11 @@
     @include('layouts.navbar')
 
     <main class="py-4">
-        @if(session()->has('error'))
-            <x-alert class="danger" :message="session()->get('error')"/>
-        @endif
+        <div class="container">
+            @if (session()->has('error'))
+                <x-alert class="danger" :message="session()->get('error')"/>
+            @endif
+        </div>
 
         @yield('content')
     </main>
