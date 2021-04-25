@@ -51,8 +51,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
-                                    for="first_name" class="col-form-label">{{ __('dictionary.FirstName') }}</label>
+                                <label for="first_name" class="col-form-label">{{ __('dictionary.FirstName') }}</label>
                                 <input type="text" name="first_name"
                                        class="form-control @error('first_name') is-invalid @enderror"
                                        value="{{ old('first_name') ?? $user->first_name }}">
@@ -65,8 +64,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
-                                    for="last_name" class="col-form-label">{{ __('dictionary.LastName') }}</label>
+                                <label for="last_name" class="col-form-label">{{ __('dictionary.LastName') }}</label>
                                 <input type="text" name="last_name"
                                        class="form-control @error('last_name') is-invalid @enderror"
                                        value="{{ old('last_name') ?? $user->last_name }}">

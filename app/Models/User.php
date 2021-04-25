@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use App\Models\Variables\Variable;
+use App\Storage\UIStore;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,36 +50,6 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
-    /**
-     * Путь до фото профиля по умолчанию
-     */
-    const DEFAULT_PHOTO = 'photo/default.svg';
-
-    /**
-     * Путь до иконки подтверждено
-     */
-    const ICON_VERIFIED = 'icons/verified.jpg';
-
-    /**
-     * Путь до иконки пользователя в профиле
-     */
-    const ICON_PROFILE_USER = 'icons/profile/user.jpg';
-
-    /**
-     * Путь до иконки почты в профиле
-     */
-    const ICON_PROFILE_MAIL = 'icons/profile/mail.jpg';
-
-    /**
-     * Путь до иконки телефона в профиле
-     */
-    const ICON_PROFILE_PHONE = 'icons/profile/phone.jpg';
-
-    /**
-     * Путь до иконки адреса в профиле
-     */
-    const ICON_PROFILE_ADDRESS = 'icons/profile/address.jpg';
 
     /**
      * The attributes that are mass assignable.
@@ -132,7 +103,7 @@ class User extends Authenticatable
      */
     public function getVerifiedUrlAttribute(): string
     {
-        return Storage::url(self::ICON_VERIFIED);
+        return Storage::url(UIStore::ICON_VERIFIED);
     }
 
     /**
@@ -142,7 +113,7 @@ class User extends Authenticatable
      */
     public function getUserIconAttribute(): string
     {
-        return Storage::url(self::ICON_PROFILE_USER);
+        return Storage::url(UIStore::ICON_PROFILE_USER);
     }
 
     /**
@@ -152,7 +123,7 @@ class User extends Authenticatable
      */
     public function getMailIconAttribute(): string
     {
-        return Storage::url(self::ICON_PROFILE_MAIL);
+        return Storage::url(UIStore::ICON_PROFILE_MAIL);
     }
 
     /**
@@ -162,7 +133,7 @@ class User extends Authenticatable
      */
     public function getPhoneIconAttribute(): string
     {
-        return Storage::url(self::ICON_PROFILE_PHONE);
+        return Storage::url(UIStore::ICON_PROFILE_PHONE);
     }
 
     /**
@@ -172,7 +143,7 @@ class User extends Authenticatable
      */
     public function getAddressIconAttribute(): string
     {
-        return Storage::url(self::ICON_PROFILE_ADDRESS);
+        return Storage::url(UIStore::ICON_PROFILE_ADDRESS);
     }
 
     /**
@@ -192,7 +163,7 @@ class User extends Authenticatable
      */
     public function getPhotoAttribute(): string
     {
-        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
+        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(UIStore::DEFAULT_PHOTO);
     }
 
     /**
