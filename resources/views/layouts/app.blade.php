@@ -20,7 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap5.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/table.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('css/table.css') }}" rel="stylesheet">--}}
     <link rel="stylesheet" href="{{ asset('css/icons.css') }}">
     @yield('styles')
 

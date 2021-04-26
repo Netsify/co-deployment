@@ -91,41 +91,51 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
-                                <span class="icon-profile" style="font-size: 30px"></span>
+                                <span class="icon-profile"></span>
                                 {{ __('account.profile') }}
                             </a>
 
                             @roleRoadOrICT()
                             <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
+                                <span class="icon-facilities"></span>
                                 {{ __('facility.facilities') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.projects.index') }}">
+                                <span class="icon-projects"></span>
                                 {{ __('account.projects') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.inbox.index') }}">
+                                <span class="icon-inbox"></span>
                                 {{ __('account.inbox') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.sent-proposals.index') }}">
+                                <span class="icon-sent"></span>
                                 {{ __('account.sent_proposals') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.variables.index') }}">
+                                <span class="icon-variables"></span>
                                 {{ __('account.economic_variables') }}
                             </a>
                             @endroleRoadOrICT
 
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('dictionary.Logout') }}
-                            </a>
+                            <hr class="dropdown-divider">
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-flex">
-                                @csrf
-                            </form>
+                            <div style="float: right">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    <span class="icon-exit"></span>
+                                    {{ __('dictionary.Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-flex">
+                                    @csrf
+                                </form>
+                            </div>
                         </div>
                     </li>
                 @endguest
