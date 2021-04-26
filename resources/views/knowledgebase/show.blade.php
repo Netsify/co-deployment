@@ -4,6 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
+                @if(session()->has('success'))
+                    <x-alert class="success" message="{{ session()->get('success') }}"/>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         {{ $article->title }}
