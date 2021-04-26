@@ -91,6 +91,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
+                                <span class="icon-profile" style="font-size: 30px"></span>
                                 {{ __('account.profile') }}
                             </a>
 
