@@ -1,5 +1,9 @@
 @extends('layouts.app-vue')
 
+@section('styles')
+    <link href="{{ asset('css/table.css') }}" rel="stylesheet">
+@endsection
+
 @section('vue-content')
     <div class="container">
         <div class="card">
