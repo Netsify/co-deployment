@@ -38,20 +38,20 @@ class UIStore
     /**
      * Путь до иконки пользователя в профиле
      */
-    const ICON_PROFILE_USER = 'icons/profile/user.jpg';
+    const ICON_PROFILE_USER = 'assets/icons/profile/user.jpg';
 
     /**
      * Путь до иконки почты в профиле
      */
-    const ICON_PROFILE_MAIL = 'icons/profile/mail.jpg';
+    const ICON_PROFILE_MAIL = 'assets/icons/profile/mail.jpg';
 
     /**
      * Путь до иконки телефона в профиле
      */
-    const ICON_PROFILE_PHONE = 'icons/profile/phone.jpg';
+    const ICON_PROFILE_PHONE = 'assets/icons/profile/phone.jpg';
 
     /**
      * Путь до иконки адреса в профиле
      */
-    const ICON_PROFILE_ADDRESS = 'icons/profile/address.jpg';
+    const ICON_PROFILE_ADDRESS = 'assets/icons/profile/address.jpg';
 }

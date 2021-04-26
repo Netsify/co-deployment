@@ -163,7 +163,7 @@ class User extends Authenticatable
      */
     public function getPhotoAttribute(): string
     {
-        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(UIStore::DEFAULT_PHOTO);
+        return Storage::url($this->photo_path ?? UIStore::DEFAULT_PHOTO);
     }
 
     /**
