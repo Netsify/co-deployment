@@ -33,8 +33,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
-                                    for="first_name">{{ __('dictionary.FirstName') }}</label>
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label for="first_name">
+                                    {{ __('dictionary.FirstName') }}</label>
                             </div>
 
                             <div class="col-sm-8">
@@ -44,8 +44,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
-                                    for="last_name">{{ __('dictionary.LastName') }}</label>
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label for="last_name">
+                                    {{ __('dictionary.LastName') }}</label>
                             </div>
 
                             <div class="col-sm-8">
@@ -55,8 +55,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
-                                    for="role">{{ __('dictionary.Role') }}</label>
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label for="role">
+                                    {{ __('dictionary.Role') }}</label>
                             </div>
 
                             <div class="col-sm-8">
@@ -66,8 +66,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->phone_icon }}" height="30"><label
-                                    for="phone">{{ __('dictionary.Phone') }}</label>
+                                <img alt="user_icon" src="{{ $user->phone_icon }}" height="30"><label for="phone">
+                                    {{ __('dictionary.Phone') }}</label>
                             </div>
 
                             <div class="col-sm-8">
@@ -77,8 +77,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->mail_icon }}" height="30"><label
-                                    for="email">{{ __('dictionary.Email') }}</label>
+                                <img alt="user_icon" src="{{ $user->mail_icon }}" height="30"><label for="email">
+                                    {{ __('dictionary.Email') }}</label>
                             </div>
 
                             <div class="col-sm-8">
@@ -88,8 +88,8 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-4">
-                                <img alt="user_icon" src="{{ $user->address_icon }}" height="30"><label
-                                    for="organization">{{ __('dictionary.Organization') }}</label>
+                                <img alt="user_icon" src="{{ $user->address_icon }}" height="30"><label for="organization">
+                                    {{ __('dictionary.Organization') }}</label>
                             </div>
 
                             <div class="col-sm-8">
