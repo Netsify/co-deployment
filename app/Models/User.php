@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use App\Models\Variables\Variable;
+use App\Storage\UIStore;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,16 +50,6 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
-    /**
-     * Путь до фото профиля по умолчанию
-     */
-    const DEFAULT_PHOTO = 'photo/default.svg';
-
-    /**
-     * Путь до иконки подтверждено
-     */
-    const ICON_VERIFIED = 'icons/verified.jpg';
 
     /**
      * The attributes that are mass assignable.
@@ -112,7 +103,47 @@ class User extends Authenticatable
      */
     public function getVerifiedUrlAttribute(): string
     {
-        return Storage::url(self::ICON_VERIFIED);
+        return Storage::url(UIStore::ICON_VERIFIED);
+    }
+
+    /**
+     * Путь до иконки пользователя в профиле
+     *
+     * @return string
+     */
+    public function getUserIconAttribute(): string
+    {
+        return Storage::url(UIStore::ICON_PROFILE_USER);
+    }
+
+    /**
+     * Путь до иконки почты в профиле
+     *
+     * @return string
+     */
+    public function getMailIconAttribute(): string
+    {
+        return Storage::url(UIStore::ICON_PROFILE_MAIL);
+    }
+
+    /**
+     * Путь до иконки телефона в профиле
+     *
+     * @return string
+     */
+    public function getPhoneIconAttribute(): string
+    {
+        return Storage::url(UIStore::ICON_PROFILE_PHONE);
+    }
+
+    /**
+     * Путь до иконки адреса в профиле
+     *
+     * @return string
+     */
+    public function getAddressIconAttribute(): string
+    {
+        return Storage::url(UIStore::ICON_PROFILE_ADDRESS);
     }
 
     /**
@@ -132,7 +163,7 @@ class User extends Authenticatable
      */
     public function getPhotoAttribute(): string
     {
-        return $this->photo_path ? Storage::url($this->photo_path) : Storage::url(self::DEFAULT_PHOTO);
+        return Storage::url($this->photo_path ?? UIStore::DEFAULT_PHOTO);
     }
 
     /**

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/label.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -18,53 +22,90 @@
 
                     <div class="card-body">
                         <div class="row mb-3">
-                            <label for="photo" class="col-sm-3">{{ __('dictionary.Photo') }}</label>
+                            <div class="col-sm-4" style="margin-left: 30px; margin-right: -30px">
+                                <label for="photo" class="col-sm-3">{{ __('dictionary.Photo') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">
-                                <img src="{{ $user->photo }}" height="200">
+                            <div class="col-sm-8">
+                                <img alt="user_photo" src="{{ $user->photo }}" height="200">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="first_name" class="col-sm-3">{{ __('dictionary.FirstName') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
+                                    for="first_name" class="col-sm-4">{{ __('dictionary.FirstName') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->first_name }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->first_name }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="last_name" class="col-sm-3">{{ __('dictionary.LastName') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
+                                    for="last_name" class="col-sm-4">{{ __('dictionary.LastName') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->last_name }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->last_name }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="role" class="col-sm-3">{{ __('dictionary.Role') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->user_icon }}" height="30"><label
+                                    for="role" class="col-sm-4">{{ __('dictionary.Role') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->role->name }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->role->name }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="phone" class="col-sm-3">{{ __('dictionary.Phone') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->phone_icon }}" height="30"><label
+                                    for="phone" class="col-sm-4">{{ __('dictionary.Phone') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->phone }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->phone }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-sm-3">{{ __('dictionary.Email') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->mail_icon }}" height="30"><label
+                                    for="email" class="col-sm-4">{{ __('dictionary.Email') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->email }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->email }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="organization" class="col-sm-3">{{ __('dictionary.Organization') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->address_icon }}" height="30"><label
+                                    for="organization" class="col-sm-4">{{ __('dictionary.Organization') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->organization }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->organization }}
+                            </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="summary" class="col-sm-3">{{ __('dictionary.Summary') }}</label>
+                            <div class="col-sm-4">
+                                <img alt="user_icon" src="{{ $user->address_icon }}" height="30"><label
+                                    for="summary" class="col-sm-6">{{ __('dictionary.Summary') }}</label>
+                            </div>
 
-                            <div class="col-sm-9">{{ $user->summary }}</div>
+                            <div class="col-sm-8">
+                                {{ $user->summary }}
+                            </div>
                         </div>
                     </div>
                 </div>
