@@ -49,7 +49,8 @@ class ArticlesController extends Controller
     {
         $articles = Article::published()
             ->with(['tags.translations', 'user', 'category'])
-            ->whereHas('category', fn($q) => $q->where('id', $category->id))
+            ->whereHas('category', fn($q) => $q->where('id', $category->id)
+                                               ->orWhere('parent_id', $category->id))
             ->orderByDesc('created_at')
             ->get();
 

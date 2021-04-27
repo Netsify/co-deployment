@@ -37,7 +37,7 @@ class ProfileRequest extends FormRequest
             'first_name'        => ['required', 'string:255'],
             'last_name'         => ['required', 'string:255'],
             'role_id'           => $role,
-            'phone'             => ['nullable', 'integer'],
+            'phone'             => ['nullable', 'numeric', 'min:4'],
             'email'             => ['required', 'string:255', 'email', Rule::unique('users')->ignore($this->user())],
             'password'          => ['nullable', 'string', 'min:8', 'confirmed'],
             'organization'      => ['nullable', 'string:255'],

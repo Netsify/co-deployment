@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::query()
+        $categories = Category::withCount('childArticles')
             ->with(['articles' => fn($q) => $q->published(),
                     'translations',
                     'children.translations',
