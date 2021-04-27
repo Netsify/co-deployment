@@ -116,6 +116,15 @@
         </div>
         <hr>--}}
 
+        <div class="row mb-3">
+            <div class="col">
+                <h2 class="text-center">{{ __('dictionary.inform_portal') }}</h2>
+                <br>
+                <h5 class="text-center">{{ __('dictionary.motto1') }}</h5>
+                <h5 class="text-center">{{ __('dictionary.motto2') }}</h5>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col col-sm-6">
                 <div class="card bg-dark text-white">
