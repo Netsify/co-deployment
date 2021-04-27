@@ -131,6 +131,8 @@ class ArticlesController extends Controller
      *
      * @param  ArticleRequest  $request
      * @param  \App\Models\Article  $article
+     * @param null|string $route
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(ArticleRequest $request, Article $article)
@@ -145,7 +147,9 @@ class ArticlesController extends Controller
 
         $knowledgeBaseService = new KnowledgeBaseService($article, Auth::user());
         if ($knowledgeBaseService->updateArticle($request->get('tag'), $request->file('files'))) {
-            return redirect()->route('home');
+            Session::flash('success', __('knowledgebase.success_update_message'));
+
+            return redirect()->route('articles.show', $article);
         }
 
         Session::flash('error', __('knowledgebase.errors.update'));
