@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProposalRequest;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\Proposal;
 use App\Models\Facilities\ProposalStatus;
@@ -12,9 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 /**
  * Контроллер для работы с предложениями
@@ -33,7 +32,7 @@ class ProposalController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function send(Facility $f_of_sender, Facility $f_of_receiver, Request $request)
+    public function send(Facility $f_of_sender, Facility $f_of_receiver, ProposalRequest $request)
     {
         $validated = $this->validator($request->except('_token'))->validate();
         $proposal = new Proposal();
@@ -53,19 +52,6 @@ class ProposalController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * Валидация запроса
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'description' => ['required', 'max:1000']
-        ]);
     }
 
     /**

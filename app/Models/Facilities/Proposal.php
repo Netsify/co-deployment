@@ -22,7 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $status_id                  - ИД статуса предложения
  * @property boolean $accepted               - статус
  * @property string $description             - описание и детали
- * @property Carbon $deleted_by_user_id      - кем удалено предложение
+ * @property Carbon $deleted_at
+ * @property int $deleted_by_user_id         - кем удалено предложение
  * @property File[] $files                   - Файлы, прикреплённые к предложению о сотрудничестве
  * @property Facility[] $facilities          - Объекты
  *

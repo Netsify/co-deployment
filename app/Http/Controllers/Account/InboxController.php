@@ -6,62 +6,57 @@ use App\Http\Controllers\Controller;
 use App\Models\Facilities\Facility;
 use App\Models\Facilities\FacilityType;
 use App\Models\Facilities\Proposal;
-use App\Models\Facilities\ProposalStatus;
 use App\Services\FacilitiesCalcService;
-use App\Services\FacilitiesService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
+/**
+ * Контроллер для работы с предложениями
+ *
+ * Class ProposalController
+ * @package App\Http\Controllers
+ */
 class InboxController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Отображение отправленных предложений
      *
      * @return View
      */
-    public function index() : View
+    public function sent() : View
+    {
+        $proposals = Proposal::with('receiver', 'sender', 'facilities')
+            ->where('sender_id', Auth::user()->id)
+            ->get();
+
+        return view('account.sent-proposals.index', compact('proposals'));
+    }
+
+    /**
+     * Отображение входящих предложений
+     *
+     * @return View
+     */
+    public function inbox() : View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('receiver_id', Auth::user()->id)
             ->get();
 
-
         return view('account.inbox.index', compact('proposals'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Proposal $proposal
-     * @return \Illuminate\Http\Response
+     * @param Proposal $proposal
+     * @return View
      */
-    public function show(Proposal $proposal)
+    public function show(Proposal $proposal): View
     {
         $facilities = $proposal->facilities()
             ->withTrashed()
@@ -90,39 +85,6 @@ class InboxController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param $status
-     * @param Proposal $proposal
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Proposal $proposal, $status)
-    {
-//        $proposal->status_id = $status;
-
-//        if ($proposal->save()) {
-//            session()->flash('message', __('account.ProposalSaved'));
-//        } else {
-//            session()->flash('message', __('account.ProposalNotSaved'));
-//
-//            Log::error('Не удалось обновить статус предложения', compact('proposal'));
-//        }
-
-//        return response()->json(['success' => true],200);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param Proposal $proposal
@@ -131,19 +93,16 @@ class InboxController extends Controller
     public function destroy(Proposal $proposal): RedirectResponse
     {
         try {
-            if ($proposal->delete() === true) {
-                $proposal->deleted_by_user_id = Auth::user()->id;
+            $proposal->deleted_at = Carbon::now();
+            $proposal->deleted_by_user_id = Auth::user()->id;
 
-                $proposal->save() === true
-                    ? Session::flash('message', __('account.proposal_deleted'))
-                    : throw new \Exception('Не сохранен пользователь (получатель) удаливший предложение');
-            } else {
-                throw new \Exception('Не удалось удалить предложение получателем');
-            }
+            $proposal->save() === true
+                ? Session::flash('message', __('account.proposal_deleted'))
+                : throw new \Exception('Не cохранились поля deleted_at, deleted_by_user_id');
         } catch (\Exception $e) {
             Session::flash('error', __('account.errors.deleteProposal'));
 
-            Log::error("Проблемы с удалением предложения получателем", [
+            Log::error('Не удалось удалить предложение', [
                 'message'  => $e->getMessage(),
                 'code'     => $e->getCode(),
                 'trace'    => $e->getTrace(),
