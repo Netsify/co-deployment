@@ -127,8 +127,6 @@ Route::middleware('auth')->group(function () {
          * Роуты для работы с объектами инфраструктуры
          */
         Route::prefix('facilities')->name('facilities.')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\FacilitiesController::class, 'index'])->name('index');
-
             /**
              * Роуты для работы с параметрами соместимости объектов
              */
