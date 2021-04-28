@@ -96,9 +96,7 @@ class Article extends Model
      */
     public function getPreviewAttribute(): string
     {
-        $preview = preg_split('/[?!.]/', $this->content);
-
-        return strip_tags(reset($preview));
+        return strip_tags(preg_replace('/^(.*?)([!?.])(.*?)$/s','\\1\\2', $this->content));
     }
 
     /**
