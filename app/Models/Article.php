@@ -86,17 +86,19 @@ class Article extends Model
      */
     public function files() : MorphMany
     {
-        return $this->MorphMany(File::class, 'fileable');
+        return $this->morphMany(File::class, 'fileable');
     }
 
     /**
-     * Превью статьи
+     * Превью статьи по первому предложению
+     *
      * @return string
      */
-    public function getPreviewAttribute()
+    public function getPreviewAttribute(): string
     {
-        $preview =trim(strip_tags(str_replace($this->special_chars, ' ', $this->content)));
-        return mb_substr($preview, 0, 50, 'UTF-8');
+        $preview = preg_split('/[?!.]/', $this->content);
+
+        return strip_tags(reset($preview));
     }
 
     /**

@@ -70,7 +70,7 @@
                                     <h5 class="card-title">{{ $article->title }}</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p>{{ $article->preview  }}</p>
+                                    <p>{!! $article->preview !!}</p>
 
                                     <a href="{{ route('articles.show', $article) }}"
                                        class="card-link">{{ __('knowledgebase.view') }}</a>
