@@ -3,6 +3,7 @@
         <a class="navbar-brand" href="https://www.unescap.org/" target="_blank">
             <img src="{{ $unescap_logo }}" alt="unescap" height="40" class="d-inline-block align-text-top">
         </a>
+        <div class="vertical-line"></div>
         <a class="navbar-brand" href="{{ route('main') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
@@ -88,7 +89,8 @@
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
-                            {{ Auth::user()->full_name }}<x-icon-verified :user="auth()->user()"></x-icon-verified>
+                            {{ Auth::user()->full_name }}
+                            <x-icon-verified :user="auth()->user()"></x-icon-verified>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

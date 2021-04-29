@@ -1,0 +1,7 @@
+div.vertical-line {
+    border-left: 1px solid black;
+    height: 60px;
+    position: relative;
+    margin-right: 10px;
+    margin-left:  -3px;
+}
