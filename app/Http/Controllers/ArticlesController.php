@@ -49,8 +49,8 @@ class ArticlesController extends Controller
     {
         $articles = Article::published()
             ->with(['tags.translations', 'user', 'category'])
-            ->whereHas('category', fn($q) => $q->where('id', $category->id))
-            ->orderByDesc('created_at')
+            ->whereHas('category', fn($q) => $q->where('id', $category->id)->orWhere('parent_id', $category->id))
+            ->latest()
             ->get();
 
         $title = $category->name;
@@ -103,7 +103,9 @@ class ArticlesController extends Controller
     {
         $article->load('tags.translations');
 
-        return view('knowledgebase.show', compact('article', 'fromAdminPanel'));
+        $tags = __('knowledgebase.Tags') . $article->tags->pluck('name')->implode(', ');
+
+        return view('knowledgebase.show', compact('article', 'fromAdminPanel', 'tags'));
     }
 
     /**
@@ -243,7 +245,7 @@ class ArticlesController extends Controller
         $vars = compact('categories', 'tags');
 
         if ($request->hasAny(['content', 'category', 'tag'])) {
-            $articles = Article::query();
+            $articles = Article::published();
 
             if ($request->filled('content')) {
                 $articles->where(fn($q) => $q

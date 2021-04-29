@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\View\Components\DeleteButtton;
+use App\View\Components\DeleteButton;
 use App\View\Components\Facilities\FacilityPreview;
 use App\View\Components\Facilities\ProposalActionButton;
 use App\View\Components\Facilities\ProposalForm;
@@ -29,7 +29,7 @@ class ComponentsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::component(DeleteButtton::class, 'delete-button');
+        Blade::component(DeleteButton::class, 'delete-button');
         Blade::component(InvalidFeedback::class, 'invalid-feedback');
         Blade::component(ProposalForm::class, 'proposal-form');
         Blade::component(ProposalActionButton::class, 'proposal-action-button');
