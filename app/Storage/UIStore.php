@@ -54,4 +54,6 @@ class UIStore
      * Путь до иконки адреса в профиле
      */
     const ICON_PROFILE_ADDRESS = 'assets/icons/profile/address.jpg';
+
+    const UNESCAP_LOGO = 'assets/unescap.png';
 }

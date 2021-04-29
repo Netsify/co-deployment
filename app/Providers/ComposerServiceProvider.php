@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Storage\UIStore;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -43,5 +44,9 @@ class ComposerServiceProvider extends ServiceProvider
         }
 
         View::composer('knowledgebase.categories.sidebar', fn($view) => $view->with(['categories' => $categories]));
+
+        View::composer('layouts.navbar',  fn($view) => $view->with([
+            'unescap_logo' => asset(UIStore::UNESCAP_LOGO)
+        ]));
     }
 }

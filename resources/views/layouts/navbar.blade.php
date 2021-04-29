@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
+        <a class="navbar-brand" href="https://www.unescap.org/" target="_blank">
+            <img src="{{ $unescap_logo }}" alt="unescap" height="40" class="d-inline-block align-text-top">
+        </a>
         <a class="navbar-brand" href="{{ route('main') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
