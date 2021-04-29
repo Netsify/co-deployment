@@ -10,15 +10,12 @@
                 <div class="card">
                     <div class="card-header">
                         {{ $article->title }}
-                        <div class="btn-group" role="group" style="float: right">
-                            @can('update', $article)
-                                <a href="{{ route(($fromAdminPanel ? 'admin.' : '' ) . 'articles.edit', $article) }}"
-                                   class="btn btn-sm btn-success">{{ __('knowledgebase.Edit') }}</a>
-                            @endcan
-                            @can('delete', $article)
-                                    <x-delete-button :article="$article" route="articles.destroy"/>
-                            @endcan
-                        </div>
+                        @can('update', $article)
+                            <a href="{{ route(($fromAdminPanel ? 'admin.' : '' ) . 'articles.edit', $article) }}"
+                               class="btn btn-sm btn-success" style="float: right">
+                                {{ __('knowledgebase.Edit') }}
+                            </a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         {!! $article->content !!}
@@ -36,7 +33,13 @@
                         @endisset
 
                         <hr>
-                        {{ $article->tags->pluck('name')->implode(', ') }}
+                        <div class="d-flex justify-content-between">
+                            {{ $tags }}
+
+                            @can('delete', $article)
+                                <x-delete-button :article="$article" route="articles.destroy"/>
+                            @endcan
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         {{ $article->category->name }}

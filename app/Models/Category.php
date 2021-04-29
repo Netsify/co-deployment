@@ -82,6 +82,6 @@ class Category extends Model implements TranslatableContract
      */
     public function childrenArticles(): HasManyThrough
     {
-        return $this->hasManyThrough(Article::class,self::class,'parent_id');
+        return $this->hasManyThrough(Article::class, self::class, 'parent_id');
     }
 }

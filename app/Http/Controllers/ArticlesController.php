@@ -103,7 +103,9 @@ class ArticlesController extends Controller
     {
         $article->load('tags.translations');
 
-        return view('knowledgebase.show', compact('article', 'fromAdminPanel'));
+        $tags = __('knowledgebase.Tags') . $article->tags->pluck('name')->implode(', ');
+
+        return view('knowledgebase.show', compact('article', 'fromAdminPanel', 'tags'));
     }
 
     /**

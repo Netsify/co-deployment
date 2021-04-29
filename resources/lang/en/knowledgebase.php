@@ -50,6 +50,7 @@ return [
     'success_create_message' => "The article is successfully created and will be published after the checking by admin",
     'success_update_message' => "The article is successfully edited",
     'Tag'                        => "Tag",
+    'Tags'                       => "Tags: ",
     'Title'                      => "Title",
     'TitleEn'                    => "Title (English)",
     'TitleRu'                    => "Title (Russian)",
