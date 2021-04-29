@@ -98,8 +98,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="col-form-label">{{ __('dictionary.Phone') }}</label>
+                                <label for="phone" class="col-form-label">{{ __('dictionary.phone_format', ['format' => "+XX(XXX)XXX-XX-XX"]) }}</label>
                                 <input type="tel" name="phone"
+                                       pattern="\+[\d]{1,3}\([\d]{3}\)[\d]{3}-[\d]{2}-[\d]{2}"
                                        class="form-control @error('phone') is-invalid @enderror"
                                        value="{{ old('phone') ?? $user->phone }}">
 
