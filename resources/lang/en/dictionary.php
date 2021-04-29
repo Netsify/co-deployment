@@ -42,6 +42,7 @@ return [
     'ProfileSaved'       => "Your profile has been successfully updated!",
     'ProfileNotSaved'    => "Unfortunately, your profile was not updated due to a system error. Please, contact the administrator.",
     'Phone'              => "Phone",
+    'phone_format'       => "Phone (in format :format)",
     'Photo'              => "Photo",
     'Save'               => "Save",
     'Summary'            => "Summary",

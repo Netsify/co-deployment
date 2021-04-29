@@ -37,11 +37,13 @@ class ProfileRequest extends FormRequest
             'first_name'        => ['required', 'string:255'],
             'last_name'         => ['required', 'string:255'],
             'role_id'           => $role,
-            'phone'             => ['nullable', 'numeric', 'min:4'],
+            'phone'             => ['nullable', 'regex:<^\+[\d]{1,3}\([\d]{3}\)[\d]{3}-[\d]{2}-[\d]{2}$>'],
             'email'             => ['required', 'string:255', 'email', Rule::unique('users')->ignore($this->user())],
             'password'          => ['nullable', 'string', 'min:8', 'confirmed'],
             'organization'      => ['nullable', 'string:255'],
             'summary'           => ['nullable', 'string:255'],
         ];
     }
+
+    
 }
