@@ -13,7 +13,7 @@
                         </a>
                     </em>
                     <span class="badge bg-primary rounded-pill">
-                        {{ $category->child_articles_count }}
+                        {{ $category->articles_sum }}
                     </span>
 
                     @categoryHasChildren($category)
@@ -25,7 +25,7 @@
                                             {{ $child->name }}
                                         </a>
                                         <span class="badge bg-primary rounded-pill">
-                                            {{ $child->articles->count() }}
+                                            {{ $child->articles_count }}
                                         </span>
                                     </div>
                                 </li>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,13 +37,6 @@ class Article extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * Спецсимволы которые могут попасться
-     *
-     * @var array
-     */
-    private $special_chars = ['&nbsp;'];
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -52,9 +46,9 @@ class Article extends Model
     /**
      * Пользователь создавший статью
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -62,9 +56,9 @@ class Article extends Model
     /**
      * Теги к статье
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
@@ -74,7 +68,7 @@ class Article extends Model
      *
      * @return BelongsTo
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -96,7 +90,7 @@ class Article extends Model
      */
     public function getPreviewAttribute(): string
     {
-        return strip_tags(preg_replace('/^(.*?)([!?.])(.*?)$/s','\\1\\2', $this->content));
+        return strip_tags(preg_replace('/^(.*?)([!?.])(.*?)$/s', '\\1\\2', $this->content));
     }
 
     /**
