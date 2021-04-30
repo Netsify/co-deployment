@@ -61,11 +61,12 @@ class ArticlesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $categories = Category::query()->orderByTranslation('name')->get();
+
         $tags = Tag::query()->orderByTranslation('name')->get();
 
         return view('knowledgebase.form', compact('categories', 'tags'));
@@ -75,9 +76,9 @@ class ArticlesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  ArticleRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(ArticleRequest $request)
+    public function store(ArticleRequest $request): RedirectResponse
     {
         $article = new Article($request->only(['title', 'content']));
         $article->category_id = $request->get('category');
@@ -96,10 +97,11 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @param Article $article
+     * @param bool $fromAdminPanel
+     * @return View
      */
-    public function show(Article $article, $fromAdminPanel = false)
+    public function show(Article $article, $fromAdminPanel = false): View
     {
         $article->load('tags.translations');
 
@@ -111,10 +113,10 @@ class ArticlesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
+     * @param Article $article
+     * @return View
      */
-    public function edit(Article $article)
+    public function edit(Article $article): View
     {
         if (Auth::user()->cannot('update', $article)) {
             abort(403);
@@ -131,13 +133,11 @@ class ArticlesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  ArticleRequest  $request
-     * @param  \App\Models\Article  $article
-     * @param null|string $route
-     *
-     * @return \Illuminate\Http\Response
+     * @param ArticleRequest $request
+     * @param Article $article
+     * @return RedirectResponse
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, Article $article): RedirectResponse
     {
         if (Auth::user()->cannot('update', $article)) {
             abort(403);
@@ -161,13 +161,14 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param Article $article
      * @param bool $routeBack
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy(Article $article, $routeBack = false)
-        {
+    public function destroy(Article $article, $routeBack = false): RedirectResponse
+    {
         $category_id = $article->category_id;
+
         $article->published = null;
         try {
             if ($article->save()) {
@@ -187,8 +188,8 @@ class ArticlesController extends Controller
                 'article' => $article->toArray()
             ]);
 
-            return redirect()->back();
-        }
+        return redirect()->back();
+    }
 
         if ($routeBack) {
             return redirect()->back();
@@ -250,14 +251,13 @@ class ArticlesController extends Controller
             if ($request->filled('content')) {
                 $articles->where(fn($q) => $q
                     ->where('title', 'LIKE', '%' . $request->input('content') . '%')
-                    ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%')
-                );
+                    ->orWhere('content', 'LIKE', '%' . $request->input('content') . '%'));
             }
 
             if ($request->filled('category')) {
-                $articles->whereHas('category',
-                    fn($q) => $q->where('categories.id', $request->input('category'))
-                );
+                $articles->whereHas('category', fn($q) => $q
+                    ->where('categories.id', $request->input('category'))
+                    ->orWhere('categories.parent_id', $request->input('category')));
             }
 
             if ($request->filled('tag')) {
@@ -272,7 +272,12 @@ class ArticlesController extends Controller
         return view('knowledgebase.search', $vars);
     }
 
-    public function my()
+    /**
+     * Статьи текущего пользователя
+     *
+     * @return View
+     */
+    public function my(): View
     {
         $articles = Auth::user()->articles()->published()->orderByDesc('created_at')->get();
 
