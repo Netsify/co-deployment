@@ -48,5 +48,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('layouts.navbar',  fn($view) => $view->with([
             'unescap_logo' => asset(UIStore::UNESCAP_LOGO)
         ]));
+
+        View::composer('layouts.footer', fn($view) => $view->with([
+            'title' => __('footer.main', ['year' => now()->year])
+        ]));
     }
 }
