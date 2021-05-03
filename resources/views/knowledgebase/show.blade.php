@@ -3,10 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
-                @if(session()->has('success'))
+            <div class="col col-sm-3">
+                @include('knowledgebase.categories.sidebar')
+            </div>
+            <div class="col col-sm-9">
+                @if (session()->has('success'))
                     <x-alert class="success" message="{{ session()->get('success') }}"/>
                 @endif
+
                 <div class="card">
                     <div class="card-header">
                         {{ $article->title }}

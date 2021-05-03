@@ -50,7 +50,8 @@ class ComposerServiceProvider extends ServiceProvider
         ]));
 
         View::composer('layouts.footer', fn($view) => $view->with([
-            'title' => __('footer.main', ['year' => now()->year])
+            'title' => __('footer.main', ['year' => now()->year]),
+            'logo' => asset(UIStore::UNESCAP_LOGO_WHITE)
         ]));
     }
 }

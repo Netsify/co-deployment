@@ -3,7 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col col-sm-3">
+                @include('knowledgebase.categories.sidebar')
+            </div>
+            <div class="col col-sm-9">
                 <div class="card">
                     <div class="card-header">
                         @isset($article)
@@ -14,11 +17,6 @@
                     </div>
 
                     <div class="card-body">
-                        @if(session()->has('error'))
-                            <div class="alert alert-danger" role="alert">
-                                {{ session()->get('error') }}
-                            </div>
-                        @endif
                         <form action="{{ isset($article) ? route('articles.update', $article) : route('articles.store') }}"
                               method="post" enctype="multipart/form-data">
                             @csrf
