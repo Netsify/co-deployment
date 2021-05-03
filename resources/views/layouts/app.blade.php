@@ -23,20 +23,25 @@
 {{--    <link href="{{ asset('css/table.css') }}" rel="stylesheet">--}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
     @yield('styles')
 </head>
 <body>
-<div>
-    @include('layouts.navbar')
+    <div>
+        @include('layouts.navbar')
 
-    <main class="py-4">
-        @if(session()->has('error'))
-            <x-alert class="danger" :message="session()->get('error')"/>
-        @endif
+        <main class="py-4">
+            @if (session()->has('error'))
+                <x-alert class="danger" :message="session('error')"></x-alert>
+            @endif
 
-        @yield('content')
-    </main>
-</div>
-@yield('scripts')
+            @yield('content')
+        </main>
+
+        @include('layouts.footer')
+    </div>
+
+    @yield('scripts')
 </body>
 </html>
