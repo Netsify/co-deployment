@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col col-sm-6">
                 <div class="card bg-dark text-white">
                     <img id="card-img" src="{{ $road_image }}" class="card-img" alt="road_image">
@@ -37,5 +37,10 @@
                 </div>
             </div>
         </div>
+
+        <em>
+            <p style="text-indent: 2em;">{{ __('dictionary.main') }}</p>
+        </em>
+
     </div>
 @endsection

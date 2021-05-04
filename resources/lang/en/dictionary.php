@@ -20,12 +20,19 @@ return [
     'FullName'           => "Full Name",
     'ForgotYourPassword' => "Forgot your password?",
     'ict_operators'      => "Telecommunication operators and providers",
-    'inform_portal' => "Information portal",
+    'inform_portal'      => "Information portal",
     'infrastructure_owners' => "Infrastructure owners",
     'KB'                 => "Knowledge base",
     'Lang'               => "",
     'LastName'           => "Last Name",
     'Logout'             => "Logout",
+    'main'               => "In the framework of the portal, facilitated by the Economic and Social Commission for Asia
+                             and the Pacific (ESCAP), infrastructure owners and their representatives, as well as
+                             potential investors, will be able to find optimal partners for the co-deployment of ICT
+                             with road transport or energy infrastructure, as well as provide information on priority
+                             areas for current investment. The portal services provide access to information on the
+                             basis of equality and transparency, and the search for potential partners is carried out
+                             in compliance with the principle of fair competition.",
     'motto1'             => "Making co-deployment wider",
     'motto2'             => "Improving infrastructure co-deployment today",
     'No'                 => "No",
