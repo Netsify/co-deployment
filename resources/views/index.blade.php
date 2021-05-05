@@ -39,7 +39,7 @@
         </div>
 
         <em>
-            <p style="text-indent: 2em;">{{ __('dictionary.main') }}</p>
+            <p style="text-indent: 2em;">{{ __('dictionary.main_idea') }}</p>
         </em>
 
     </div>

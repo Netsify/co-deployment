@@ -26,7 +26,7 @@ return [
     'Lang'               => "",
     'LastName'           => "Last Name",
     'Logout'             => "Logout",
-    'main'               => "In the framework of the portal, facilitated by the Economic and Social Commission for Asia
+    'main_idea'          => "In the framework of the portal, facilitated by the Economic and Social Commission for Asia
                              and the Pacific (ESCAP), infrastructure owners and their representatives, as well as
                              potential investors, will be able to find optimal partners for the co-deployment of ICT
                              with road transport or energy infrastructure, as well as provide information on priority
