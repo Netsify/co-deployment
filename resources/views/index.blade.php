@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row mb-3">
@@ -11,29 +15,32 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-5">
             <div class="col col-sm-6">
                 <div class="card bg-dark text-white">
-                    <img src="{{ $road_image }}" class="card-img" alt="..." style="opacity: 0.67; height: 390px;">
-                    <div class="card-img-overlay text-center">
-                        <br><br><br><br><br><br><br>
-                        <a  class="btn btn-outline-light" href="{{ route('login') }}">
-                            <h3 class="card-title">{{ __('dictionary.infrastructure_owners') }}</h3>
+                    <img id="card-img" src="{{ $road_image }}" class="card-img" alt="road_image">
+                    <div class="card-img-overlay text-center d-flex align-items-center justify-content-center">
+                        <a id="a-title" class="btn btn-outline-light" href="{{ route('login') }}">
+                            <h1 class="card-title">{{ __('dictionary.infrastructure_owners') }}</h1>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col col-sm-6">
                 <div class="card bg-dark text-white">
-                    <img src="{{ $ict_image }}" class="card-img" alt="..." style="opacity: 0.67; height: 390px;">
-                    <div class="card-img-overlay text-center">
-                        <br><br><br><br><br><br><br>
-                        <a  class="btn btn-outline-light" href="{{ route('login') }}">
-                            <h3 class="card-title">{{ __('dictionary.ict_operators') }}</h3>
+                    <img id="card-img" src="{{ $ict_image }}" class="card-img" alt="ict_image">
+                    <div class="card-img-overlay text-center d-flex align-items-center justify-content-center">
+                        <a id="a-title" class="btn btn-outline-light" href="{{ route('login') }}">
+                            <h1 class="card-title">{{ __('dictionary.ict_operators') }}</h1>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <em>
+            <p style="text-indent: 2em;">{{ __('dictionary.main_idea') }}</p>
+        </em>
+
     </div>
 @endsection

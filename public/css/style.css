@@ -1,7 +1,12 @@
 div.vertical-line {
-    border-left: 1px solid black;
-    height: 60px;
+    border-left: 1px solid lightgrey;
+    height: 65px;
     position: relative;
-    margin-right: 10px;
-    margin-left:  -3px;
+    margin-right: 5px;
+    margin-left: 5px;
+    color: grey;
+}
+
+#logo-img {
+    height: 74px;
 }

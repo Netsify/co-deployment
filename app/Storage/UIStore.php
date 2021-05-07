@@ -55,5 +55,13 @@ class UIStore
      */
     const ICON_PROFILE_ADDRESS = 'assets/icons/profile/address.jpg';
 
+    /**
+     * Путь до иконки лого в навбаре
+     */
     const UNESCAP_LOGO = 'assets/unescap.png';
+
+    /**
+     * Путь до иконки лого в футере
+     */
+    const UNESCAP_LOGO_WHITE = 'assets/footer/ESCAP-logo-master-white.png';
 }

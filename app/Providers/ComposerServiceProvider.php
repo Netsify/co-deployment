@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use App\View\Composers\CategoryComposer;
 use App\Storage\UIStore;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -26,31 +26,15 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::query()
-            ->withCount(['childrenArticles' => fn($q) => $q->published()])
-            ->with(['articles' => fn($q) => $q->published(),
-                    'translations',
-                    'children.translations',
-                    'children.articles' => fn($q) => $q->published()])
-            ->whereNull('parent_id')
-            ->get();
-
-        foreach ($categories as $category) {
-            $category->articles_sum = $category->articles->count() + $category->children_articles_count;
-
-            foreach ($category->children as $child) {
-                $child->articles_count = $child->articles->count();
-            }
-        }
-
-        View::composer('knowledgebase.categories.sidebar', fn($view) => $view->with(['categories' => $categories]));
+        View::composer('knowledgebase.categories.sidebar', CategoryComposer::class);
 
         View::composer('layouts.navbar',  fn($view) => $view->with([
             'unescap_logo' => asset(UIStore::UNESCAP_LOGO)
         ]));
 
         View::composer('layouts.footer', fn($view) => $view->with([
-            'title' => __('footer.main', ['year' => now()->year])
+            'title' => __('footer.main', ['year' => now()->year]),
+            'logo' => asset(UIStore::UNESCAP_LOGO_WHITE)
         ]));
     }
 }

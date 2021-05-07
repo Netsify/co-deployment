@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow">
     <div class="container">
-        <a class="navbar-brand" href="https://www.unescap.org/" target="_blank">
-            <img src="{{ $unescap_logo }}" alt="unescap" height="40" class="d-inline-block align-text-top">
+        <a href="https://www.unescap.org/" target="_blank" rel="noreferrer">
+            <img id="logo-img" src="{{ $unescap_logo }}" alt="unescap_logo">
         </a>
         <div class="vertical-line"></div>
         <a class="navbar-brand" href="{{ route('main') }}">
