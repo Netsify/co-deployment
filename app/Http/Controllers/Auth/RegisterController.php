@@ -94,6 +94,6 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        return route('profile.index');
+        return route('main');
     }
 }

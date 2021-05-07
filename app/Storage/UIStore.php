@@ -11,6 +11,11 @@ namespace App\Storage;
 class UIStore
 {
     /**
+     * Лого сайта
+     */
+    const CO_DEPLOYMENT_LOGO = 'assets/co-deployment-logo.png';
+
+    /**
      * Операторы и провайдеры ИКТ
      */
     const ICT_START_PAGE_IMAGE = 'assets/ict.jpg';

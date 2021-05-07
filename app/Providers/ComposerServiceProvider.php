@@ -29,6 +29,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('knowledgebase.categories.sidebar', CategoryComposer::class);
 
         View::composer('layouts.navbar',  fn($view) => $view->with([
+            'co_deployment_logo' => asset(UIStore::CO_DEPLOYMENT_LOGO),
             'unescap_logo' => asset(UIStore::UNESCAP_LOGO)
         ]));
 

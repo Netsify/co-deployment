@@ -1,12 +1,16 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow">
     <div class="container">
-        <a href="https://www.unescap.org/" target="_blank" rel="noreferrer">
-            <img id="logo-img" src="{{ $unescap_logo }}" alt="unescap_logo">
-        </a>
+        <div style="width: 40%">
+            <a href="https://www.unescap.org/" target="_blank" rel="noreferrer">
+                <img id="logo-img" src="{{ $unescap_logo }}" alt="unescap_logo" class="img-fluid">
+            </a>
+        </div>
         <div class="vertical-line"></div>
-        <a class="navbar-brand" href="{{ route('main') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
+        <div style="width: 50%">
+            <a class="navbar-brand" href="{{ route('main') }}">
+                <img src="{{ $co_deployment_logo }}" alt="Co-deployment" class="img-fluid">
+            </a>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
