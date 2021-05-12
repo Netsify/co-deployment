@@ -79,6 +79,9 @@
 
                             <div class="mb-3">
                                 <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror" multiple>
+                                @error('files')
+                                <x-invalid-feedback :message="$message"/>
+                                @enderror
                             </div>
 
                             <button type="submit" class="btn btn-primary">{{ __('knowledgebase.Save') }}</button>
