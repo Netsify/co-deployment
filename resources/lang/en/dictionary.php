@@ -9,7 +9,7 @@ return [
     'Authorization'      => "Login",
     'ConfirmPassword'    => "Repeat Password",
     'EditProfile'        => "Edit Personal Data",
-    'Email'              => "Email",
+    'Email'              => "E-Mail Address",
 
     'errors'               => [
         'delete_user'      => "Could not delete user. Please, contact the administrator.",
@@ -51,6 +51,8 @@ return [
     'Phone'              => "Phone",
     'phone_format'       => "Phone (in format :format)",
     'Photo'              => "Photo",
+    'reset'              => "Reset Password",
+    'reset_link'         => "Send Password Reset Link",
     'Save'               => "Save",
     'Summary'            => "Summary",
     'UpdatePassword'     => "Optional to fill. Here you can change your password.",
