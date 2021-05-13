@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxUploadedFilesSizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
@@ -27,7 +28,8 @@ class ArticleRequest extends FormRequest
             'title'    => ['required', 'string:255'],
             'content'  => ['required'],
             'category' => ['integer', 'exists:categories,id'],
-            'tag'      => ['required', 'array']
+            'tag'      => ['required', 'array'],
+            'files'    => ['nullable', new MaxUploadedFilesSizeRule(config('services.max_available_filesize'))]
         ];
     }
 

@@ -30,4 +30,5 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'max_available_filesize' => env('MAX_AVAILABLE_FILESIZE')
 ];
