@@ -1,8 +1,16 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('main') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
+        <div style="width: 40%">
+            <a href="https://www.unescap.org/" target="_blank" rel="noreferrer">
+                <img id="logo-img" src="{{ $unescap_logo }}" alt="unescap_logo" class="img-fluid">
+            </a>
+        </div>
+        <div class="vertical-line"></div>
+        <div style="width: 50%">
+            <a class="navbar-brand" href="{{ route('main') }}">
+                <img src="{{ $co_deployment_logo }}" alt="Co-deployment" class="img-fluid">
+            </a>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -85,46 +93,58 @@
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ Auth::user()->photo }}" height="40">
-                            {{ Auth::user()->full_name }}<x-icon-verified :user="auth()->user()"></x-icon-verified>
+                            {{ Auth::user()->full_name }}
+                            <x-icon-verified :user="auth()->user()"></x-icon-verified>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
+                                <span class="icon-profile"></span>
                                 {{ __('account.profile') }}
                             </a>
 
                             @roleRoadOrICT()
                             <a class="dropdown-item" href="{{ route('account.facilities.index') }}">
+                                <span class="icon-facilities"></span>
                                 {{ __('facility.facilities') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.projects.index') }}">
+                                <span class="icon-projects"></span>
                                 {{ __('account.projects') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.inbox.index') }}">
+                                <span class="icon-inbox"></span>
                                 {{ __('account.inbox') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.sent-proposals.index') }}">
+                                <span class="icon-sent"></span>
                                 {{ __('account.sent_proposals') }}
                             </a>
 
                             <a class="dropdown-item" href="{{ route('account.variables.index') }}">
+                                <span class="icon-variables"></span>
                                 {{ __('account.economic_variables') }}
                             </a>
                             @endroleRoadOrICT
 
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('dictionary.Logout') }}
-                            </a>
+                            <hr class="dropdown-divider">
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-flex">
-                                @csrf
-                            </form>
+                            <div style="float: right">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    <span class="icon-exit"></span>
+                                    {{ __('dictionary.Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-flex">
+                                    @csrf
+                                </form>
+                            </div>
                         </div>
                     </li>
                 @endguest

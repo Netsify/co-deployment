@@ -12,7 +12,11 @@
             </div>
             <div class="mb-3">
                 <label for="attachments" class="form-label">{{ __('proposal.attachments') }}</label>
-                <input type="file" class="form-control form-control-sm" name="attachments[]" id="attachments" multiple>
+                <input type="file" class="form-control form-control-sm  @error('attachments') is-invalid @enderror"
+                       name="attachments[]" id="attachments" multiple>
+                @error('attachments')
+                <x-invalid-feedback :message="$message"/>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary btn-sm">{{ __('proposal.send_proposal') }}</button>
         </form>

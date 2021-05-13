@@ -5,7 +5,7 @@ namespace App\View\Components;
 use App\Models\Article;
 use Illuminate\View\Component;
 
-class DeleteButtton extends Component
+class DeleteButton extends Component
 {
     public $article;
 
@@ -29,6 +29,6 @@ class DeleteButtton extends Component
      */
     public function render()
     {
-        return view('components.delete-buttton');
+        return view('components.delete-button');
     }
 }

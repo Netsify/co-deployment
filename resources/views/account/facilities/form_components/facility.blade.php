@@ -82,6 +82,10 @@
     <label for="attachments"
            class="col-sm-2 col-form-label">{{ __('facility.attachments') }}</label>
     <div class="col-sm-10">
-        <input class="form-control" type="file" id="attachments" name="attachments[]" multiple>
+        <input class="form-control @error('attachments') is-invalid @enderror" type="file" id="attachments"
+               name="attachments[]" multiple>
+        @error('attachments')
+        <x-invalid-feedback :message="$message"/>
+        @enderror
     </div>
 </div>

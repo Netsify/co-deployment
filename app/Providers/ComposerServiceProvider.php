@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use App\View\Composers\CategoryComposer;
+use App\Storage\UIStore;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -25,14 +26,16 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = Category::query()
-            ->with(['articles' => fn($q) => $q->published(),
-                    'translations',
-                    'children.translations',
-                    'children.articles' => fn($q) => $q->published()])
-            ->whereNull('parent_id')
-            ->get();
+        View::composer('knowledgebase.categories.sidebar', CategoryComposer::class);
 
-        View::composer('knowledgebase.categories.sidebar', fn($view) => $view->with(['categories' => $categories]));
+        View::composer('layouts.navbar',  fn($view) => $view->with([
+            'co_deployment_logo' => asset(UIStore::CO_DEPLOYMENT_LOGO),
+            'unescap_logo' => asset(UIStore::UNESCAP_LOGO)
+        ]));
+
+        View::composer('layouts.footer', fn($view) => $view->with([
+            'title' => __('footer.main', ['year' => now()->year]),
+            'logo' => asset(UIStore::UNESCAP_LOGO_WHITE)
+        ]));
     }
 }

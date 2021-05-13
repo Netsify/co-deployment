@@ -20,7 +20,7 @@ return [
     'facility_id' => "Identifier",
     'facility_id_description' => "Facility's unique identifier (created automatically)",
     'facility_name_or_id' => "Facility's name or id",
-    'facility_search' => "Search of facilities",
+    'facility_search' => "Search facilities",
     'facility_updated' => "Object has been successfully updated!",
     'find' => "Find",
     'found_count' => "Found facilities: :count",

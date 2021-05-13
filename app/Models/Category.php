@@ -9,6 +9,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -72,5 +73,15 @@ class Category extends Model implements TranslatableContract
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
+     * Статьи подкатегорий
+     *
+     * @return HasManyThrough
+     */
+    public function childrenArticles(): HasManyThrough
+    {
+        return $this->hasManyThrough(Article::class, self::class, 'parent_id');
     }
 }

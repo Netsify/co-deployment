@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main')
-    ->middleware('guest');
+Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
 Auth::routes();
 
