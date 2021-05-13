@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                {{ __('account.sent_proposals') }}
+                {{ $title }}
             </div>
 
             <div class="card-body">
@@ -27,7 +27,7 @@
                         @foreach($proposals as $proposal)
                             <tr>
                                 <td>
-                                    <a href="{{ route('account.inbox.show', $proposal) }}"
+                                    <a href="{{ route("account.$resource.show", $proposal) }}"
                                        class="btn btn-sm btn-info">{{ __('account.open') }}
                                     </a>
                                 </td>
@@ -48,7 +48,7 @@
                                 <td>
                                     @proposalUnderConsideration($proposal)
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                            formaction="{{ route('account.sent-proposals.delete', $proposal) }}">
+                                            formaction="{{ route('account.inbox.destroy', $proposal) }}">
                                         {{ __('account.delete') }}
                                     </button>
                                     @endproposalUnderConsideration

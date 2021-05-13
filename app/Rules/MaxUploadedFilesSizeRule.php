@@ -24,7 +24,7 @@ class MaxUploadedFilesSizeRule implements Rule
      *
      * @return void
      */
-    public function __construct(float $mb)
+    public function __construct(?float $mb)
     {
         $this->mb = $mb;
     }

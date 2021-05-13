@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
         ->except(['index', 'show']);
 
     Route::post('/proposals/send/facility_of_sender/{f_of_sender}/facility_of_receiver/{f_of_receiver}',
-        [\App\Http\Controllers\ProposalController::class, 'send'])->name('proposal.send');
+        [\App\Http\Controllers\Account\ProposalController::class, 'send'])->name('proposal.send');
 
     /**
      * Роуты для работы с вкладками личного кабинета (профиль, объекты, проекты, входящие, отправленные предложения)
@@ -68,21 +68,27 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('projects',\App\Http\Controllers\Account\ProjectController::class);
 
-        Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\ProposalController::class, 'decline'])
+        Route::post('/inbox/proposal/{proposal}/decline', [\App\Http\Controllers\Account\ProposalController::class, 'decline'])
             ->name('proposal.decline');
 
-        Route::post('/inbox/proposal/{proposal}/accept', [\App\Http\Controllers\ProposalController::class, 'accept'])
+        Route::post('/inbox/proposal/{proposal}/accept', [\App\Http\Controllers\Account\ProposalController::class, 'accept'])
             ->name('proposal.accept');
 
-        Route::get('sent-proposals', [\App\Http\Controllers\Account\InboxController::class, 'sent'])
+        Route::get('sent-proposals', [\App\Http\Controllers\Account\ProposalController::class, 'sent'])
             ->name('sent-proposals.index');
 
-        Route::get('inbox', [\App\Http\Controllers\Account\InboxController::class, 'inbox'])
+        Route::get('inbox', [\App\Http\Controllers\Account\ProposalController::class, 'inbox'])
             ->name('inbox.index');
 
-        Route::resource('inbox', \App\Http\Controllers\Account\InboxController::class)
+        Route::get('sent-proposals/{proposal}', [\App\Http\Controllers\Account\ProposalController::class, 'show'])
+            ->name('sent-proposals.show');
+
+        Route::get('inbox/{proposal}', [\App\Http\Controllers\Account\ProposalController::class, 'show'])
+            ->name('inbox.show');
+
+        Route::resource('inbox', \App\Http\Controllers\Account\ProposalController::class)
             ->parameter('inbox', 'proposal')
-            ->only('show', 'destroy');
+            ->only('destroy');
 
         Route::get('/variables', [\App\Http\Controllers\Account\VariablesController::class, 'index'])
             ->name('variables.index');
