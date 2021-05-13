@@ -7,9 +7,12 @@
 
 return [
     'Authorization'      => "Login",
+    'check_email'        => "Before proceeding, please check your email for a verification link.",
     'ConfirmPassword'    => "Repeat Password",
+    'confirm_continue'   => "Please confirm your password before continuing.",
     'EditProfile'        => "Edit Personal Data",
     'Email'              => "E-Mail Address",
+    'email_not_received' => "If you did not receive the email",
 
     'errors'               => [
         'delete_user'      => "Could not delete user. Please, contact the administrator.",
@@ -51,6 +54,7 @@ return [
     'Phone'              => "Phone",
     'phone_format'       => "Phone (in format :format)",
     'Photo'              => "Photo",
+    'request_another'    => "click here to request another",
     'reset'              => "Reset Password",
     'reset_link'         => "Send Password Reset Link",
     'Save'               => "Save",
@@ -58,7 +62,9 @@ return [
     'UpdatePassword'     => "Optional to fill. Here you can change your password.",
     'user_verified'      => "The user has been successfully verified!",
     'user_unverified'    => "Verification has been canceled!",
+    'verification_link'  => "A fresh verification link has been sent to your email address.",
     'Verified'           => "Verified",
     'verified_desc'      => "Verified user. User :fullName has been verified.",
+    'verify_email'       => "Verify Your Email Address",
     'Yes'                => "Yes",
 ];
