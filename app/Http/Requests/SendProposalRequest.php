@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\MaxUploadedFilesSizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class SendProposalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => ['required', 'string'],
-            'files'   => ['sometimes', new MaxUploadedFilesSizeRule(config('services.max_available_filesize'))]
+            'description' => ['required', 'max:1000'],
+            'attachments' => ['nullable', new MaxUploadedFilesSizeRule(config('services.max_available_filesize'))]
         ];
     }
 }

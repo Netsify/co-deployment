@@ -69,7 +69,7 @@
             <div class="mb-3">
                 <input type="file" name="files[]" class="form-control @error('files') is-invalid @enderror" multiple>
 
-                @error('file')
+                @error('files')
                     <x-invalid-feedback :message="$message"/>
                 @enderror
             </div>
