@@ -81,10 +81,12 @@ class ProposalController extends Controller
             ->get()
             ->load('type.translations', 'compatibilityParams.translations', 'user.variables');
 
-        $title = __('proposal.sent_proposal');
+        $title = $proposal->sender_id == Auth::user()->id
+            ? __('proposal.sent_proposal')
+            : __('proposal.incoming_proposal');
 
         if ($facilities[0]->isDeleted() || $facilities[1]->isDeleted()) {
-            return view('account.proposals.show-d');
+            return view('account.proposals.show-d', compact('title'));
         }
 
         $ict_facility = $facilities->filter(function (Facility $facility) {
@@ -101,7 +103,7 @@ class ProposalController extends Controller
         $c_level = $facilityCalcService->getCompatibilityLevel();
 
         return view('account.proposals.show',
-            compact('proposal', 'facilities', 'c_level', 'economic_efficiency'));
+            compact('proposal', 'facilities', 'c_level', 'economic_efficiency', 'title'));
     }
 
     /**
