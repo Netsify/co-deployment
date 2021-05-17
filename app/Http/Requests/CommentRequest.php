@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxUploadedFilesSizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CommentRequest extends FormRequest
@@ -24,8 +25,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content'  => ['required', 'string'],
-            'files'    => ['sometimes'],
+            'content' => ['required', 'string'],
+            'files'   => ['sometimes', new MaxUploadedFilesSizeRule(config('services.max_available_filesize'))]
         ];
     }
 }

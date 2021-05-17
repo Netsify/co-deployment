@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxUploadedFilesSizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProposalRequest extends FormRequest
@@ -25,6 +26,7 @@ class ProposalRequest extends FormRequest
     {
         return [
             'description' => ['required', 'max:1000'],
+            'attachments' => ['nullable', new MaxUploadedFilesSizeRule(config('services.max_available_filesize'))]
         ];
     }
 }

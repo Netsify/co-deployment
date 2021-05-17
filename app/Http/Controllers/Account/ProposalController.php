@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Account;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProposalRequest;
 use App\Models\Facilities\Facility;
@@ -15,11 +14,9 @@ use App\Services\ProposalService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -140,13 +137,11 @@ class ProposalController extends Controller
      *
      * @param Facility $f_of_sender
      * @param Facility $f_of_receiver
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @param ProposalRequest $request
+     * @return RedirectResponse
      */
     public function send(Facility $f_of_sender, Facility $f_of_receiver, ProposalRequest $request)
     {
-        $validated = $this->validator($request->except('_token'))->validate();
         $proposal = new Proposal();
         $proposal->description = trim(strip_tags($request->input('description')));
         $proposal->sender_id   = $f_of_sender->user_id;
@@ -170,7 +165,7 @@ class ProposalController extends Controller
      * Отклонить запрос
      *
      * @param Proposal $proposal
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function decline(Proposal $proposal)
     {
