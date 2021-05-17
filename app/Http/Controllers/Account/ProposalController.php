@@ -34,7 +34,7 @@ class ProposalController extends Controller
      *
      * @return View
      */
-    public function sent() : View
+    public function sent(): View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('sender_id', Auth::user()->id)
@@ -42,7 +42,7 @@ class ProposalController extends Controller
 
         $title = __('account.sent_proposals');
 
-        $resource = 'sent-proposals';
+        $resource = request()->segment(2);
 
         return view('account.proposals.index', compact('proposals', 'title', 'resource'));
     }
@@ -52,7 +52,7 @@ class ProposalController extends Controller
      *
      * @return View
      */
-    public function inbox() : View
+    public function inbox(): View
     {
         $proposals = Proposal::with('receiver', 'sender', 'facilities')
             ->where('receiver_id', Auth::user()->id)
@@ -60,7 +60,7 @@ class ProposalController extends Controller
 
         $title = __('account.inbox');
 
-        $resource = 'inbox';
+        $resource = request()->segment(2);
 
         return view('account.proposals.index', compact('proposals', 'title', 'resource'));
     }
@@ -78,7 +78,7 @@ class ProposalController extends Controller
             ->get()
             ->load('type.translations', 'compatibilityParams.translations', 'user.variables');
 
-        $title = $proposal->sender_id == Auth::user()->id
+        $title = $proposal->sender_id === Auth::user()->id
             ? __('proposal.sent_proposal')
             : __('proposal.incoming_proposal');
 
