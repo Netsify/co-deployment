@@ -86,9 +86,11 @@ Route::middleware('auth')->group(function () {
         Route::get('inbox/{proposal}', [\App\Http\Controllers\Account\ProposalController::class, 'show'])
             ->name('inbox.show');
 
-        Route::resource('inbox', \App\Http\Controllers\Account\ProposalController::class)
-            ->parameter('inbox', 'proposal')
-            ->only('destroy');
+        Route::delete('inbox/{proposal}', [\App\Http\Controllers\Account\ProposalController::class, 'destroy'])
+            ->name('inbox.destroy');
+
+        Route::delete('sent-proposals/{proposal}', [\App\Http\Controllers\Account\ProposalController::class, 'destroy'])
+            ->name('sent-proposals.destroy');
 
         Route::get('/variables', [\App\Http\Controllers\Account\VariablesController::class, 'index'])
             ->name('variables.index');

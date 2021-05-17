@@ -48,7 +48,7 @@
                                 <td>
                                     @proposalUnderConsideration($proposal)
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                            formaction="{{ route('account.inbox.destroy', $proposal) }}">
+                                            formaction="{{ route("account.$resource.destroy", $proposal) }}">
                                         {{ __('account.delete') }}
                                     </button>
                                     @endproposalUnderConsideration
