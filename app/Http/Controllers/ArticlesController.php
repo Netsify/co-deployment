@@ -80,7 +80,6 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request): RedirectResponse
     {
-        dd($request->all());
         $article = new Article($request->only(['title', 'content']));
         $article->category_id = $request->get('category');
 
