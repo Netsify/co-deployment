@@ -29,6 +29,7 @@ class AddDeletedByUserIdToProposalsTable extends Migration
     {
         Schema::table('proposals', function (Blueprint $table) {
             $table->dropColumn('deleted_by_user_id');
+            $table->timestamp('deleted_at_by_receiver')->nullable()->after('deleted_at');
         });
     }
 }
