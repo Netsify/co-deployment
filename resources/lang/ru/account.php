@@ -29,6 +29,7 @@ return [
     'project_id'           => 'ID проекта',
     'project_updated'      => 'Проект был успешно обновлен!',
     'projects'             => 'Проекты',
+    'proposal_deleted'     => 'Предложение было успешно удалено!',
     'quick_search'         => 'Быстрый поиск',
     'receiver'             => 'Кому',
     'search'               => 'Поиск',

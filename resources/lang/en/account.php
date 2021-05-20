@@ -29,6 +29,7 @@ return [
     'project_id'           => 'Project ID',
     'project_updated'      => 'Project has been successfully updated!',
     'projects'             => 'Projects',
+    'proposal_deleted'     => 'Proposal has been successfully deleted!',
     'quick_search'         => 'Quick Search',
     'receiver'             => 'Receiver',
     'search'               => 'Search',
