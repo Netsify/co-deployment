@@ -42,12 +42,12 @@ class ProposalController extends Controller
 
         $title = __('account.sent_proposals');
 
-        foreach ($proposals as $proposal) {
-            $proposal->route_show = route('account.sent-proposals.show', $proposal);
-            $proposal->route_destroy = route('account.sent-proposals.destroy', $proposal);
-        }
+        $routeShow = 'account.sent-proposals.show';
 
-        return view('account.proposals.index', compact('proposals', 'title'));
+        $routeDestroy = 'account.sent-proposals.destroy';
+
+        return view('account.proposals.index',
+            compact('proposals', 'title', 'routeShow', 'routeDestroy'));
     }
 
     /**
@@ -63,12 +63,12 @@ class ProposalController extends Controller
 
         $title = __('account.inbox');
 
-        foreach ($proposals as $proposal) {
-            $proposal->route_show = route('account.inbox.show', $proposal);
-            $proposal->route_destroy = route('account.inbox.destroy', $proposal);
-        }
+        $routeShow = 'account.inbox.show';
 
-        return view('account.proposals.index', compact('proposals', 'title'));
+        $routeDestroy = 'account.inbox.destroy';
+
+        return view('account.proposals.index',
+            compact('proposals', 'title', 'routeShow', 'routeDestroy'));
     }
 
     /**

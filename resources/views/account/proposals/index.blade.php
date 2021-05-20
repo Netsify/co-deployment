@@ -27,7 +27,7 @@
                         @foreach($proposals as $proposal)
                             <tr>
                                 <td>
-                                    <a href="{{ $proposal->route_show }}" class="btn btn-sm btn-info">
+                                    <a href="{{ route($routeShow, $proposal) }}" class="btn btn-sm btn-info">
                                         {{ __('account.open') }}
                                     </a>
                                 </td>
@@ -47,7 +47,8 @@
                                 </td>
                                 <td>
                                     @proposalUnderConsideration($proposal)
-                                    <button type="submit" class="btn btn-danger btn-sm" formaction="{{ $proposal->route_destroy }}">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            formaction="{{ route($routeDestroy, $proposal) }}">
                                         {{ __('account.delete') }}
                                     </button>
                                     @endproposalUnderConsideration
