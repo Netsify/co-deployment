@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                {{ __('proposal.incoming_proposal') }}
+                {{ $title }}
                 <div class="btn-group" style="float: right">
                     @proposalUnderConsideration($proposal)
                     <x-proposal-action-button :proposal="$proposal" route="account.proposal.accept" class="success"

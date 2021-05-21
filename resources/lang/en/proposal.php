@@ -20,5 +20,6 @@ return [
     'if_facility_deleted' => "The propsal not available because one of the objects has been deleted",
     'incoming_proposal' => 'Incoming proposal',
     'send_proposal' => "Send proposal",
+    'sent_proposal' => "Sent proposal",
     'wrong_value' => 'Wrong value. Please contact the administrator.',
 ];

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\MaxUploadedFilesSizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendProposalRequest extends FormRequest
+class ProposalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
