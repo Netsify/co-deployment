@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
-Auth::routes();
+Auth::routes(['reset' => false]);
 
 Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
     ->name('facilities.search');
