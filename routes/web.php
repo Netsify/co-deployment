@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('main');
 
-Auth::routes(['reset' => false]);
+Auth::routes();
 
 Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchController::class, 'search'])
     ->name('facilities.search');
@@ -24,8 +24,6 @@ Route::get('/facilities/search', [\App\Http\Controllers\FacilitiesSearchControll
 Route::resource('facilities',\App\Http\Controllers\FacilitiesController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::delete('profile/{user}/delete_photo', [\App\Http\Controllers\ProfileController::class, 'nullifyPhoto'])
         ->name('profile.delete_photo');
