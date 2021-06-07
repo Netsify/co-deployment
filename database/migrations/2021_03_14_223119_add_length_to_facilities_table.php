@@ -14,7 +14,7 @@ class AddLengthToFacilitiesTable extends Migration
     public function up()
     {
         Schema::table('facilities', function (Blueprint $table) {
-            $table->double('length', '12', 3)->after('description');
+            $table->double('length', '12', 3)->after('description')->nullable();
         });
     }
 
