@@ -11,6 +11,11 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * The login form can be displayed.
+     *
+     * @return void
+     */
     public function test_user_can_view_login_page()
     {
         $this->assertGuest();
@@ -22,6 +27,11 @@ class LoginTest extends TestCase
         $response->assertViewIs('auth.login');
     }
 
+    /**
+     * The login form cannot be displayed.
+     *
+     * @return void
+     */
     public function test_auth_user_cannot_view_login_page()
     {
         $user = User::factory()->create();
@@ -31,6 +41,11 @@ class LoginTest extends TestCase
         $response->assertRedirect(route('main'));
     }
 
+    /**
+     * A valid user can be logged in.
+     *
+     * @return void
+     */
     public function test_user_can_login_with_correct_credentials()
     {
         $password = 'test';
@@ -49,6 +64,11 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    /**
+     * An invalid user cannot be logged in.
+     *
+     * @return void
+     */
     public function test_user_cannot_login_with_incorrect_password()
     {
         $user = User::factory()->create([
@@ -95,5 +115,21 @@ class LoginTest extends TestCase
             $user->getRememberToken(),
             $user->password,
         ]));
+    }
+
+    /**
+     * A logged in user can be logged out.
+     *
+     * @return void
+     */
+    public function test_authenticated_user_can_logout()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post(route('logout'));
+
+        $response->assertRedirect(route('main'));
+
+        $this->assertGuest();
     }
 }
