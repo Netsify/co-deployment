@@ -8,7 +8,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <em>
-                        <a href="{{ route('articles.category', $category->id) }}">
+                        <a href="{{ route('articles.category', $category) }}">
                             {{ $category->name }}
                         </a>
                     </em>
@@ -21,7 +21,7 @@
                             @foreach($category->children as $child)
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <a href="{{ route('articles.category', $child->id) }}">
+                                        <a href="{{ route('articles.category', $child) }}">
                                             {{ $child->name }}
                                         </a>
                                         <span class="badge bg-primary rounded-pill">
