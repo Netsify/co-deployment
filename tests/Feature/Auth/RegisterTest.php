@@ -10,11 +10,6 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * The registration form can be displayed.
-     *
-     * @return void
-     */
     public function test_user_can_view_register_page()
     {
         $this->assertGuest();
@@ -26,11 +21,6 @@ class RegisterTest extends TestCase
         $response->assertViewIs('auth.register');
     }
 
-    /**
-     * The registration form cannot be displayed.
-     *
-     * @return void
-     */
     public function test_user_cannot_view_register_page()
     {
         $user = User::factory()->create();
@@ -40,14 +30,8 @@ class RegisterTest extends TestCase
         $response->assertRedirect(route('main'));
     }
 
-    /**
-     * A valid user can be registered.
-     *
-     * @return void
-     */
     public function test_validated_user_can_register()
     {
-//        $this->withoutExceptionHandling();
 
         $user = User::factory()->create();
 
@@ -67,11 +51,6 @@ class RegisterTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /**
-     * An invalid user is not registered.
-     *
-     * @return void
-     */
     public function test_invalidated_user_cannot_register()
     {
         $user = User::factory()->create();

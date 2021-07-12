@@ -13,11 +13,6 @@ class ResetPasswordTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Displays the reset password request form.
-     *
-     * @return void
-     */
     public function test_user_can_view_password_reset_page()
     {
         $this->assertGuest();
@@ -29,11 +24,6 @@ class ResetPasswordTest extends TestCase
         $response->assertViewIs('auth.passwords.email');
     }
 
-    /**
-     * Sends the password reset email when the user exists.
-     *
-     * @return void
-     */
     public function test_sends_password_reset_email()
     {
         $user = User::factory()->create();
@@ -45,11 +35,6 @@ class ResetPasswordTest extends TestCase
         $response->assertRedirect(route('main'));
     }
 
-    /**
-     * Does not send a password reset email when the user does not exist.
-     *
-     * @return void
-     */
     public function test_does_not_send_password_reset_email()
     {
         $this->doesntExpectJobs(ResetPassword::class);
@@ -57,11 +42,6 @@ class ResetPasswordTest extends TestCase
         $this->post(route('password.email'), ['email' => 'invalid@email.com']);
     }
 
-    /**
-     * Displays the form to reset a password.
-     *
-     * @return void
-     */
     public function test_displays_password_reset_page()
     {
         $response = $this->get(route('password.reset', ['token' => 'test_token']));
@@ -69,11 +49,6 @@ class ResetPasswordTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * Allows a user to reset their password.
-     *
-     * @return void
-     */
     public function test_user_can_change_password()
     {
         $user = User::factory()->create();
