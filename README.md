@@ -1,5 +1,7 @@
 ![alt text](https://github.com/Netsify/Co-Deployment-v.1/blob/master/public/assets/co-deployment-logo.png?raw=true)
 
+This is the first version of the portal created by KEEU developers in the first half of 2021
+
 <em>
     <strong>Main idea (en):</strong>
 
